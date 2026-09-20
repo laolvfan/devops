@@ -1,2 +1,2 @@
 # devops
-DevOps course project for Group B, implementing DRAFT and MDFixer.
+DevOps course project for Group B, implementing DRAFT and MDFixer. DRAFT iteratively generates buildable Docker environments using project documentation, Docker build logs, and large language models. MDFixer consumes Missing Dependency reports, generates dependency repair patches, and validates them through rebuilding, testing, and dependency rechecking. The repository also contains shared Job schemas, interface examples, architecture decisions, backlog records, AI usage documentation, and experiment results.
