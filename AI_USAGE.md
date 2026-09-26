@@ -44,7 +44,6 @@ AI 协助整理 E2 接口契约、解释字段含义，并起草 ADR 与本记�
 - 提示摘要：拉取 E2 最新版本后检查 B11 交付缺项，并继续补充；不确定的细节与成员讨论。
 - 人工约束：只安排 B11 的工作；成员暂以 A/B/C 表示；不使用“待负责人审阅”状态；不要求每人单独提交 SHA 清单。
 - AI 工作：按 Git 实际作者整理贡献证据，编写 B11 Backlog 和校验记录，修正 README 的成果描述；未将计划分工当作实际贡献。
-- 成员确认：用户明确 `wuren` 与 `lao fan` 均为阳旅帆，`WwNotVvvv` 为王炜，并要求按已有提交分工。阳旅帆维护 Schema、样例、报告与校验，王炜维护接口契约、ADR 和 AI_USAGE；第三位成员的具体工作尚未提供，不代填贡献。
 - 关联文件：[Backlog](docs/backlog.md)、[贡献记录](docs/contributions.md)、[校验记录](docs/validation.md)。本轮变更尚未提交，后续以实际 commit 关联。
 
 ## 独立部署的产物交接
@@ -59,4 +58,4 @@ AI 协助整理 E2 接口契约、解释字段含义，并起草 ADR 与本记�
 - 人工决定：明确当前尚无构建环境或真实日志，同意先定义记录格式，再由未来的真实运行生成数据。
 - AI 工作：定义轮次、修改、理由、镜像构建/项目构建/验证结果，提供 MANUAL_EXAMPLE 样例和独立 Schema；成功响应通过 iteration_record_uri 引用记录。
 - 关联文件：[格式说明](docs/draft_iterations.md)、[Schema](schemas/draft-iterations.schema.json)、[人工样例](examples/artifacts/draft-iterations.json)。
-- 验证：当前未提交工作区共 23 项文件校验通过，包括新增 5 项逐轮记录校验。未运行 Docker、make 或真实验证命令，未创建示例 URI 所指向的日志。
+- 验证：当前工作区共 23 项文件校验通过，包括新增 5 项逐轮记录校验。未运行 Docker、make 或真实验证命令，未创建示例 URI 所指向的日志。
