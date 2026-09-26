@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "trace_id": "trace-pair11-demo-001",
+  "job_type": "FULL_CHECK",
+  "idempotency_key": "pair11-full_check-demo001",
+  "input": {
+    "repository": {
+      "url": "https://example.com/a11-b11/make-demo.git",
+      "commit": "0123456789abcdef0123456789abcdef01234567"
+    },
+    "timeout_seconds": 1800,
+    "environment": {
+      "image_uri": "artifact://job-DRAFT-demo001/image-001/image.tar",
+      "configuration_id": "cfg-ubuntu22-gcc12-release-v1"
+    },
+    "clean_build_command": "make clean && make",
+    "project_root": "/project"
+  }
+}

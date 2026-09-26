@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "trace_id": "trace-pair11-demo-001",
+  "error": {
+    "code": "REQUEST_1001",
+    "message": "Invalid baseline",
+    "retryable": false,
+    "details": {
+      "field": "input.baseline"
+    },
+    "log_uri": null
+  }
+}

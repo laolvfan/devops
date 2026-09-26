@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0.0",
+  "trace_id": "trace-pair11-demo-001",
+  "job_type": "REPAIR",
+  "input": {
+    "repository": {
+      "url": "https://example.com/a11-b11/make-demo.git",
+      "commit": "89abcdef0123456789abcdef0123456789abcdef"
+    },
+    "timeout_seconds": 1800,
+    "md_report_uri": "artifact://job-INCREMENTAL_CHECK-demo001/report-001/md-report.json",
+    "makefile_path": "Makefile",
+    "environment": {
+      "image_uri": "artifact://job-DRAFT-demo001/image-001/image.tar",
+      "configuration_id": "cfg-ubuntu22-gcc12-release-v1"
+    },
+    "build_command": "make",
+    "verify_command": "make test"
+  },
+  "job_id": "job-REPAIR-demo001",
+  "status": "SUCCEEDED",
+  "execution": {
+    "attempt": 1,
+    "retry_of_job_id": null,
+    "queued_at": "2026-09-26T10:30:00+08:00",
+    "started_at": "2026-09-26T10:30:01+08:00",
+    "finished_at": "2026-09-26T10:31:01+08:00",
+    "duration_ms": 60000,
+    "timeout_seconds": 1800
+  },
+  "output": {
+    "artifacts": [
+      {
+        "artifact_id": "patch-001",
+        "type": "PATCH",
+        "uri": "artifact://job-REPAIR-demo001/patch-001/repair.patch",
+        "media_type": "text/x-diff",
+        "producer_job_id": "job-REPAIR-demo001",
+        "commit": "89abcdef0123456789abcdef0123456789abcdef",
+        "configuration_id": "cfg-ubuntu22-gcc12-release-v1"
+      },
+      {
+        "artifact_id": "log-001",
+        "type": "BUILD_LOG",
+        "uri": "artifact://job-REPAIR-demo001/log-001/build.log",
+        "media_type": "text/plain",
+        "producer_job_id": "job-REPAIR-demo001",
+        "commit": "89abcdef0123456789abcdef0123456789abcdef",
+        "configuration_id": "cfg-ubuntu22-gcc12-release-v1"
+      },
+      {
+        "artifact_id": "test-001",
+        "type": "TEST_RESULT",
+        "uri": "artifact://job-REPAIR-demo001/test-001/tests.json",
+        "media_type": "application/json",
+        "producer_job_id": "job-REPAIR-demo001",
+        "commit": "89abcdef0123456789abcdef0123456789abcdef",
+        "configuration_id": "cfg-ubuntu22-gcc12-release-v1"
+      },
+      {
+        "artifact_id": "report-001",
+        "type": "ERROR_REPORT",
+        "uri": "artifact://job-REPAIR-demo001/report-001/recheck.json",
+        "media_type": "application/json",
+        "producer_job_id": "job-REPAIR-demo001",
+        "commit": "89abcdef0123456789abcdef0123456789abcdef",
+        "configuration_id": "cfg-ubuntu22-gcc12-release-v1"
+      }
+    ],
+    "patch_accepted": true,
+    "declaration_style": "在现有显式规则 main.o 的先决条件中补入 config.h。",
+    "validation": {
+      "build_exit_code": 0,
+      "test_exit_code": 0,
+      "remaining_missing": 0,
+      "workspace": "C1 plus the emitted patch; no new commit created"
+    }
+  },
+  "error": null
+}

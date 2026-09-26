@@ -4,7 +4,6 @@
 
 - 配对组：A11 / B11
 - 版本：1.0.0
-- 更新时间：2026-09-20
 - 说明：本文件记录 E2 阶段的接口、数据传递和验收约定。
 
 ## 2. 小组职责与流程
@@ -124,7 +123,7 @@ execution 由服务端生成。客户端只在 input 中提供任务所需的超
 | duration_ms | integer/null | 实际执行时长，单位为毫秒 |
 | timeout_seconds | integer | 本次任务允许的最长执行时间 |
 
-时间统一使用 ISO 8601 格式，例如 2026-09-20T10:00:00+08:00。
+时间统一使用带时区偏移的 ISO 8601 格式。
 
 状态与必填执行字段：
 
@@ -407,7 +406,9 @@ output.artifacts 至少包含：
 
 必填字段：仓库、当前 commit、MD 报告、Makefile 路径、镜像、配置 ID、构建命令、验证命令和 timeout_seconds。
 
-MDFixer 只消费 MISSING 报告，不消费 REDUNDANT 报告。
+报告允许同时包含 MISSING 和 REDUNDANT；MDFixer 校验完整报告后只修复 MISSING，不删除 REDUNDANT 对应的依赖声明。无 MISSING 时应跳过修复；仍提交时在报告预检阶段返回 HTTP 400 / REQUEST_1001（NO_MISSING_FINDINGS）。
+
+报告字段、位置、证据、增量变化和异常处理详见 [MD/RD 报告契约](md_report.md)，对应 `schemas/md-report.schema.json`。此补充为 B11 初稿，待 A11 确认。
 
 ### 10.2 输出
 

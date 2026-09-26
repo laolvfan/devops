@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "trace_id": "trace-pair11-demo-001",
+  "error": {
+    "code": "REQUEST_1001",
+    "message": "Invalid job_type",
+    "retryable": false,
+    "details": {
+      "field": "job_type"
+    },
+    "log_uri": null
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "trace_id": "trace-pair11-demo-001",
+  "job_type": "REPAIR",
+  "idempotency_key": "pair11-repair-demo001",
+  "input": {
+    "repository": {
+      "url": "https://example.com/a11-b11/make-demo.git",
+      "commit": "89abcdef0123456789abcdef0123456789abcdef"
+    },
+    "timeout_seconds": 1800,
+    "md_report_uri": "artifact://job-INCREMENTAL_CHECK-demo001/report-001/md-report.json",
+    "makefile_path": "Makefile",
+    "environment": {
+      "image_uri": "artifact://job-DRAFT-demo001/image-001/image.tar",
+      "configuration_id": "cfg-ubuntu22-gcc12-release-v1"
+    },
+    "build_command": "make",
+    "verify_command": "make test"
+  }
+}

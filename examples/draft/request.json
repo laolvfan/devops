@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "trace_id": "trace-pair11-demo-001",
+  "job_type": "DRAFT",
+  "idempotency_key": "pair11-draft-demo001",
+  "input": {
+    "repository": {
+      "url": "https://example.com/a11-b11/make-demo.git",
+      "commit": "0123456789abcdef0123456789abcdef01234567"
+    },
+    "timeout_seconds": 1800,
+    "build_command": "make",
+    "verify_command": "make test"
+  }
+}

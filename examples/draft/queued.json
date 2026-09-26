@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "trace_id": "trace-pair11-demo-001",
+  "job_type": "DRAFT",
+  "input": {
+    "repository": {
+      "url": "https://example.com/a11-b11/make-demo.git",
+      "commit": "0123456789abcdef0123456789abcdef01234567"
+    },
+    "timeout_seconds": 1800,
+    "build_command": "make",
+    "verify_command": "make test",
+    "max_iterations": 20
+  },
+  "job_id": "job-DRAFT-demo001",
+  "status": "QUEUED",
+  "execution": {
+    "attempt": 1,
+    "retry_of_job_id": null,
+    "queued_at": "2026-09-26T10:00:00+08:00",
+    "started_at": null,
+    "finished_at": null,
+    "duration_ms": null,
+    "timeout_seconds": 1800
+  },
+  "output": null,
+  "error": null
+}

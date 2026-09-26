@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0.0",
+  "repository": {
+    "url": "https://example.com/a11-b11/make-demo.git",
+    "commit": "89abcdef0123456789abcdef0123456789abcdef"
+  },
+  "configuration_id": "cfg-ubuntu22-gcc12-release-v1",
+  "producer_job_id": "job-INCREMENTAL_CHECK-demo001",
+  "detector": "MANUAL_EXAMPLE",
+  "findings": [
+    {
+      "finding_id": "md-001",
+      "type": "MISSING",
+      "target": "main.o",
+      "dependency": "config.h",
+      "commit": "89abcdef0123456789abcdef0123456789abcdef",
+      "location": {
+        "path": "Makefile",
+        "line": 6
+      },
+      "evidence": [
+        {
+          "kind": "FILE_READ",
+          "path": "config.h",
+          "command": "cc -c main.c -o main.o",
+          "description": "手工演示：编译读取 config.h，但 main.o 的声明先决条件仅有 main.c。"
+        },
+        {
+          "kind": "DECLARATION",
+          "path": "Makefile",
+          "declared_dependencies": [
+            "main.c"
+          ],
+          "description": "人工设定的 Makefile 第 6 行为 main.o: main.c，未声明 config.h；并非读取真实仓库所得。"
+        }
+      ]
+    },
+    {
+      "finding_id": "rd-001",
+      "type": "REDUNDANT",
+      "target": "helper.o",
+      "dependency": "unused.h",
+      "commit": "89abcdef0123456789abcdef0123456789abcdef",
+      "location": {
+        "path": "Makefile",
+        "line": 9
+      },
+      "evidence": [
+        {
+          "kind": "DECLARATION",
+          "path": "Makefile",
+          "declared_dependencies": [
+            "helper.c",
+            "unused.h"
+          ],
+          "description": "人工设定的第 9 行为 helper.o: helper.c unused.h。"
+        },
+        {
+          "kind": "ANALYSIS",
+          "description": "人工设定：在当前 configuration_id 下生成 helper.o 不使用 unused.h；不代表其他构建配置也不需要。"
+        }
+      ]
+    }
+  ],
+  "delta": {
+    "added": [
+      "md-001",
+      "rd-001"
+    ],
+    "resolved": [],
+    "base_commit": "0123456789abcdef0123456789abcdef01234567"
+  }
+}
