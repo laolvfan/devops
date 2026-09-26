@@ -8,6 +8,7 @@ B11 负责 DRAFT（生成可构建环境）和 MDFixer（修复缺失依赖）�
 |---|---|
 | [Backlog](docs/backlog.md) | B11 任务、责任角色、交付物、验收条件和状态 |
 | [接口契约](docs/interface_contract.md) | 任务模型、服务输入输出、状态和错误码 |
+| [响应格式](docs/response_formats.md) | 202、400 和 B11 成功结果的结构规则 |
 | [Schema 说明](schemas/README.md) | JSON 结构约束及使用方法 |
 | [JSON 样例](examples/README.md) | 请求、响应、失败和产物引用演示 |
 | [DRAFT 逐轮记录](docs/draft_iterations.md) | 将来每轮修改、理由和步骤结果的格式 |

@@ -54,4 +54,4 @@ FULL_CHECK 使用 DRAFT 返回的 image URI；INCREMENTAL_CHECK 使用 FULL_CHEC
 python -m unittest discover -s tests -v
 ```
 
-测试使用现有 task.schema.json 校验四类请求、完整查询响应和非法请求，同时检查演示中的跨任务 URI、基线、版本和报告引用衔接。MD/RD 报告内容另由 `md-report.schema.json` 校验。accepted、HTTP 错误封装和新增输出字段尚无正式 Schema；相关测试只检查提案的基本一致性，不表示双方已经确认。正式 validate.py 属于后续校验工具任务。
+测试使用现有 task.schema.json 校验四类请求、完整查询响应和非法请求，同时检查演示中的跨任务 URI、基线、版本和报告引用衔接。MD/RD 报告内容另由 `md-report.schema.json` 校验。accepted、HTTP 400 封装和 B11 最终结果字段现已由 task.schema.json 的专用入口校验，见 [响应格式](../docs/response_formats.md)；这不表示双方已经确认。正式 validate.py 属于后续校验工具任务。

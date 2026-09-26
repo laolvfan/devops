@@ -89,7 +89,7 @@ error
 | 修复缺失依赖 | POST /v1/repair-jobs |
 | 查询任务 | GET /v1/jobs/{job_id} |
 
-创建接口接受请求后返回 HTTP 202 和 job_id。客户端通过查询接口获取任务结果。
+创建接口接受请求后返回 HTTP 202 和 job_id。客户端通过查询接口获取任务结果。202 回执、400 错误封装及 DRAFT/MDFixer 成功结果的必填字段见 [响应格式](response_formats.md)，对应 `task.schema.json` 中的独立入口。
 
 ### 4.2 状态
 

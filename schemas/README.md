@@ -6,9 +6,10 @@
 
 - 根入口：创建请求或完整任务查询响应。
 - `$defs/createRequest`：创建请求，禁止携带服务端生成的 job_id、status、execution、output、error。
-- `$defs/jobResponse`：完整任务查询响应。
+- `$defs/jobResponse`：完整任务查询响应，按 DRAFT/REPAIR 成功状态校验专有结果。
+- `$defs/acceptedResponse`、`$defs/badRequestResponse`：202 回执、400 错误响应，独立于根入口。
 - `$defs/artifact`、`$defs/error`：可复用的产物元数据、系统错误结构。
-- `draft-iterations.schema.json`：DRAFT 逐轮记录文件的独立入口，定义修改、理由和步骤结果；它不自动校验 Job 的扩展字段。
+- `draft-iterations.schema.json`：DRAFT 逐轮记录文件的独立入口，定义修改、理由和步骤结果；Job 中的逐轮引用与计数由 task.schema.json 检查。
 
 四类任务根据 job_type 选择对应 input。成功响应要求相应服务的最低产物集合；失败、超时和取消响应要求 error，output 必须为 null。QUEUED/RUNNING 的 output/error 均为 null。
 
@@ -21,8 +22,8 @@
 - configuration_id 按文档的 cfg-系统-工具链-模式-版本五段格式校验。
 - DRAFT 请求可省略 max_iterations；服务端应补成 20 并在响应中返回。Schema 的 default 只提供说明，不修改数据。
 - 日期与 URI 校验需显式启用格式检查器。
-- `task.schema.json` 只检查产物元数据；MD/RD 文件内容由新增的 `md-report.schema.json` 单独校验，详见 [报告契约](../docs/md_report.md)。图、构建验证结果、修复声明风格等内部结构仍待补充。
-- 简短 HTTP 202 回执的字段尚未完全约定，不属于根入口；不能用完整查询响应的规则校验它。
+- `task.schema.json` 只检查产物元数据；MD/RD 文件内容由新增的 `md-report.schema.json` 单独校验，详见 [报告契约](../docs/md_report.md)。B11 构建验证结果和声明风格字段已纳入任务 Schema；依赖图等产物的文件内部结构不在本次范围内。
+- HTTP 回执及 B11 最终结果字段已补齐，详见 [响应格式](../docs/response_formats.md)；仍属于 B11 未发布初稿。
 
 以下仍需业务程序检查：baseline.commit 等于 base_commit、基线配置匹配环境、报告版本匹配源码、execution/input 超时一致、时间先后及实际时长、任务编号唯一、幂等行为、状态转换、URI 可读取、修复只消费 MD，以及构建/测试/重检真正通过。结构校验通过不等于业务验收通过。
 

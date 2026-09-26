@@ -73,7 +73,7 @@ artifacts/<job_id>/<artifact_id>/<filename>
 
 当前选择 HTTP 传输 `image.tar`，不要求额外部署镜像仓库。每份归档只包含本次成功环境的一个明确镜像标签，生产方在 DRAFT 的 DOCKER_IMAGE 产物记录中附加可选 `image_ref`，标明加载后使用的标签。标签在联调期间不得重用为不同镜像；接收方同时核对 configuration_id。
 
-`image_ref` 是本次新增的 B11 交接字段，属于 DOCKER_IMAGE 元数据，不是 artifact URI，也不是要求联网拉取的地址。当前允许扩展字段的任务 Schema 可接受它；字段专用约束在后续完善结果结构时补齐。
+`image_ref` 是本次新增的 B11 交接字段，属于 DOCKER_IMAGE 元数据，不是 artifact URI，也不是要求联网拉取的地址。任务 Schema 已将该可选字段约束为非空字符串；实际镜像标签是否存在仍由加载后的检查确认。
 
 以下仅为操作说明，没有在本项目执行。假设成功镜像已有标签 `b11/draft:demo001`，B11 导出：
 
