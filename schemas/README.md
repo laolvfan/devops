@@ -8,6 +8,7 @@
 - `$defs/createRequest`：创建请求，禁止携带服务端生成的 job_id、status、execution、output、error。
 - `$defs/jobResponse`：完整任务查询响应。
 - `$defs/artifact`、`$defs/error`：可复用的产物元数据、系统错误结构。
+- `draft-iterations.schema.json`：DRAFT 逐轮记录文件的独立入口，定义修改、理由和步骤结果；它不自动校验 Job 的扩展字段。
 
 四类任务根据 job_type 选择对应 input。成功响应要求相应服务的最低产物集合；失败、超时和取消响应要求 error，output 必须为 null。QUEUED/RUNNING 的 output/error 均为 null。
 

@@ -38,11 +38,11 @@ FULL_CHECK 使用 DRAFT 返回的 image URI；INCREMENTAL_CHECK 使用 FULL_CHEC
 ## 待 A11 确认的具体提案
 
 1. HTTP 202 回执包含 schema_version、trace_id、job_id、status=QUEUED；HTTP 400 包含 schema_version、trace_id、error。查询响应仍使用现有完整 Job 结构。
-2. DRAFT 输出新增 build_result、verification_result（command 和 exit_code），iterations 记录实际迭代次数；逐轮日志、修改与选择理由的结构后续补充。
+2. DRAFT 输出新增 build_result、verification_result（command 和 exit_code），iterations 记录实际迭代次数；逐轮修改、理由和步骤结果已定义于 [逐轮记录格式](../docs/draft_iterations.md)，人工样例为 `artifacts/draft-iterations.json`，通过 iteration_record_uri 关联成功响应。样例引用的日志未实际生成。
 3. REPAIR 输出新增 patch_accepted、declaration_style、validation；验证失败时 output=null，拒绝原因放入 error.details。
 4. `artifacts/md-report.json` 对应增量响应中的 `artifact://job-INCREMENTAL_CHECK-demo001/report-001/md-report.json`。这是报告内容提案，未放入仓库根目录 artifacts/，若演示本地解析需将它复制到 `artifacts/job-INCREMENTAL_CHECK-demo001/report-001/md-report.json`。
 5. 报告的 findings 表示当前发现，delta.added/resolved 使用 finding_id；人工来源为 MANUAL_EXAMPLE。纯 MD 样例只含 MISSING；另有 `artifacts/mixed-report.json` 演示混合报告。B11 初稿规定校验完整报告后只修复 MISSING，RD 保留不修改；见 [报告契约](../docs/md_report.md)。
-6. image.tar 表示 Docker 镜像归档的提案；实际交接方式、加载方法、配置检查和跨组读取仍需确认。
+6. 两组独立部署，image.tar 经 HTTP 下载后使用 docker image load 加载；DRAFT 镜像产物中的 image_ref 指明镜像标签。URI 映射、文件读取和加载流程见 [产物交接约定](../docs/artifact_handoff.md)。真实地址与部署配置待确定。
 
 检测发现 MD 时，增量分析任务仍为 SUCCEEDED、error=null。MD 属于报告内容，不能放进系统执行 error。
 

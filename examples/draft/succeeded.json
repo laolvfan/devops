@@ -41,13 +41,23 @@
         "media_type": "application/x-tar",
         "producer_job_id": "job-DRAFT-demo001",
         "commit": "0123456789abcdef0123456789abcdef01234567",
-        "configuration_id": "cfg-ubuntu22-gcc12-release-v1"
+        "configuration_id": "cfg-ubuntu22-gcc12-release-v1",
+        "image_ref": "b11/draft:demo001"
       },
       {
         "artifact_id": "log-001",
         "type": "BUILD_LOG",
         "uri": "artifact://job-DRAFT-demo001/log-001/build.log",
         "media_type": "text/plain",
+        "producer_job_id": "job-DRAFT-demo001",
+        "commit": "0123456789abcdef0123456789abcdef01234567",
+        "configuration_id": "cfg-ubuntu22-gcc12-release-v1"
+      },
+      {
+        "artifact_id": "iterations-001",
+        "type": "BUILD_LOG",
+        "uri": "artifact://job-DRAFT-demo001/iterations-001/iterations.json",
+        "media_type": "application/json",
         "producer_job_id": "job-DRAFT-demo001",
         "commit": "0123456789abcdef0123456789abcdef01234567",
         "configuration_id": "cfg-ubuntu22-gcc12-release-v1"
@@ -61,7 +71,8 @@
       "command": "make test",
       "exit_code": 0
     },
-    "iterations": 1
+    "iterations": 1,
+    "iteration_record_uri": "artifact://job-DRAFT-demo001/iterations-001/iterations.json"
   },
   "error": null
 }

@@ -13,25 +13,27 @@ Dockerfile、镜像、依赖图、检测报告和 Patch 等产物可能较大。
   ```text
   artifact://<job_id>/<artifact_id>/<filename>
   ```
-- 当前实验将 URI 映射到项目根目录下的 `artifacts/`：
+- 生产方内部将 URI 映射到自己的 `artifacts/`：
   ```text
   artifact://job-FULL_CHECK-001/graph-001/actual.json
   → artifacts/job-FULL_CHECK-001/graph-001/actual.json
   ```
 - 产物记录 `artifact_id`、类型、URI、媒体类型、生产 Job、源码 commit 和 `configuration_id`。
-- 接收方根据 URI 读取产物，不依赖绝对本地路径。
+- 两组分别部署，接收方按生产任务类型选择组入口，通过 `GET /v1/artifacts/{job_id}/{artifact_id}/{filename}` 下载文件。
+- 不要求共用代码仓库或共享文件系统。镜像先使用 image.tar 归档下载，加载后按 image_ref 使用。
 - 后续可将同一逻辑 URI 映射到产物服务或对象存储。
 
 ## 备选方案分析
 
 - **在 Job 响应内嵌文件内容**：小文件调用方便，但响应体随产物变大，难以处理镜像、日志和图等文件。
+- **共享目录或共用代码仓库传输产物**：需要额外共享存储或同步，不适合当前分别部署的安排。
 - **使用绝对本地路径**：本机调试方便，但另一组或另一台机器不能依赖相同路径。
 - **让消费者直接依赖某种对象存储 URL**：可复用现成存储，但把存储供应方和接口地址暴露给各服务。
 
 ## 后果
 
 - Job 响应只需携带产物引用。
-- A/B 组必须能通过约定 URI 访问共享文件，并核对产物元数据。
+- A/B 组必须能通过约定 URI 下载交接文件，并核对产物元数据。
 - 后续更换存储实现时，调用方接口可以保持不变。
 - 当前 `artifact://` 映射是实验约定；仓库中的 URI 样例不表示文件已实际上传或可读取。
 
@@ -39,3 +41,7 @@ Dockerfile、镜像、依赖图、检测报告和 Patch 等产物可能较大。
 
 - [接口契约](../interface_contract.md)
 - [样例说明](../../examples/README.md)
+
+## 方案补充
+
+原有本地目录映射保留为生产方内部存储约定；依据两组独立部署的安排，补充 HTTP 读取层。详细步骤见 [产物交接约定](../artifact_handoff.md)。真实服务地址及访问配置后续确定，尚未部署下载 API。

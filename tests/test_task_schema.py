@@ -52,6 +52,17 @@ def response(kind, status='SUCCEEDED'):
              'media_type': 'application/octet-stream', 'producer_job_id': job_id,
              'commit': REPO['commit'], 'configuration_id': ENV['configuration_id']}
             for i, kind_ in enumerate(OUTPUTS[kind])]}
+        if kind == 'DRAFT':
+            value['output'].update(
+                build_result={'command': 'make', 'exit_code': 0},
+                verification_result={'command': 'make test', 'exit_code': 0},
+                iterations=1,
+                iteration_record_uri=f'artifact://{job_id}/iterations-001/iterations.json')
+        elif kind == 'REPAIR':
+            value['output'].update(
+                patch_accepted=True, declaration_style='Add prerequisite to the existing rule',
+                validation={'build_exit_code': 0, 'test_exit_code': 0,
+                            'remaining_missing': 0, 'workspace': 'Source plus candidate patch'})
     elif status in ('FAILED', 'TIMED_OUT', 'CANCELLED'):
         value['error'] = {'code': {'FAILED': 'ENV_3002', 'TIMED_OUT': 'EXEC_4002', 'CANCELLED': 'EXEC_4003'}[status],
                           'message': 'Execution stopped', 'retryable': False, 'details': {}, 'log_uri': None}

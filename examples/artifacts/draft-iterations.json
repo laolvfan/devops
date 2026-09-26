@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "source": "MANUAL_EXAMPLE",
+  "producer_job_id": "job-DRAFT-demo001",
+  "repository": {
+    "url": "https://example.com/a11-b11/make-demo.git",
+    "commit": "0123456789abcdef0123456789abcdef01234567"
+  },
+  "rounds": [
+    {
+      "iteration": 1,
+      "changes": [
+        {
+          "path": "Dockerfile",
+          "summary": "人工设定：首次生成包含 C 编译器和 make 的构建环境。"
+        }
+      ],
+      "reason": "人工演示：根据项目构建命令选择所需工具；未实际读取或构建演示仓库。",
+      "image_build": {
+        "command": "docker build -t b11/draft:demo001 .",
+        "status": "PASSED",
+        "exit_code": 0,
+        "log_uri": "artifact://job-DRAFT-demo001/iteration-001/image-build.log"
+      },
+      "build": {
+        "command": "make",
+        "status": "PASSED",
+        "exit_code": 0,
+        "log_uri": "artifact://job-DRAFT-demo001/iteration-001/build.log"
+      },
+      "verification": {
+        "command": "make test",
+        "status": "PASSED",
+        "exit_code": 0,
+        "log_uri": "artifact://job-DRAFT-demo001/iteration-001/verification.log"
+      }
+    }
+  ]
+}

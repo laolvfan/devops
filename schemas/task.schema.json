@@ -107,7 +107,8 @@
         "media_type": {"type": "string", "minLength": 1},
         "producer_job_id": {"$ref": "#/$defs/jobId"},
         "commit": {"$ref": "#/$defs/commit"},
-        "configuration_id": {"$ref": "#/$defs/configurationId"}
+        "configuration_id": {"$ref": "#/$defs/configurationId"},
+        "image_ref": {"type": "string", "minLength": 1}
       }
     },
     "error": {
@@ -478,6 +479,121 @@
         {
           "if": {"required": ["job_type"], "properties": {"job_type": {"const": "DRAFT"}}},
           "then": {"properties": {"input": {"required": ["max_iterations"]}}}
+        },
+        {
+          "if": {
+            "required": ["job_type", "status"],
+            "properties": {"job_type": {"const": "DRAFT"}, "status": {"const": "SUCCEEDED"}}
+          },
+          "then": {"properties": {"output": {"$ref": "#/$defs/draftOutput"}}}
+        },
+        {
+          "if": {
+            "required": ["job_type", "status"],
+            "properties": {"job_type": {"const": "REPAIR"}, "status": {"const": "SUCCEEDED"}}
+          },
+          "then": {"properties": {"output": {"$ref": "#/$defs/repairOutput"}}}
+        }
+      ]
+    },
+    "acceptedResponse": {
+      "type": "object",
+      "required": ["schema_version", "trace_id", "job_id", "status"],
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "pattern": "^1\\.[0-9]+\\.[0-9]+$",
+          "description": "本文件支持契约 1.x；破坏性变更需另一主版本的 Schema。"
+        },
+        "trace_id": {"type": "string", "pattern": "^trace-[^\\s]+$"},
+        "job_id": {"$ref": "#/$defs/jobId"},
+        "status": {"const": "QUEUED"}
+      },
+      "allOf": [
+        {
+          "not": {
+            "anyOf": [
+              {"required": ["input"]},
+              {"required": ["execution"]},
+              {"required": ["output"]},
+              {"required": ["error"]}
+            ]
+          }
+        }
+      ]
+    },
+    "badRequestResponse": {
+      "type": "object",
+      "required": ["schema_version", "trace_id", "error"],
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "pattern": "^1\\.[0-9]+\\.[0-9]+$",
+          "description": "本文件支持契约 1.x；破坏性变更需另一主版本的 Schema。"
+        },
+        "trace_id": {"anyOf": [{"type": "string", "pattern": "^trace-[^\\s]+$"}, {"type": "null"}]},
+        "error": {
+          "allOf": [
+            {"$ref": "#/$defs/error"},
+            {
+              "properties": {"code": {"enum": ["REQUEST_1001", "REQUEST_1002"]}, "retryable": {"const": false}}
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "anyOf": [
+              {"required": ["job_id"]},
+              {"required": ["status"]},
+              {"required": ["execution"]},
+              {"required": ["output"]}
+            ]
+          }
+        }
+      ]
+    },
+    "successfulCommandResult": {
+      "type": "object",
+      "required": ["command", "exit_code"],
+      "properties": {"command": {"type": "string", "minLength": 1}, "exit_code": {"const": 0}}
+    },
+    "draftOutput": {
+      "allOf": [
+        {"$ref": "#/$defs/output"},
+        {
+          "type": "object",
+          "required": ["build_result", "verification_result", "iterations", "iteration_record_uri"],
+          "properties": {
+            "build_result": {"$ref": "#/$defs/successfulCommandResult"},
+            "verification_result": {"$ref": "#/$defs/successfulCommandResult"},
+            "iterations": {"type": "integer", "minimum": 1, "maximum": 50},
+            "iteration_record_uri": {"$ref": "#/$defs/artifactUri"}
+          }
+        }
+      ]
+    },
+    "repairOutput": {
+      "allOf": [
+        {"$ref": "#/$defs/output"},
+        {
+          "type": "object",
+          "required": ["patch_accepted", "declaration_style", "validation"],
+          "properties": {
+            "patch_accepted": {"const": true},
+            "declaration_style": {"type": "string", "minLength": 1},
+            "validation": {
+              "type": "object",
+              "required": ["build_exit_code", "test_exit_code", "remaining_missing", "workspace"],
+              "properties": {
+                "build_exit_code": {"const": 0},
+                "test_exit_code": {"const": 0},
+                "remaining_missing": {"const": 0},
+                "workspace": {"type": "string", "minLength": 1}
+              }
+            }
+          }
         }
       ]
     }

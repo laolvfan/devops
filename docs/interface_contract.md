@@ -263,14 +263,16 @@ TEST_RESULT
 - 修复报告必须属于当前源码 commit。
 - 产物内容和文件地址都必须能被另一组理解和读取。
 
-artifact uri 映射到项目根目录下的 artifacts/：
+两组独立部署，产物通过 HTTP 下载交接。生产方内部可将 artifact uri 映射到自己的 artifacts/：
 
 ~~~text
 artifact://job-FULL_CHECK-001/graph-001/actual.json
 → artifacts/job-FULL_CHECK-001/graph-001/actual.json
 ~~~
 
-后续可以将同一 URI 映射到产物服务或对象存储，调用方不依赖绝对本地路径。
+接收方按生产任务类型选择已配置的组入口，再访问 `GET /v1/artifacts/{job_id}/{artifact_id}/{filename}`。接收方不直接读取生产方目录，不要求共享实现代码仓库。
+
+镜像以 `image.tar` 下载后加载；DOCKER_IMAGE 元数据可附加 `image_ref` 表示加载后的镜像标签。完整读取流程、错误处理和镜像操作见 [产物交接约定](artifact_handoff.md)。本方案为 B11 提案，真实入口待部署时确定。
 
 configuration_id 使用 cfg-系统-工具链-模式-版本格式，例如 cfg-ubuntu22-gcc12-release-v1。凡是影响构建结果的环境配置发生变化，必须生成新的 configuration_id；commit、job_id、trace_id 和任务类型不属于 configuration_id。
 
@@ -304,6 +306,8 @@ output.artifacts 至少包含：
 - BUILD_LOG
 
 同时记录最终构建结果和验证结果。只有构建及验证均通过时，DRAFT 才能报告成功产物。
+
+成功响应通过 `output.iteration_record_uri` 引用逐轮记录 JSON，并将其登记为 BUILD_LOG 产物；`output.iterations` 表示实际轮数。逐轮修改、理由、镜像构建、项目构建及验证结果的结构见 [DRAFT 逐轮记录格式](draft_iterations.md)。这是运行记录的格式约定，当前只有人工样例。
 
 ### 7.3 失败
 
