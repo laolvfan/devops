@@ -1,0 +1,126 @@
+{
+  "archive": "E4实验包.zip",
+  "archive_sha256": "689694f368ac36ed6fcd5d94eec08ea7b89365973e2c4804324c3b2188234f4d",
+  "files": [
+    {
+      "source": "E4实验包/B-draft/.dockerignore",
+      "destination": ".dockerignore",
+      "sha256": "fe49249345cb96bbbd2c982a935cc707d673d33e59d8bacb24917d59ccf37fd2"
+    },
+    {
+      "source": "E4实验包/B-draft/.env.example",
+      "destination": ".env.example",
+      "sha256": "bd800b0f7b18224cf1e6411d6e9a08c0dbbd63e73ece1b4f31b4da9ab5e84ecd"
+    },
+    {
+      "source": "E4实验包/B-draft/.gitignore",
+      "destination": ".gitignore",
+      "sha256": "7f4b21a7294d8319fc04ef5904f9735408d5577a6cd9e74446ca1adda15e39a2"
+    },
+    {
+      "source": "E4实验包/B-draft/compose.yaml",
+      "destination": "compose.yaml",
+      "sha256": "d3c72761e3c572a527b6eae112c06b9109d1081db4f9aed06196321e821fbf90"
+    },
+    {
+      "source": "E4实验包/B-draft/fixtures/draft/.dockerignore",
+      "destination": "fixtures/draft/.dockerignore",
+      "sha256": "4e2d01841cd05ae77ebcac6d7ed12f277fc7ab86506a5eb0186d2b7600e6487c"
+    },
+    {
+      "source": "E4实验包/B-draft/fixtures/draft/Dockerfile.broken",
+      "destination": "fixtures/draft/Dockerfile.broken",
+      "sha256": "e3a8a0b8cd3f526f49af8c54b954f5d1ee7f8da508362949fcdc185e81d4a03d"
+    },
+    {
+      "source": "E4实验包/B-draft/fixtures/draft/Dockerfile.reference",
+      "destination": "fixtures/draft/Dockerfile.reference",
+      "sha256": "197a36397a5c7c23968aa8ed85b0b777af1dfeafb3a3c73eca36e0e7961a82df"
+    },
+    {
+      "source": "E4实验包/B-draft/fixtures/draft/main.c",
+      "destination": "fixtures/draft/main.c",
+      "sha256": "05f3bcbf50c51513eb01dd78b3a9a4ae0a01115140fed7d1030cc47451807bc1"
+    },
+    {
+      "source": "E4实验包/B-draft/fixtures/draft/Makefile",
+      "destination": "fixtures/draft/Makefile",
+      "sha256": "7ed3f5b85a10827cf4c177ee9fa9855b1c70166b5339e5da8e81f4decee74cc3"
+    },
+    {
+      "source": "E4实验包/B-draft/fixtures/draft/README.md",
+      "destination": "fixtures/draft/README.md",
+      "sha256": "706f5780103451757caa6327b11159989d0bbcd80688405a25e5f15eaa57c011"
+    },
+    {
+      "source": "E4实验包/B-draft/Makefile",
+      "destination": "Makefile",
+      "sha256": "411c84560d2f417c6aba61b10398ad568241fa12dd5e88cf45b52615fdcc8754"
+    },
+    {
+      "source": "E4实验包/B-draft/README.md",
+      "destination": "docs/E4/template_README.md",
+      "sha256": "eb26181ec111aedfbdbf743b92cd353929137d364bb7485548f566183b2c7338"
+    },
+    {
+      "source": "E4实验包/B-draft/requirements-dev.in",
+      "destination": "requirements-dev.in",
+      "sha256": "40457296154aab4b3db2e2b9c25d2c6440ae9d9a0752b24f838450f64b1826ae"
+    },
+    {
+      "source": "E4实验包/B-draft/requirements-dev.lock",
+      "destination": "requirements-dev.lock",
+      "sha256": "24f54d917487599d98e13c5733a75ca4a86652fa11cdccaf863c08e1cc66f5df"
+    },
+    {
+      "source": "E4实验包/B-draft/scripts/doctor.py",
+      "destination": "scripts/doctor.py",
+      "sha256": "30ed7e83e5559d8f4987041a6466e8845a9863e162a7dafe6bc5cfd221e73b6a"
+    },
+    {
+      "source": "E4实验包/B-draft/scripts/secret_scan.py",
+      "destination": "scripts/secret_scan.py",
+      "sha256": "e3aefad5e87201d684841b931b8586a3d81d2930968bfa02867eff41cfcfbc65"
+    },
+    {
+      "source": "E4实验包/B-draft/services/draft/Dockerfile",
+      "destination": "services/draft/Dockerfile",
+      "sha256": "d713bb26bc134c508600a6a9ae83d4ac52643803d01206773cc145603fa77b32"
+    },
+    {
+      "source": "E4实验包/B-draft/services/draft/draft/cli.py",
+      "destination": "services/draft/draft/cli.py",
+      "sha256": "818f4df61584e3fccc2210996542b3160f00817b4ac26a561b6113d5e072b2de"
+    },
+    {
+      "source": "E4实验包/B-draft/services/draft/draft/smoke.py",
+      "destination": "services/draft/draft/smoke.py",
+      "sha256": "f937da5d6973044d8f8ca963e2971ed392bc106e48b33d61050281231f9dafb9"
+    },
+    {
+      "source": "E4实验包/B-draft/services/draft/draft/__init__.py",
+      "destination": "services/draft/draft/__init__.py",
+      "sha256": "013d3d968f1a3db218a7af5af406ce0a1ca27fc2c62266230abd43a5b1d92426"
+    },
+    {
+      "source": "E4实验包/B-draft/services/draft/draft/__main__.py",
+      "destination": "services/draft/draft/__main__.py",
+      "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+    },
+    {
+      "source": "E4实验包/B-draft/services/draft/pytest.ini",
+      "destination": "services/draft/pytest.ini",
+      "sha256": "f211820b112f706314629c1055868340301685733ea465af1151e0a92de620cc"
+    },
+    {
+      "source": "E4实验包/B-draft/services/draft/tests/test_cli.py",
+      "destination": "services/draft/tests/test_cli.py",
+      "sha256": "160c8f511dfb3a069a0eb4137ed7861f339ed5410634386bf6927fe7248b1119"
+    },
+    {
+      "source": "E4实验包/setup/bootstrap_ubuntu.sh",
+      "destination": "setup/bootstrap_ubuntu.sh",
+      "sha256": "e2b3f5f842297e35756599a21d076451b42e56ab8b7134085c0c39627d68dfc9"
+    }
+  ]
+}
