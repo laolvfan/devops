@@ -1,0 +1,38 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.broken
+#1 transferring dockerfile: 132B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.13-slim
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/4] FROM docker.io/library/python:3.13-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+#4 resolve docker.io/library/python:3.13-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b 0.1s done
+#4 CANCELED
+
+#5 [internal] load build context
+#5 transferring context: 107B done
+#5 DONE 0.1s
+
+#6 [2/4] WORKDIR /work
+#6 CACHED
+
+#7 [3/4] COPY main.c Makefile ./
+#7 ERROR: failed to calculate checksum of ref djmt9v7ktyslkt3d50ufv9en5::6d1jz2pecfwiguzwx0gcz9253: "/Makefile": not found
+------
+ > [3/4] COPY main.c Makefile ./:
+------
+Dockerfile.broken:4
+--------------------
+   2 |     
+   3 |     WORKDIR /work
+   4 | >>> COPY main.c Makefile ./
+   5 |     
+   6 |     RUN make
+--------------------
+ERROR: failed to build: failed to solve: failed to compute cache key: failed to calculate checksum of ref djmt9v7ktyslkt3d50ufv9en5::6d1jz2pecfwiguzwx0gcz9253: "/Makefile": not found

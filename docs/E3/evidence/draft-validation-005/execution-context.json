@@ -1,0 +1,48 @@
+{
+  "entry_command": [
+    "python3",
+    "/tmp/b11-e3-with-proxy.py",
+    "python3",
+    "scripts/e3/verify_draft.py",
+    "--output",
+    "docs/E3/evidence/draft-validation-005",
+    "--build-network",
+    "host",
+    "--build-proxy",
+    "http://127.0.0.1:18443"
+  ],
+  "cwd": "/home/wuren/devops",
+  "network_relay_snapshot": "network_relay.py",
+  "network_relay_sha256": "be75cd48f2ad680dc9b9d15e381431c4190139bf0ff7725841cffb6d11515098",
+  "network_setup": "Temporary loopback relay uses the existing HTTPS_PROXY environment setting. Authentication stays in memory. HTTP requests have up to four attempts. No Docker daemon configuration changes.",
+  "build_network": "host with http_proxy and https_proxy build arguments pointing to http://127.0.0.1:18443",
+  "functional_run_network": "none",
+  "relay_lifecycle": "Started for this command; shut down after the validation runner returned 0.",
+  "prior_attempts": [
+    {
+      "directory": "../draft-validation-001",
+      "outcome": "Base image pull failed: configured loopback proxy was not listening."
+    },
+    {
+      "directory": "../draft-validation-002",
+      "outcome": "Base image pull and expected missing-make failure completed. Package index downloads made no progress on the default build network; the experiment container was explicitly stopped.",
+      "intervention_command": [
+        "docker",
+        "stop",
+        "--time",
+        "5",
+        "210cc82b6f97"
+      ],
+      "intervention_exit_code": 0,
+      "reference_build_exit_code": 137
+    },
+    {
+      "directory": "../draft-validation-003",
+      "outcome": "Reference build failed with exit 100 after three package requests returned HTTP 404 through the relay."
+    },
+    {
+      "directory": "../draft-validation-004",
+      "outcome": "Reference build failed with exit 100 after one package request returned HTTP 404 through the relay."
+    }
+  ]
+}

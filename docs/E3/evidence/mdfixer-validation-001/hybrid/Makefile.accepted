@@ -1,0 +1,15 @@
+CC = gcc
+CFLAGS = -Wall -Wextra -O0
+HEADERS = config.h
+
+.PHONY: all clean
+all: app
+
+app: main.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+main.o: main.c $(HEADERS)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f app main.o

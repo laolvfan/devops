@@ -1,0 +1,4 @@
+OS=Ubuntu 20.04.6 LTS
+Architecture=x86_64
+Kernel=6.6.87.2-microsoft-standard-WSL2
+Storage=overlay2

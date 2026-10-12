@@ -1,0 +1,177 @@
+[
+  {
+    "label": "01-baseline-build",
+    "command": [
+      "make"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "02-baseline-run",
+    "command": [
+      "./app"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": "1"
+  },
+  {
+    "label": "04-stale-make",
+    "command": [
+      "make"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "05-stale-run",
+    "command": [
+      "./app"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": "1"
+  },
+  {
+    "label": "06-check-patch",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/home/wuren/devops/docs/E3/evidence/mdfixer-validation-001/patches/implicit.patch"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "07-apply-patch",
+    "command": [
+      "git",
+      "apply",
+      "/home/wuren/devops/docs/E3/evidence/mdfixer-validation-001/patches/implicit.patch"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "08-clean",
+    "command": [
+      "make",
+      "clean"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "09-fixed-build",
+    "command": [
+      "make"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "10-fixed-run",
+    "command": [
+      "./app"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": "2"
+  },
+  {
+    "label": "12-incremental-make",
+    "command": [
+      "make"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "13-incremental-run",
+    "command": [
+      "./app"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": "3"
+  },
+  {
+    "label": "14-before-rejection-clean",
+    "command": [
+      "make",
+      "clean"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "15-invalid-check",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/home/wuren/devops/docs/E3/evidence/mdfixer-validation-001/implicit/invalid.patch"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "16-invalid-apply",
+    "command": [
+      "git",
+      "apply",
+      "/home/wuren/devops/docs/E3/evidence/mdfixer-validation-001/implicit/invalid.patch"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "17-invalid-build",
+    "command": [
+      "make"
+    ],
+    "exit_code": 2,
+    "expected_exit_code": "nonzero",
+    "expected_stdout": null
+  },
+  {
+    "label": "18-restored-clean",
+    "command": [
+      "make",
+      "clean"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "19-restored-build",
+    "command": [
+      "make"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": null
+  },
+  {
+    "label": "20-restored-run",
+    "command": [
+      "./app"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "expected_stdout": "3"
+  }
+]

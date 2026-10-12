@@ -1,0 +1,2 @@
+gcc -Wall -Wextra -O0 -MMD -MP -c -o main.o main.c
+gcc -Wall -Wextra -O0 -o app main.o

@@ -1,0 +1,52 @@
+{
+  "source_repository": "https://github.com/WwNotVvvv/DevOps-E3-Lab-Kit.git",
+  "lab_commit": "1efc4381cb1b5f5f8212c93cf082461eece50bb1",
+  "source_commit": "4fdc623c51e3fd9c07d4905a9f2bbc8e78d5fa8f",
+  "kind": "ACTUAL_LOCAL_RUN",
+  "environment": {
+    "os_release": "NAME=\"Ubuntu\"\nVERSION=\"20.04.6 LTS (Focal Fossa)\"\nID=ubuntu\nID_LIKE=debian\nPRETTY_NAME=\"Ubuntu 20.04.6 LTS\"\nVERSION_ID=\"20.04\"\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nVERSION_CODENAME=focal\nUBUNTU_CODENAME=focal\n",
+    "architecture": "x86_64",
+    "gcc": "gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0",
+    "make": "GNU Make 4.2.1",
+    "git": "git version 2.25.1"
+  },
+  "note": "Independent environment; not the original cfg-ubuntu24-gcc13-debug-v1 run.",
+  "results": {
+    "target": {
+      "passed": true,
+      "stale_output": "1",
+      "fixed_clean_output": "2",
+      "fixed_incremental_output": "3",
+      "invalid_candidate_accepted": false,
+      "restored_original_makefile": true,
+      "restored_output": "3"
+    },
+    "macro": {
+      "passed": true,
+      "stale_output": "1",
+      "fixed_clean_output": "2",
+      "fixed_incremental_output": "3",
+      "invalid_candidate_accepted": false,
+      "restored_original_makefile": true,
+      "restored_output": "3"
+    },
+    "hybrid": {
+      "passed": true,
+      "stale_output": "1",
+      "fixed_clean_output": "2",
+      "fixed_incremental_output": "3",
+      "invalid_candidate_accepted": false,
+      "restored_original_makefile": true,
+      "restored_output": "3"
+    },
+    "implicit": {
+      "passed": true,
+      "stale_output": "1",
+      "fixed_clean_output": "2",
+      "fixed_incremental_output": "3",
+      "invalid_candidate_accepted": false,
+      "restored_original_makefile": true,
+      "restored_output": "3"
+    }
+  }
+}

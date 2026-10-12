@@ -1,0 +1,19 @@
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -1,5 +1,6 @@
+ CC = gcc
+ CFLAGS = -Wall -Wextra -O0
++DEPS = main.c config.h
+ 
+ .PHONY: all clean
+ all: app
+@@ -7,7 +8,7 @@
+ app: main.o
+ 	$(CC) $(CFLAGS) -o $@ $^
+ 
+-main.o: main.c
++main.o: $(DEPS)
+ 	$(CC) $(CFLAGS) -c -o $@ $<
+ 
+ clean:

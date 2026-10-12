@@ -1,0 +1,34 @@
+{
+  "kind": "ACTUAL_LOCAL_RUN",
+  "source_repository": "https://github.com/laolvfan/devops.git",
+  "source_commit": "4ddc1f9db7c23d0ee580bdde9758bc8cb024b1a3",
+  "source_path": "E3实验包/fixtures/draft",
+  "input_method": "git show from fixed commit; build context contains only the four exported files",
+  "base_image_tag": "python:3.13-slim",
+  "build_network": "host",
+  "build_proxy": "http://127.0.0.1:18443",
+  "passed": true,
+  "materials_commit": "9948e55ca5d384cae7ce0736f9cd96f8a84a359b",
+  "input_sha256": {
+    "main.c": "7e5be4020c463e1f10089306e527dc61656dfc5c9a2ddb0c7e3f00cd9bcbf730",
+    "Makefile": "7a39c91c4de5ee873750369f5ad2d309214412271d8636e09a9684cef1d238fb",
+    "Dockerfile.broken": "95d1358fd48cf303d9fc15fadd631ef0c8df4043058cdbc0919a6556c5e2a83e",
+    "Dockerfile.reference": "e73ef651ae347ac34eda2aa302484df019d07a2ab6306fcd9107e9d4d4ee88b8"
+  },
+  "base_image_id": "sha256:ce3ff9524414289fc922d9d5dc1de87abc77a39ff2ff5007435839f2af1d7569",
+  "base_repo_digests": [
+    "python@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f"
+  ],
+  "build_context": "/tmp/b11-e3-draft-uyha6qv7",
+  "broken_build": {
+    "exit_code": 127,
+    "missing_make_confirmed": true
+  },
+  "input_unchanged": true,
+  "base_image_unchanged": true,
+  "reference_image_id": "sha256:a57618098954341c82a407e773265de225d10c240478fddd979048619e9c128a",
+  "reference_image_tag": "b11-e3-draft-reference:b11-e3-draft-uyha6qv7",
+  "reference_build_exit_code": 0,
+  "reference_run_exit_code": 0,
+  "reference_stdout": "hello E3\n"
+}

@@ -1,0 +1,189 @@
+[
+  {
+    "label": "host-os",
+    "argv": [
+      "cat",
+      "/etc/os-release"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "host-kernel-architecture",
+    "argv": [
+      "uname",
+      "-srm"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "host-git-version",
+    "argv": [
+      "git",
+      "--version"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "host-python-version",
+    "argv": [
+      "python3",
+      "--version"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "materials-commit",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "materials-worktree",
+    "argv": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "docker-version",
+    "argv": [
+      "docker",
+      "version"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "docker-daemon",
+    "argv": [
+      "docker",
+      "info",
+      "--format",
+      "OS={{.OperatingSystem}}\nArchitecture={{.Architecture}}\nKernel={{.KernelVersion}}\nStorage={{.Driver}}"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "export-main.c",
+    "argv": [
+      "git",
+      "show",
+      "4ddc1f9db7c23d0ee580bdde9758bc8cb024b1a3:E3实验包/fixtures/draft/main.c"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "export-Makefile",
+    "argv": [
+      "git",
+      "show",
+      "4ddc1f9db7c23d0ee580bdde9758bc8cb024b1a3:E3实验包/fixtures/draft/Makefile"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "export-Dockerfile.broken",
+    "argv": [
+      "git",
+      "show",
+      "4ddc1f9db7c23d0ee580bdde9758bc8cb024b1a3:E3实验包/fixtures/draft/Dockerfile.broken"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "export-Dockerfile.reference",
+    "argv": [
+      "git",
+      "show",
+      "4ddc1f9db7c23d0ee580bdde9758bc8cb024b1a3:E3实验包/fixtures/draft/Dockerfile.reference"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "base-pull",
+    "argv": [
+      "docker",
+      "pull",
+      "python:3.13-slim"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "base-inspect",
+    "argv": [
+      "docker",
+      "image",
+      "inspect",
+      "python:3.13-slim"
+    ],
+    "cwd": "/home/wuren/devops",
+    "expected_exit_code": 0,
+    "exit_code": 0
+  },
+  {
+    "label": "broken-build",
+    "argv": [
+      "docker",
+      "build",
+      "--no-cache",
+      "--force-rm",
+      "--pull=false",
+      "-f",
+      "Dockerfile.broken",
+      "."
+    ],
+    "cwd": "/tmp/b11-e3-draft-xe3rpc0b",
+    "expected_exit_code": "nonzero",
+    "exit_code": 127
+  },
+  {
+    "label": "reference-build",
+    "argv": [
+      "docker",
+      "build",
+      "--no-cache",
+      "--force-rm",
+      "--pull=false",
+      "--iidfile",
+      "/home/wuren/devops/docs/E3/evidence/draft-validation-002/image_id.txt",
+      "-t",
+      "b11-e3-draft-reference:b11-e3-draft-xe3rpc0b",
+      "-f",
+      "Dockerfile.reference",
+      "."
+    ],
+    "cwd": "/tmp/b11-e3-draft-xe3rpc0b",
+    "expected_exit_code": 0,
+    "exit_code": 137
+  }
+]

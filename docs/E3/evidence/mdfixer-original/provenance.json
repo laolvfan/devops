@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/WwNotVvvv/DevOps-E3-Lab-Kit.git",
+  "commit": "1efc4381cb1b5f5f8212c93cf082461eece50bb1",
+  "kind": "COPIED_EXISTING_EVIDENCE_NOT_RERUN",
+  "sha256": {
+    "README.md": "05cba1ea6bc7ce50b8d6dbbad1c642c855541d824b5b84c8e74cd6eb40aff0ca",
+    "evidence/20260929T104529-b2/01-baseline-build.log": "0dc59074d7eb6612d0efac4dfa50b66e57775c1392eda82043c7959510bf50c3",
+    "evidence/20260929T104529-b2/02-baseline-run.log": "286dc3ef73433dd367a9a6e40c6300a18cc0d84fe2186cba78019c5dc846e84c",
+    "evidence/20260929T104529-b2/03-header-change.log": "46e92191e70b4568b3cff502ac7552908c517eb0ea4b899a34fa5195c13cfa27",
+    "evidence/20260929T104529-b2/04-incremental-make.log": "65f43a998815775105a972833cbf5e6aba19a3f173ef0e1c30171c9e25939170",
+    "evidence/20260929T104529-b2/05-incremental-run.log": "286dc3ef73433dd367a9a6e40c6300a18cc0d84fe2186cba78019c5dc846e84c",
+    "evidence/20260929T104529-b2/commands.json": "ca2412998d16df4aa7a202c56b0a833a70e27b9108e2f1dfd5d3a957d23667ed",
+    "evidence/20260929T104529-b2/observations.json": "153c93fbb5f92c82b2ff73aa37d874924900a8d4bf63e0239ac97dfea10666a1",
+    "evidence/20260929T104529-b2/run_b2.sh": "f07fb97c86c472b718f31c285e05c777c0ea57d2d6be0e41c9fbcb50c3193880",
+    "evidence/20260929T104529-b2/source.txt": "ac56ea7aabaa76ed1c306bc2e2e317ece21ed59472b1b6f81b5e1f73cfe20665",
+    "fixtures/mdfixer/missing-header/.gitattributes": "f70d755466b101646b043fe3c62c4f8a39eae827c1a2a303a2d39ccd93f534f8",
+    "fixtures/mdfixer/missing-header/Makefile": "508734a2c8e0178fb4fbd543c192e859860d33667f32d52fe1c7cdd21d9196b1",
+    "fixtures/mdfixer/missing-header/README.md": "35cfff1a5cee4b1a4ad8499c5b11c9e2bf15b75f3e632015d58c6522cb41b6f4",
+    "fixtures/mdfixer/missing-header/config.h": "adf6d0c3598ccd6378fdb56f8325352497b0796b72fb7e9f0607c0b673f77a20",
+    "fixtures/mdfixer/missing-header/main.c": "672c954ce5ec3f222d2f981d43d3b6849c046de97ad8a06ca56175c36a4c8031",
+    "oracle/mdfixer/md-report.json": "1c5120b7e642696ecf80b9c90ffd9cd55c0a441b2197ad36d58af376b13fc79c",
+    "oracle/mdfixer/reference/README.md": "0b9eff7f2b49ba294b045f8be9da15fe97df5f1ea6089e672b1cf22dbbb9f512",
+    "oracle/mdfixer/reference/hybrid.patch": "061ed5547bc23da4a8960dd9ac6c3c035f0977f2ca46c422ef2da767701c6eb4",
+    "oracle/mdfixer/reference/implicit.patch": "1e682176ad514bc24ed7f84593b712c6dad7619a8f7414333106e1fa77b360d9",
+    "oracle/mdfixer/reference/macro.patch": "cb168f5ca41ca7c9a046e362e7a9296688aef99b7a25fd0419e52c4f756e3ed3",
+    "oracle/mdfixer/reference/target.patch": "31b0ecd9778964c5bbdaf0bea7aa4fa1d26714d61f8d7dc08f01c6456945ce7f"
+  }
+}

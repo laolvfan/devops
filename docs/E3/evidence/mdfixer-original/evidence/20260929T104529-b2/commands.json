@@ -1,0 +1,50 @@
+{
+  "run_id": "20260929T104529-b2",
+  "source_tag": "e3-mdfixer-md-v1.0.0",
+  "source_commit": "4fdc623c51e3fd9c07d4905a9f2bbc8e78d5fa8f",
+  "steps": [
+    {
+      "step": "baseline_build",
+      "commands": [
+        "make clean",
+        "make"
+      ],
+      "clean_exit_code": 0,
+      "build_exit_code": 0,
+      "log": "01-baseline-build.log"
+    },
+    {
+      "step": "baseline_run",
+      "command": "./app",
+      "exit_code": 0,
+      "expected_stdout": "1",
+      "log": "02-baseline-run.log",
+      "actual_stdout": "1"
+    },
+    {
+      "step": "change_header",
+      "commands": [
+        "sleep 2",
+        "sed -i 's/^#define VALUE 1$/#define VALUE 2/' config.h"
+      ],
+      "exit_code": 0,
+      "log": "03-header-change.log"
+    },
+    {
+      "step": "incremental_make",
+      "command": "make",
+      "clean_before_run": false,
+      "exit_code": 0,
+      "log": "04-incremental-make.log",
+      "actual_output": "make: Nothing to be done for 'all'."
+    },
+    {
+      "step": "incremental_run",
+      "command": "./app",
+      "exit_code": 0,
+      "expected_stale_stdout": "1",
+      "log": "05-incremental-run.log",
+      "actual_stdout": "1"
+    }
+  ]
+}
