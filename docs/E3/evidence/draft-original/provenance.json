@@ -1,0 +1,29 @@
+{
+  "repository": "https://github.com/laolvfan/devops.git",
+  "branch": "e3-killy",
+  "commit": "4ddc1f9db7c23d0ee580bdde9758bc8cb024b1a3",
+  "author": "杨晨昊",
+  "kind": "COPIED_EXISTING_EVIDENCE_NOT_RERUN",
+  "sha256": {
+    "evidence/draft-broken-002/build.log": "85f8d0c6d7d9bc2e20784637c812d7524913ccc664f172d03f5139dfc923d643",
+    "evidence/draft-broken-002/exit_code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "evidence/draft-broken-003/build.log": "f0b0cccc584f9b39bc0425266f9cb2278a80d4f59b482b79412eeae983f7f1f3",
+    "evidence/draft-broken-003/exit_code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "evidence/draft-broken-004/build.log": "9c3c131b759041b35d384998f2a1e9769c5a882c3dc7ec1ce813af0f043fc09f",
+    "evidence/draft-broken-004/exit_code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "evidence/draft-broken/build.log": "ab864b7ec064efcc003f33f83aa765e7c02a9d5d3a9ac63f28c3d00e712f44c1",
+    "evidence/draft-broken/exit_code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "evidence/draft-reference-001/build.log": "f0b0cccc584f9b39bc0425266f9cb2278a80d4f59b482b79412eeae983f7f1f3",
+    "evidence/draft-reference-001/build_exit_code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "evidence/draft-reference-002/build.log": "8f44988f12e08025e693bc6f5ba4fb2233a622738fbcc3e3b213c9bcea01d2a8",
+    "evidence/draft-reference-002/build_exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "evidence/draft-reference-002/image_id.txt": "c9d352ddbcf6e9259a13562ce36cb542358ee1edab6ba5cb3d0032e4d9dd81c7",
+    "evidence/draft-reference-002/run.log": "8e4e09b0c3458c9c59e691c847d4d7484995403e663549d919fac7c2a5823548",
+    "evidence/draft-reference-002/run_exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "fixtures/draft/Dockerfile.broken": "95d1358fd48cf303d9fc15fadd631ef0c8df4043058cdbc0919a6556c5e2a83e",
+    "fixtures/draft/Dockerfile.reference": "e73ef651ae347ac34eda2aa302484df019d07a2ab6306fcd9107e9d4d4ee88b8",
+    "fixtures/draft/Makefile": "7a39c91c4de5ee873750369f5ad2d309214412271d8636e09a9684cef1d238fb",
+    "fixtures/draft/README.md": "dde987e163ff92e48404368b1c8bfc5a596587af0e90424c0257bafe363edf89",
+    "fixtures/draft/main.c": "7e5be4020c463e1f10089306e527dc61656dfc5c9a2ddb0c7e3f00cd9bcbf730"
+  }
+}

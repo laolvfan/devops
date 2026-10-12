@@ -1,0 +1,10 @@
+--- a/Makefile
++++ b/Makefile
+@@ -3,6 +3,7 @@
+ 
+ .PHONY: all clean
+ all: app
++	false
+ 
+ app: main.o
+ 	$(CC) $(CFLAGS) -o $@ $^

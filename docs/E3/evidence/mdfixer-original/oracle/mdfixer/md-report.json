@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "repository": {
+    "url": "https://github.com/WwNotVvvv/DevOps-E3-Lab-Kit.git",
+    "commit": "4fdc623c51e3fd9c07d4905a9f2bbc8e78d5fa8f"
+  },
+  "configuration_id": "cfg-ubuntu24-gcc13-debug-v1",
+  "producer_job_id": "job-INCREMENTAL_CHECK-e3-md-oracle-001",
+  "detector": "INSTRUCTOR_ORACLE",
+  "findings": [
+    {
+      "finding_id": "e3-md-config-h-001",
+      "type": "MISSING",
+      "target": "main.o",
+      "dependency": "config.h",
+      "commit": "4fdc623c51e3fd9c07d4905a9f2bbc8e78d5fa8f",
+      "location": {
+        "path": "Makefile",
+        "line": 10
+      },
+      "evidence": [
+        {
+          "kind": "DECLARATION",
+          "path": "Makefile",
+          "declared_dependencies": [
+            "main.c"
+          ],
+          "description": "Oracle 依据固定基线：Makefile 第 10 行的 main.o 规则未声明 config.h。"
+        },
+        {
+          "kind": "ANALYSIS",
+          "description": "main.c 固定包含 config.h；实际时间戳触发行为将在 2B 中验证。"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+command: make clean
+command: make
+rm -f app main.o
+gcc -Wall -Wextra -O0 -c -o main.o main.c
+gcc -Wall -Wextra -O0 -o app main.o

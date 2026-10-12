@@ -1,0 +1,18 @@
+CC = gcc
+CFLAGS = -Wall -Wextra -O0
+DEPFLAGS = -MMD -MP
+DEPFILES = main.d
+
+.PHONY: all clean
+all: app
+
+-include $(DEPFILES)
+
+app: main.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(DEPFLAGS) -c -o $@ $<
+
+clean:
+	rm -f app main.o $(DEPFILES)

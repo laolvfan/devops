@@ -1,0 +1,6 @@
+command: sleep 2
+command: sed -i ... config.h
+edit_exit_code=0
+config_value=2
+config.h_mtime=2026-09-29 10:50:41.792892032 +0800
+main.o_mtime_before_make=2026-09-29 10:50:38.276511346 +0800

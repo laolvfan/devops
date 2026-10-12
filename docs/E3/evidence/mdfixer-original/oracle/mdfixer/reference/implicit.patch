@@ -1,0 +1,27 @@
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -1,14 +1,18 @@
+ CC = gcc
+ CFLAGS = -Wall -Wextra -O0
++DEPFLAGS = -MMD -MP
++DEPFILES = main.d
+ 
+ .PHONY: all clean
+ all: app
+ 
++-include $(DEPFILES)
++
+ app: main.o
+ 	$(CC) $(CFLAGS) -o $@ $^
+ 
+-main.o: main.c
+-	$(CC) $(CFLAGS) -c -o $@ $<
++%.o: %.c
++	$(CC) $(CFLAGS) $(DEPFLAGS) -c -o $@ $<
+ 
+ clean:
+-	rm -f app main.o
+\ No newline at end of file
++	rm -f app main.o $(DEPFILES)
+\ No newline at end of file
