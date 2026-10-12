@@ -13,7 +13,20 @@ E4 不要求实现完整 DRAFT 自动生成与修复算法，也不要求同时�
 - 已有：E2 契约与 [E3 完整提交材料](../E3/README.md)；E4 分支整合了原先在 main 上导入的 B-draft 模板。
 - 已核对：24 个导入文件与教师实验包逐字节一致；原始说明见 [模板 README](template_README.md)，来源与文件摘要见 [导入清单](template_manifest.json)。
 - 已检查服务器：Ubuntu 22.04.5 LTS、x86_64、2 核、约 3.5 GiB 内存；Docker Engine 29.1.3、Compose 2.40.3、Buildx 0.30.1 均可用。
-- 下一步：在个人学号目录克隆 E4 分支，运行 `make doctor` 和 `make all`，再完成假密钥检查与组员重跑对照。
+- 已完成个人运行：阳旅帆（`241880100`）的 `make all`、假密钥拒绝及删除后恢复扫描均通过，详见下方运行记录。
+- 剩余验收：另一名组员在独立学号目录按同一源码 SHA 重跑，比较工具版本、单测和冒烟结论。
+
+## 本次运行记录
+
+| 项目 | 记录 |
+|---|---|
+| 统一运行版本 | [255f9d06da6d7ba05e4772aeabe6f5002b68c4fc](https://github.com/laolvfan/devops/commit/255f9d06da6d7ba05e4772aeabe6f5002b68c4fc) |
+| 个人克隆 | 服务器 `/root/241880100/devops` |
+| 完整证据目录 | `work/20261012-150836/`，含源码 SHA、命令、环境、构建、镜像、工具清单、测试、扫描及文件摘要 |
+| 一键运行 | 退出 0；`problems: []`；单测 `4 passed`；冒烟 `passed: true`、关键行为 `make: not found`；密钥扫描通过 |
+| 假密钥检查 | `work/e4-scan-probe-001/`；加入样例时扫描失败，移除后通过；`.env` 权限为 600，工作区干净 |
+
+本次构建复用了服务器已有镜像缓存。第二名组员按下面命令固定到同一提交；后续仅更新本页记录时，不改变这次对照使用的源码 SHA。
 
 ## 仓库整合方案
 
@@ -61,7 +74,7 @@ devops/
 
 ## 运行流程
 
-每名成员登录服务器后，在自己的学号目录克隆 `E4` 分支。将下面的 `你的学号` 替换为本人学号；已有克隆先检查路径与状态，不重复覆盖：
+每名成员登录服务器后，在自己的学号目录克隆 `E4` 分支，并切到上表的统一运行版本。将下面的 `你的学号` 替换为本人学号；已有克隆先检查路径与状态，不重复覆盖：
 
 ```bash
 student_id='你的学号'
@@ -69,6 +82,7 @@ mkdir -p "/root/$student_id"
 cd "/root/$student_id"
 git clone --branch E4 https://github.com/laolvfan/devops.git devops
 cd devops
+git checkout --detach 255f9d06da6d7ba05e4772aeabe6f5002b68c4fc
 git config --local user.name "$student_id"
 git config --local user.email "$student_id@localhost"
 git rev-parse HEAD
