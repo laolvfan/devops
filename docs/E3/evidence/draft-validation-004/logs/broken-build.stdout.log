@@ -1,0 +1,13 @@
+Sending build context to Docker daemon   5.12kB
+Step 1/5 : FROM python:3.13-slim
+ ---> ce3ff9524414
+Step 2/5 : WORKDIR /work
+ ---> Running in dd4cc077755d
+ ---> Removed intermediate container dd4cc077755d
+ ---> 1429f5a0e8c6
+Step 3/5 : COPY main.c Makefile ./
+ ---> 8a9b15df01ea
+Step 4/5 : RUN make
+ ---> Running in fce1be9e653c
+[91m/bin/sh: 1: make: not found
+[0m ---> Removed intermediate container fce1be9e653c

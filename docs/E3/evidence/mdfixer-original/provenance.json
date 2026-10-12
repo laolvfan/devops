@@ -2,7 +2,6 @@
   "repository": "https://github.com/WwNotVvvv/DevOps-E3-Lab-Kit.git",
   "commit": "1efc4381cb1b5f5f8212c93cf082461eece50bb1",
   "kind": "COPIED_EXISTING_EVIDENCE_NOT_RERUN",
-  "note": "Git authors shown as CodexAI; personal attribution requires group confirmation.",
   "sha256": {
     "README.md": "05cba1ea6bc7ce50b8d6dbbad1c642c855541d824b5b84c8e74cd6eb40aff0ca",
     "evidence/20260929T104529-b2/01-baseline-build.log": "0dc59074d7eb6612d0efac4dfa50b66e57775c1392eda82043c7959510bf50c3",

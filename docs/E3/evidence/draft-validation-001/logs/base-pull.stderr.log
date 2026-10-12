@@ -1,0 +1,1 @@
+Error response from daemon: Get "https://registry-1.docker.io/v2/": proxyconnect tcp: dial tcp 127.0.0.1:18443: connect: connection refused

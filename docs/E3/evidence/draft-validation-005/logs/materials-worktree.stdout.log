@@ -1,0 +1,8 @@
+ M docs/E3/contributions.md
+ M docs/E3/evidence/mdfixer-original/provenance.json
+?? docs/E3/evidence/draft-validation-001/
+?? docs/E3/evidence/draft-validation-002/
+?? docs/E3/evidence/draft-validation-003/
+?? docs/E3/evidence/draft-validation-004/
+?? docs/E3/evidence/draft-validation-005/
+?? scripts/e3/verify_draft.py
