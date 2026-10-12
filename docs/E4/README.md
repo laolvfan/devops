@@ -1,6 +1,6 @@
 # B11 E4 准备与验收
 
-E2、E3 已完成。本页依据教师提供的 E4 课件及 B 组全流程命令手册整理，只记录准备方案，不冒充真实运行结果。
+E2、E3 已完成，当前进入 E4。本文依据教师 E4 课件及 B 组全流程命令手册，说明统一模板、服务器运行步骤和验收材料。
 
 ## 本次目标
 
@@ -10,14 +10,14 @@ E4 不要求实现完整 DRAFT 自动生成与修复算法，也不要求同时�
 
 ## 当前准备状态
 
-- 已有：E4 B 组命令手册、E4 课件、E3 课件，以及本组 E2 契约材料。
-- 已导入：实验包中的 B-draft 模板和服务器初始化脚本；原始模板说明见 [模板 README](template_README.md)，来源与文件摘要见 [导入清单](template_manifest.json)。初始化脚本尚未执行。
-- 尚未验证：服务器登录、Docker 可用性、模板构建、真实冒烟和组员重跑。
-- 下一步：完成组内提交与服务器准备，在各自克隆中运行 make doctor 和 make all。
+- 已有：E2 契约与 [E3 完整提交材料](../E3/README.md)；E4 分支整合了原先在 main 上导入的 B-draft 模板。
+- 已核对：24 个导入文件与教师实验包逐字节一致；原始说明见 [模板 README](template_README.md)，来源与文件摘要见 [导入清单](template_manifest.json)。
+- 已检查服务器：Ubuntu 22.04.5 LTS、x86_64、2 核、约 3.5 GiB 内存；Docker Engine 29.1.3、Compose 2.40.3、Buildx 0.30.1 均可用。
+- 下一步：在个人学号目录克隆 E4 分支，运行 `make doctor` 和 `make all`，再完成假密钥检查与组员重跑对照。
 
 ## 仓库整合方案
 
-保留现有单仓库与 E2 成果，采用课件规定的 `services/draft/` 结构。以下是目标布局，不表示文件已全部存在：
+保留单仓库及 E2、E3 成果，采用课件规定的 `services/draft/` 结构；`work/` 在运行时生成：
 
 ```text
 devops/
@@ -43,7 +43,7 @@ devops/
 └── work/                     # 真实运行证据，不进入 Git 或镜像
 ```
 
-整合时先比较同名文件，尤其 README、Makefile 和忽略规则；不将模板直接覆盖到现有项目。保留 contract/ 和 docs/E2/。检查模板的构建上下文及 Makefile 路径，沿用根目录 `make all` 入口。教师模板单测与 E2 契约校验分别报告，不把先前 29 项文件校验当作 E4 服务测试结果。
+根目录 `make all` 是 E4 入口。教师模板单测与 E2 契约校验分别报告。
 
 ## 准备任务
 
@@ -61,9 +61,16 @@ devops/
 
 ## 运行流程
 
-拿到模板并整合后，每名成员在服务器自己的克隆根目录执行：
+每名成员登录服务器后，在自己的学号目录克隆 `E4` 分支。将下面的 `你的学号` 替换为本人学号；已有克隆先检查路径与状态，不重复覆盖：
 
 ```bash
+student_id='你的学号'
+mkdir -p "/root/$student_id"
+cd "/root/$student_id"
+git clone --branch E4 https://github.com/laolvfan/devops.git devops
+cd devops
+git config --local user.name "$student_id"
+git config --local user.email "$student_id@localhost"
 git rev-parse HEAD
 git status --short
 make doctor
@@ -112,4 +119,4 @@ E4 smoke.json 的日志末尾与关键行不代替 E5 完整原始日志。E5 �
 - 《E4 可重复工程环境》课件：第 4、7—20、23 页。
 - 《E3 并行测试基线》课件：B 组 DRAFT 样本和 MDFixer 固定输入部分。
 
-源材料位于本机 `~/devops_resources/`。本文不复制教师凭据或同学名单，也不包含运行日期标注。
+源材料位于本机 `~/devops_resources/`。
