@@ -1,8 +1,10 @@
 name: E7 B quality gate
 
-# Preparation stage: manual only. Enable pull_request and push(main) after the
-# E6 handoff; docs/E7/README.md records the exact activation and acceptance steps.
+# Validate PR updates and integrated main commits once per event.
 on:
+  pull_request:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
