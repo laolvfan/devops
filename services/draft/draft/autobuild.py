@@ -82,13 +82,14 @@ def auto_build(fixture, candidate, output, expected_output, timeout=300, verify_
         raise ValueError("Use a fresh empty output directory")
     if any(p.is_symlink() for p in fixture.rglob("*")):
         raise ValueError("Symlink fixtures are unsupported")
-    text = candidate.read_text(encoding="utf-8")
+    candidate_bytes = candidate.read_bytes()
+    text = candidate_bytes.decode("utf-8")
     baseline = prepare_candidate((fixture / "Dockerfile.broken").read_text(encoding="utf-8"), text)
     output.mkdir(parents=True, exist_ok=True)
     run_id = uuid.uuid4().hex
     report = {"status": "RUNNING", "detector": "DRAFT_TEACHING_REPLAY", "trace_id": "e6-b-" + run_id,
               "candidate_source": candidate_source,
-              "candidate_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "attempts": []}
+              "candidate_sha256": hashlib.sha256(candidate_bytes).hexdigest(), "attempts": []}
     started = time.monotonic()
     cid_path = output / "verify-container-id.txt"
     try:
@@ -100,7 +101,10 @@ def auto_build(fixture, candidate, output, expected_output, timeout=300, verify_
             iteration = output / f"iter-{number:02d}"
             iteration.mkdir()
             path = iteration / "Dockerfile"
-            path.write_text(dockerfile, encoding="utf-8")
+            if number == 2:
+                path.write_bytes(candidate_bytes)
+            else:
+                path.write_text(dockerfile, encoding="utf-8")
             tag = f"e6-draft-replay:{run_id}-{number}"
             command = ["docker", "build", "--progress=plain", "-f", str(path), "-t", tag, str(project)]
             attempt = {"iteration": number, "tag": tag, "command": command}
