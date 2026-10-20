@@ -1,0 +1,13 @@
+{
+  "original_response": "work/candidate/response-error.txt",
+  "original_candidate": "work/candidate/error/Dockerfile",
+  "candidate": "work/candidate/error-mirror/Dockerfile",
+  "manual_changes": [
+    "Switch Debian repositories to Aliyun HTTPS mirror; add apt update timeout and one retry"
+  ],
+  "reason": "Original build stalled while downloading Debian package index; mirror apt update verified exit 0 in 21.59 seconds",
+  "evidence": "work/e5-apt-recovery-01/",
+  "candidate_sha256": "5d4f3abf8f5aeb7907bb89baa9f94341af0ba4b3415cde3db21b07bab03c9f96",
+  "build_and_run_verified": true,
+  "verification_evidence": "work/e5-02/"
+}

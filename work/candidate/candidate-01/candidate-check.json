@@ -1,0 +1,6 @@
+{
+  "candidate_sha256": "510dc459a9a3830aabdf35b32c15b0c22a3c3299982950e40378d4a3227b9788",
+  "prepare_candidate_passed": true,
+  "baseline_matches_actual_failure": true,
+  "build_and_run_verified": false
+}

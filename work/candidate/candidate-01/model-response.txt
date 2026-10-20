@@ -1,0 +1,15 @@
+建议在编译前安装 build-essential，补齐 GNU Make、C 编译器及标准库开发文件。
+保留原来的基础镜像摘要、工作目录、源码复制、构建命令和程序启动命令。
+
+```dockerfile
+FROM python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f
+WORKDIR /work
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential \
+    && rm -rf /var/lib/apt/lists/*
+COPY main.c Makefile ./
+RUN make
+CMD ["./hello"]
+```
+
+这份候选基于本次真实构建错误和项目 README 生成，尚未经过实际构建与运行验证。
