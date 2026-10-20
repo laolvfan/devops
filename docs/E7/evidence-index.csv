@@ -1,0 +1,15 @@
+phase,case,status,expected,actual,source_commit,image_id,evidence_path_or_url,notes
+local,independent-oracle,PASS,6 unit tests pass,6 passed,b9dc5ff1c5d233433ced0be257d50ef284795a18,,docs/E7/preparation-evidence/oracle-tests.log,Working tree adds E7 files; synthetic reports test the oracle only
+local,team-extension,PASS,Multistage candidate rejected before build,Passed against implementation received from main,6600fe78347af499417ab7eab69832c568135a88,,docs/E7/main-sync-evidence/service-and-oracle-tests.log,Main implementation plus E7 extension; Docker validation pending
+local,service-and-oracle-integration,PASS,All service and E7 oracle tests pass,32 passed,6600fe78347af499417ab7eab69832c568135a88,,docs/E7/main-sync-evidence/service-and-oracle-tests.log,26 service tests plus 6 gate-oracle tests; Windows unit tests
+gate,unit-tests,PENDING,All collected service tests pass,,,,,Record actual count
+gate,success,PENDING,SUCCEEDED/0 and matching output from the built image,,,,,
+gate,wrong-output,PENDING,FAILED/1 and output_matches=false,,,,,
+gate,invalid-candidate,PENDING,FAILED/1 before building with no attempts,,,,,
+gate,build-failed,PENDING,FAILED/1 after second build and no verification,,,,,
+gate,runtime-timeout,PENDING,TIMED_OUT/1 after successful build and runtime container removed,,,,,
+ci,normal,PENDING,Full quality gate passes and artifact saved,,,,,
+ci,branch-protection,PENDING,Required check plus strict and enforce_admins enabled,,,,,
+ci,rejection,PENDING,Latest PR check fails and normal merge is blocked,,,,,
+ci,recovery,PENDING,Same PR corrected and latest full check passes,,,,,
+ci,merged,PENDING,MERGED with mergeCommit and mergedAt saved,,,,,

@@ -1,0 +1,15 @@
+{
+  "main_commit": "6600fe78347af499417ab7eab69832c568135a88",
+  "e5_artifact_commit": "a28e3a0ffefdbf0900c606d01b97fc4c18803a90",
+  "candidate_path": "work/candidate/error-mirror/Dockerfile",
+  "candidate_sha256": "5d4f3abf8f5aeb7907bb89baa9f94341af0ba4b3415cde3db21b07bab03c9f96",
+  "candidate_compatibility": "PASS",
+  "actual_service_tests": 26,
+  "independent_oracle_tests": 6,
+  "total_passed": 32,
+  "test_environment": "Windows Python unit tests against actual repository implementation",
+  "real_docker_gate": "PENDING",
+  "github_ci": "PENDING",
+  "submission_root": "/root/submit",
+  "submission_status": "PLANNED_NOT_UPLOADED"
+}

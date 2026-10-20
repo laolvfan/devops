@@ -1,0 +1,2 @@
+PASS: final workflow YAML and 5 bash blocks; handoff JSON; evidence CSV
+PASS: current E4 mismatch rejected; required teaching fixture/candidate accepted

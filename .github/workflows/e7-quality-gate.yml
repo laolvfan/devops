@@ -1,14 +1,11 @@
 name: E7 B quality gate
 
+# Validate PR updates and integrated main commits once per event.
 on:
-  push:
   pull_request:
+  push:
+    branches: [main]
   workflow_dispatch:
-    inputs:
-      fail_demo:
-        description: "Intentional failing oracle for the teaching demonstration"
-        type: boolean
-        default: false
 
 permissions:
   contents: read
@@ -20,22 +17,52 @@ jobs:
     timeout-minutes: 40
     env:
       IMAGE: e7-draft:ci
-      FAIL_DEMO: ${{ inputs.fail_demo }}
+      CANDIDATE_PATH: work/candidate/error-mirror/Dockerfile
+      CANDIDATE_SOURCE: group-e5-error-driven-with-recorded-mirror-adjustment
     steps:
-      - name: Check out the exact triggering revision
-        uses: actions/checkout@v7.0.1
+      - name: Check out the triggering revision
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Prepare evidence and check Python syntax
+      - name: Record revision and validate the E6 handoff
         shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          TRIGGER_SHA: ${{ github.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
           mkdir -p work/ci
           git rev-parse HEAD > work/ci/commit.txt
+          printf '%s\n' "$EVENT_NAME" > work/ci/event.txt
+          printf '%s\n' "$TRIGGER_SHA" > work/ci/trigger-sha.txt
+          printf '%s\n' "$PR_HEAD_SHA" > work/ci/pr-head-sha.txt
+          printf '%s\n' "$CANDIDATE_PATH" "$CANDIDATE_SOURCE" > work/ci/candidate-source.txt
+          if [[ ! -f services/draft/draft/autobuild.py ]]; then
+            echo 'E6 handoff required: services/draft/draft/autobuild.py is missing.' | tee work/ci/preflight.log
+            exit 1
+          fi
+          test -f "$CANDIDATE_PATH"
+          PYTHONPATH=services/draft python3 - <<'PY' 2>&1 | tee work/ci/preflight.log
+          import os
+          from pathlib import Path
+          from draft.autobuild import prepare_candidate
+          broken = Path('fixtures/draft/Dockerfile.broken').read_text(encoding='utf-8')
+          candidate = Path(os.environ['CANDIDATE_PATH']).read_text(encoding='utf-8')
+          prepare_candidate(broken, candidate)
+          print('E6 fixture/candidate contract passed')
+          PY
+          sha256sum "$CANDIDATE_PATH" > work/ci/candidate.sha256
           docker version > work/ci/docker-version.txt
-          python3 -m compileall -q services/draft/draft scripts
+          python3 -m compileall -q services/draft/draft scripts tests/e7
+
+      - name: Check the independent gate oracle
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests/e7 -v 2>&1 | tee work/ci/oracle-tests.log
 
       - name: Scan tracked sources and Git history
         shell: bash
@@ -43,35 +70,25 @@ jobs:
           set -euo pipefail
           python3 scripts/secret_scan.py . --history 2>&1 | tee work/ci/source-scan.log
 
-      - name: Build the service image
+      - name: Build and scan the service image
         shell: bash
         run: |
           set -euo pipefail
           docker build --progress=plain -f services/draft/Dockerfile -t "$IMAGE" . 2>&1 | tee work/ci/build.log
           docker image inspect "$IMAGE" > work/ci/service-image-inspect.json
-
-      - name: Scan built image
-        shell: bash
-        run: |
-          set -euo pipefail
           python3 scripts/secret_scan.py . --image "$IMAGE" 2>&1 | tee work/ci/image-scan.log
 
-      - name: Run the real component and fault gate
+      - name: Run service tests and all five real scenarios
         shell: bash
         run: |
           set -euo pipefail
-          args=()
-          if [[ "$FAIL_DEMO" == "true" ]]; then
-            args+=(--case success --inject-bad-oracle)
-          fi
-          python3 scripts/run_e7_b_gate.py --image "$IMAGE" --candidate fixtures/ci-candidates/DeepSeek-E5.Dockerfile --out work/ci/gate "${args[@]}" 2>&1 | tee work/ci/gate-console.log
+          python3 scripts/run_e7_b_gate.py --image "$IMAGE" --candidate "$CANDIDATE_PATH" --out work/ci/gate --build-timeout 600 2>&1 | tee work/ci/gate-console.log
 
-      - name: Archive evidence even when checks fail
+      - name: Archive evidence on success or failure
         if: always()
-        uses: actions/upload-artifact@v7.0.2
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: e7-b-evidence-${{ github.run_id }}-${{ github.run_attempt }}
           path: work/ci/
-          include-hidden-files: true
           if-no-files-found: warn
           retention-days: 14

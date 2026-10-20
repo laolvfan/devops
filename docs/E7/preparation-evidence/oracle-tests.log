@@ -1,0 +1,11 @@
+test_accepts_complete_success (test_gate_expectations.GateExpectationTests.test_accepts_complete_success) ... ok
+test_expected_faults_are_accepted (test_gate_expectations.GateExpectationTests.test_expected_faults_are_accepted) ... ok
+test_failed_build_must_not_verify_a_program (test_gate_expectations.GateExpectationTests.test_failed_build_must_not_verify_a_program) ... ok
+test_rejects_build_timeout_as_runtime_timeout (test_gate_expectations.GateExpectationTests.test_rejects_build_timeout_as_runtime_timeout) ... ok
+test_rejects_infrastructure_failure_as_reproduction (test_gate_expectations.GateExpectationTests.test_rejects_infrastructure_failure_as_reproduction) ... ok
+test_rejects_running_a_different_image (test_gate_expectations.GateExpectationTests.test_rejects_running_a_different_image) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.000s
+
+OK
