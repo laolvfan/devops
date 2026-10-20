@@ -1,0 +1,15 @@
+{
+  "provider": "OpenAI",
+  "model_version": "Not recorded",
+  "date": "2026-10-20",
+  "acquisition": "Generated in the current assistant conversation from actual build evidence and project README",
+  "prompt_path": "work/e5-02/iter-01/prompt-context-driven.txt",
+  "additional_prompt_path": "work/e5-02/iter-01/prompt-error-driven.txt",
+  "prompt_scope": "Both prompts are present in the conversation; this is one combined-context generation, not two independent prompt experiments",
+  "raw_response_path": "work/candidate/candidate-01/model-response.txt",
+  "candidate_path": "work/candidate/candidate-01/Dockerfile",
+  "candidate_sha256": "510dc459a9a3830aabdf35b32c15b0c22a3c3299982950e40378d4a3227b9788",
+  "manual_changes": [],
+  "selection_reason": "Install missing build dependencies while preserving the pinned base image and original project/build/runtime instructions",
+  "is_recorded_replay": false
+}

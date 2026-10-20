@@ -1,0 +1,17 @@
+{
+  "base_digest": "sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f",
+  "mirror": "m.daocloud.io/docker.io/library/python@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f",
+  "commands": [
+    {
+      "name": "pull",
+      "exit_code": 0,
+      "elapsed_seconds": 30.31
+    },
+    {
+      "name": "tag",
+      "exit_code": 0,
+      "elapsed_seconds": 0.03
+    }
+  ],
+  "same_image_id": "sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f"
+}

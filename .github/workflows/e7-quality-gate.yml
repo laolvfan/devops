@@ -15,8 +15,8 @@ jobs:
     timeout-minutes: 40
     env:
       IMAGE: e7-draft:ci
-      CANDIDATE_PATH: fixtures/ci-candidates/DeepSeek-E5.Dockerfile
-      CANDIDATE_SOURCE: recorded-teaching-replay
+      CANDIDATE_PATH: work/candidate/error-mirror/Dockerfile
+      CANDIDATE_SOURCE: group-e5-error-driven-with-recorded-mirror-adjustment
     steps:
       - name: Check out the triggering revision
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4

@@ -1,0 +1,11 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--name",
+  "b11-e5-apt-probe",
+  "python:3.13-slim",
+  "sh",
+  "-c",
+  "sed -i -e s@http://deb.debian.org/debian-security@https://mirrors.aliyun.com/debian-security@g -e s@http://deb.debian.org/debian@https://mirrors.aliyun.com/debian@g /etc/apt/sources.list.d/debian.sources && apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update"
+]

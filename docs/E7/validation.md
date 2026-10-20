@@ -1,4 +1,17 @@
-# E7 第一阶段检查记录
+# E7 准备与交接检查记录
+
+## E5 已完成后的 main 同步
+
+- 已同步 main 合并提交 `6600fe78347af499417ab7eab69832c568135a88`；E5 产物提交为 `a28e3a0ffefdbf0900c606d01b97fc4c18803a90`。
+- P1 最终候选为 `work/candidate/error-mirror/Dockerfile`，来源为 ChatGPT 错误驱动回复加记录过的阿里云换源调整。候选哈希与 `work/candidate/provenance.json` 一致，保存的运行日志输出 `hello E3`。本次读取并核对 P1 原始结果，未重跑 E5 构建。
+- main 已接入基础 `autobuild.py`、CLI、服务测试和修正后的初始样例。原 E4 镜像命名差异已解决，真实 `prepare_candidate` 接受当前初始样例与 P1 最终候选。
+- 使用仓库实际实现运行 `services/draft/tests` 与 `tests/e7`：**32 passed**，其中服务测试 26 项（上游 25 项加 E7 自主测试 1 项），独立判定测试 6 项。原先仅对教师参考验证的扩展测试现已在小组实际代码上通过。
+- workflow 和 handoff.json 均切换为 P1 最终候选，并保留手动触发。YAML/JSON、CLI 解析、候选兼容性与 `/root/submit` 路径记录检查通过。
+- 源码与 Git 历史扫描通过，覆盖 634 个跟踪文件。本次合并的 P1 原始日志保留原始字节和已有哈希，空白检查限定为 E7 自己的改动；shell 内容未变，复用此前语法检查。本次采用自查及实际接口测试，未另开独立审查。
+- 对应输出保存在 `main-sync-evidence/`。真实 Linux/Docker 五场景、E6 自动运行验收与 GitHub CI 继续按版本推进。
+- 服务器最终提交根目录为 `/root/submit`，E7 产物建议归档至 `/root/submit/E7`，详见 submission.md；尚未连接服务器或执行上传。
+
+以下记录保留初始准备提交 `a2afae8` 的检查背景；E6 是否存在及候选兼容性的当前状态以上述 main 同步结果为准。
 
 ## 输入与范围
 
@@ -36,7 +49,7 @@
 
 其中 `work/e7-prep/reference-service/draft/` 是从教师包复制到忽略目录的参考模块，仅用于准备期验证。交付代码中没有替换 E6 核心、自动回退或跳过缺少的 `autobuild`。该测试覆盖已有约束，参考实现直接通过，未为制造红灯修改生产代码。
 
-## 后续验证
+## 初始准备阶段的待验证项（a2afae8 时点）
 
 - 根目录 `tests/test_examples.py`、`tests/test_response_formats.py`、`tests/test_task_schema.py` 读取根目录 `schemas/task.schema.json`，而当前文件位于 `contract/schemas/task.schema.json`。这是仓库基线的目录迁移遗留问题，失败日志为 preparation-evidence/existing-contract-tests.log。本次未修改历史契约测试；仓库完整测试目前尚未通过。
 - E6 的 autobuild.py 与 CLI 尚未接入。正式服务测试、镜像构建、五场景 Docker gate 均在交接后执行。

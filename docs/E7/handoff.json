@@ -1,29 +1,41 @@
 {
-  "status": "AWAITING_E5_E6_HANDOFF",
+  "status": "E5_RECEIVED_E6_BASELINE_AVAILABLE_REAL_GATE_PENDING",
   "e5": {
-    "commit": null,
-    "candidate_path": "fixtures/student-candidates/e5-selected.Dockerfile",
-    "provenance_path": "fixtures/student-candidates/provenance.json",
-    "successful_build_evidence": null,
-    "successful_run_evidence": null
+    "status": "COMPLETED_ON_MAIN",
+    "commit": "a28e3a0ffefdbf0900c606d01b97fc4c18803a90",
+    "main_merge_commit": "6600fe78347af499417ab7eab69832c568135a88",
+    "candidate_path": "work/candidate/error-mirror/Dockerfile",
+    "candidate_sha256": "5d4f3abf8f5aeb7907bb89baa9f94341af0ba4b3415cde3db21b07bab03c9f96",
+    "provenance_path": "work/candidate/provenance.json",
+    "successful_build_evidence": "work/e5-02/candidate-build-retry-01.log",
+    "successful_run_evidence": "work/e5-02/candidate-run.stdout.log",
+    "report_path": "docs/E5/report.md"
   },
   "e6": {
-    "commit": null,
+    "status": "BASELINE_AVAILABLE_REAL_VALIDATION_PENDING",
+    "commit": "6600fe78347af499417ab7eab69832c568135a88",
     "service_image_id": null,
     "result_json_path": null,
     "evidence_verifier_result": null,
     "required_module": "services/draft/draft/autobuild.py",
     "required_cli": "python3 -m draft auto-build",
     "candidate_validation_interface": "prepare_candidate(broken, candidate)",
-    "fixture_compatibility_status": "CURRENT_E4_FIXTURE_INCOMPATIBLE_WITH_REPLAY",
+    "fixture_compatibility_status": "MATCHED_MAIN_IMPLEMENTATION_AND_P1_CANDIDATE",
     "teaching_fixture_initial_from": "FROM python:3.13-slim",
     "replay_candidate_from": "FROM python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f"
   },
   "e7": {
-    "preparation_candidate_path": "fixtures/ci-candidates/DeepSeek-E5.Dockerfile",
-    "preparation_candidate_source": "recorded-teaching-replay",
+    "preparation_candidate_path": "work/candidate/error-mirror/Dockerfile",
+    "preparation_candidate_source": "group-e5-error-driven-with-recorded-mirror-adjustment",
+    "teacher_replay_candidate_path": "fixtures/ci-candidates/DeepSeek-E5.Dockerfile",
     "automatic_ci_triggers_enabled": false,
     "real_docker_gate_executed": false,
     "branch_protection_applied": false
+  },
+  "submission": {
+    "root": "/root/submit",
+    "e7_directory": "/root/submit/E7",
+    "status": "PLANNED_NOT_UPLOADED",
+    "instructions_path": "docs/E7/submission.md"
   }
 }
