@@ -1,0 +1,35 @@
+{
+  "scope": "E7 phase 1 preparation",
+  "repository_base": "b9dc5ff1c5d233433ced0be257d50ef284795a18",
+  "working_branch": "feat/e7-quality-gate",
+  "existing_service_tests": {
+    "passed": 4,
+    "implementation": "repository E4 baseline"
+  },
+  "independent_gate_tests": {
+    "passed": 6,
+    "input_kind": "synthetic unit reports"
+  },
+  "team_extension": {
+    "passed": 1,
+    "implementation": "isolated teaching reference",
+    "formal_e6_result": "PENDING"
+  },
+  "legacy_contract_tests": {
+    "status": "COLLECTION_ERROR",
+    "exit_code": 2,
+    "files": [
+      "tests/test_examples.py",
+      "tests/test_response_formats.py",
+      "tests/test_task_schema.py"
+    ],
+    "cause": "root schemas/task.schema.json absent; contract/schemas/task.schema.json exists"
+  },
+  "real_docker_gate": "PENDING",
+  "github_ci": "PENDING",
+  "branch_protection": "PENDING",
+  "candidate_sha256": "ede21b0fab394071641526e2fccefc41565efb00de6fb54d9d5b906aebeb535d",
+  "e6_fixture_compatibility": "CURRENT_E4_FIXTURE_INCOMPATIBLE_WITH_REPLAY",
+  "handoff_check": "Current fixture rejected; teaching fixture accepted",
+  "independent_review": "One combined review; fixture mismatch addressed in handoff and CI preflight"
+}

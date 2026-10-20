@@ -1,0 +1,14 @@
+phase,case,status,expected,actual,source_commit,image_id,evidence_path_or_url,notes
+local,independent-oracle,PASS,6 unit tests pass,6 passed,b9dc5ff1c5d233433ced0be257d50ef284795a18,,docs/E7/preparation-evidence/oracle-tests.log,Working tree adds E7 files; synthetic reports test the oracle only
+local,team-extension,PASS_REFERENCE,Multistage candidate rejected before build,1 passed against teaching reference,b9dc5ff1c5d233433ced0be257d50ef284795a18,,docs/E7/preparation-evidence/extension-reference.log,Formal E6 implementation still pending
+gate,unit-tests,PENDING,All collected service tests pass,,,,,Record actual count
+gate,success,PENDING,SUCCEEDED/0 and matching output from the built image,,,,,
+gate,wrong-output,PENDING,FAILED/1 and output_matches=false,,,,,
+gate,invalid-candidate,PENDING,FAILED/1 before building with no attempts,,,,,
+gate,build-failed,PENDING,FAILED/1 after second build and no verification,,,,,
+gate,runtime-timeout,PENDING,TIMED_OUT/1 after successful build and runtime container removed,,,,,
+ci,normal,PENDING,Full quality gate passes and artifact saved,,,,,
+ci,branch-protection,PENDING,Required check plus strict and enforce_admins enabled,,,,,
+ci,rejection,PENDING,Latest PR check fails and normal merge is blocked,,,,,
+ci,recovery,PENDING,Same PR corrected and latest full check passes,,,,,
+ci,merged,PENDING,MERGED with mergeCommit and mergedAt saved,,,,,

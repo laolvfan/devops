@@ -1,0 +1,50 @@
+
+=================================== ERRORS ====================================
+___________________ ERROR collecting tests/test_examples.py ___________________
+tests\test_examples.py:10: in <module>
+    SCHEMA = json.loads((ROOT / 'schemas/task.schema.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\py\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\py\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\py\Lib\pathlib\_local.py:537: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: 'D:\\aaaWW\\DevOps\\devops-e7\\schemas\\task.schema.json'
+_______________ ERROR collecting tests/test_response_formats.py _______________
+tests\test_response_formats.py:9: in <module>
+    SCHEMA = json.loads((ROOT / 'schemas/task.schema.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\py\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\py\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\py\Lib\pathlib\_local.py:537: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: 'D:\\aaaWW\\DevOps\\devops-e7\\schemas\\task.schema.json'
+_________________ ERROR collecting tests/test_task_schema.py __________________
+tests\test_task_schema.py:9: in <module>
+    SCHEMA = json.loads((Path(__file__).resolve().parents[1] / 'schemas/task.schema.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\py\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\py\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+D:\py\Lib\pathlib\_local.py:537: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: 'D:\\aaaWW\\DevOps\\devops-e7\\schemas\\task.schema.json'
+=========================== short test summary info ===========================
+ERROR tests/test_examples.py - FileNotFoundError: [Errno 2] No such file or d...
+ERROR tests/test_response_formats.py - FileNotFoundError: [Errno 2] No such f...
+ERROR tests/test_task_schema.py - FileNotFoundError: [Errno 2] No such file o...
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!
+3 errors in 1.33s

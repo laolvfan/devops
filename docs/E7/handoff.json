@@ -1,0 +1,29 @@
+{
+  "status": "AWAITING_E5_E6_HANDOFF",
+  "e5": {
+    "commit": null,
+    "candidate_path": "fixtures/student-candidates/e5-selected.Dockerfile",
+    "provenance_path": "fixtures/student-candidates/provenance.json",
+    "successful_build_evidence": null,
+    "successful_run_evidence": null
+  },
+  "e6": {
+    "commit": null,
+    "service_image_id": null,
+    "result_json_path": null,
+    "evidence_verifier_result": null,
+    "required_module": "services/draft/draft/autobuild.py",
+    "required_cli": "python3 -m draft auto-build",
+    "candidate_validation_interface": "prepare_candidate(broken, candidate)",
+    "fixture_compatibility_status": "CURRENT_E4_FIXTURE_INCOMPATIBLE_WITH_REPLAY",
+    "teaching_fixture_initial_from": "FROM python:3.13-slim",
+    "replay_candidate_from": "FROM python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f"
+  },
+  "e7": {
+    "preparation_candidate_path": "fixtures/ci-candidates/DeepSeek-E5.Dockerfile",
+    "preparation_candidate_source": "recorded-teaching-replay",
+    "automatic_ci_triggers_enabled": false,
+    "real_docker_gate_executed": false,
+    "branch_protection_applied": false
+  }
+}
