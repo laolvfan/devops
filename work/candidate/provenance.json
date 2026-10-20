@@ -1,0 +1,43 @@
+{
+  "candidates": [
+    {
+      "id": "error",
+      "provider": "ChatGPT",
+      "model_version": "5.6",
+      "source_basis": "使用者提供的模型界面名称",
+      "prompt_path": "work/e5-02/iter-01/prompt-error-driven.txt",
+      "raw_response_path": "work/candidate/response-error.txt",
+      "candidate_path": "work/candidate/error/Dockerfile",
+      "candidate_sha256": "1ab9b77cd9aaf3036838adc54de6ea51849fc3584a92f2da6b5b6412c35b6afe",
+      "manual_changes": [],
+      "is_recorded_replay": false
+    },
+    {
+      "id": "context",
+      "provider": "ChatGPT",
+      "model_version": "5.6",
+      "source_basis": "使用者提供的模型界面名称",
+      "prompt_path": "work/e5-02/iter-01/prompt-context-driven.txt",
+      "raw_response_path": "work/candidate/response-context.txt",
+      "candidate_path": "work/candidate/context/Dockerfile",
+      "candidate_sha256": "7792065d6d9233095c37b5ba60ef30a3b387e8a007723f02a06473648e03f592",
+      "manual_changes": [],
+      "is_recorded_replay": false
+    }
+  ],
+  "comparison": "两份回复安装相同的 gcc、make、libc6-dev，仅包名顺序不同。",
+  "selected_candidate": "error",
+  "selection_reason": "两者修复依赖集合一致，选择错误驱动候选并处理软件源下载问题后验证。",
+  "final_candidate_path": "work/candidate/error-mirror/Dockerfile",
+  "final_candidate_sha256": "5d4f3abf8f5aeb7907bb89baa9f94341af0ba4b3415cde3db21b07bab03c9f96",
+  "manual_changes": [
+    "Debian 软件源切换到阿里云 HTTPS 镜像；索引更新增加 30 秒连接超时和一次重试。"
+  ],
+  "adjustment_path": "work/candidate/error-mirror/adjustment.patch",
+  "verified_image_id": "sha256:df4844a6863ebc8637114a5c45a513bf513e23e031feca1883cfebfdbdd3a8b1",
+  "build_exit_code": 0,
+  "run_exit_code": 0,
+  "stdout": "hello E3\n",
+  "stderr": "",
+  "evidence_dir": "work/e5-02/"
+}

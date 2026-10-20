@@ -1,6 +1,6 @@
-# B11 E4 准备与验收
+# B11 E4 环境与验收
 
-E2、E3 已完成。本页依据教师提供的 E4 课件及 B 组全流程命令手册整理，只记录准备方案，不冒充真实运行结果。
+E2、E3 已完成，E4 已完成服务环境验证与组内重跑对照。本文依据教师 E4 课件及 B 组全流程命令手册，记录统一模板、服务器运行步骤和验收材料。
 
 ## 本次目标
 
@@ -8,16 +8,38 @@ E2、E3 已完成。本页依据教师提供的 E4 课件及 B 组全流程命�
 
 E4 不要求实现完整 DRAFT 自动生成与修复算法，也不要求同时搭建 MDFixer。模板中的 CLI、测试和 E3 小样例用于证明服务环境可用。
 
-## 当前准备状态
+## 验收状态
 
-- 已有：E4 B 组命令手册、E4 课件、E3 课件，以及本组 E2 契约材料。
-- 已导入：实验包中的 B-draft 模板和服务器初始化脚本；原始模板说明见 [模板 README](template_README.md)，来源与文件摘要见 [导入清单](template_manifest.json)。初始化脚本尚未执行。
-- 尚未验证：服务器登录、Docker 可用性、模板构建、真实冒烟和组员重跑。
-- 下一步：完成组内提交与服务器准备，在各自克隆中运行 make doctor 和 make all。
+- 已有：E2 契约与 [E3 完整提交材料](../E3/README.md)；E4 分支整合了原先在 main 上导入的 B-draft 模板。
+- 已核对：24 个导入文件与教师实验包逐字节一致；原始说明见 [模板 README](template_README.md)，来源与文件摘要见 [导入清单](template_manifest.json)。
+- 已检查服务器：Ubuntu 22.04.5 LTS、x86_64、2 核、约 3.5 GiB 内存；Docker Engine 29.1.3、Compose 2.40.3、Buildx 0.30.1 均可用。
+- 已核实运行：阳旅帆（`241880100`）、王炜（`241880326`）、杨晨昊（`241880581`）的独立学号目录均有完整流程的成功日志，假密钥检出及删除后恢复扫描也已核实。
+- 同版本对照已通过：`241880100` 与 `241880581` 使用同一完整源码 SHA，工具版本、单元测试及冒烟结论一致。
+
+## 本次运行记录
+
+统一对照版本：[255f9d06da6d7ba05e4772aeabe6f5002b68c4fc](https://github.com/laolvfan/devops/commit/255f9d06da6d7ba05e4772aeabe6f5002b68c4fc)。下表的证据路径相对于各自服务器克隆。
+
+| 成员 | 服务器克隆 | 所测版本 | 完整流程证据目录 |
+|---|---|---|---|
+| 阳旅帆（241880100） | `/root/241880100/devops` | `255f9d0` | `work/20261012-150836/` |
+| 王炜（241880326） | `/root/241880326/devops` | [8f8a4b7](https://github.com/laolvfan/devops/commit/8f8a4b7eca3f9f87385ab0958410dad2247bc8f0) | `work/20261011-164519/` |
+| 杨晨昊（241880581） | `/root/241880581/devops` | `255f9d0` | `work/20261012-204628/` |
+
+三份记录均为 `problems: []`、构建成功、单测 `4 passed`、冒烟 `passed: true` 且检出 `make: not found`、常规密钥扫描通过。阳旅帆与杨晨昊目录的完整流程退出码均为 0，源码 SHA 和命令随运行保存；王炜的历史版本依据该克隆 HEAD 与仅含克隆操作的 reflog 核对。各目录的 `.env` 权限均为 600，核对时工作区干净；构建均复用了服务器镜像缓存。
+
+假密钥证据：
+
+- `241880100`、`241880581`：各自的 `work/e4-scan-probe-001/`，`rejected/` 记录检出，`clean/` 记录删除后通过。
+- `241880326`：`work/20261011-164759/`、`work/20261011-164904/` 记录检出，`work/20261011-164923/` 记录删除后通过。
+
+`241880100` 与 `241880581` 的完整 SHA 相同，宿主机工具版本及 `toolchain.lock` 一致，单测与冒烟结论一致；镜像 ID 不同，但文件系统层一致。同 SHA 对照结果保存在 `241880581` 克隆的 `work/e4-peer-comparison-100-581.json`。王炜的历史运行使用不同提交，其 24 个模板文件与统一版本逐字节一致，作为已有运行记录保留。
+
+后续更新本页记录不改变统一对照版本。
 
 ## 仓库整合方案
 
-保留现有单仓库与 E2 成果，采用课件规定的 `services/draft/` 结构。以下是目标布局，不表示文件已全部存在：
+保留单仓库及 E2、E3 成果，采用课件规定的 `services/draft/` 结构；`work/` 在运行时生成：
 
 ```text
 devops/
@@ -43,7 +65,7 @@ devops/
 └── work/                     # 真实运行证据，不进入 Git 或镜像
 ```
 
-整合时先比较同名文件，尤其 README、Makefile 和忽略规则；不将模板直接覆盖到现有项目。保留 contract/ 和 docs/E2/。检查模板的构建上下文及 Makefile 路径，沿用根目录 `make all` 入口。教师模板单测与 E2 契约校验分别报告，不把先前 29 项文件校验当作 E4 服务测试结果。
+根目录 `make all` 是 E4 入口。教师模板单测与 E2 契约校验分别报告。
 
 ## 准备任务
 
@@ -61,9 +83,17 @@ devops/
 
 ## 运行流程
 
-拿到模板并整合后，每名成员在服务器自己的克隆根目录执行：
+每名成员登录服务器后，在自己的学号目录克隆 `E4` 分支，并切到统一运行版本 `255f9d0`。将下面的 `你的学号` 替换为本人学号；已有克隆先检查路径与状态，不重复覆盖：
 
 ```bash
+student_id='你的学号'
+mkdir -p "/root/$student_id"
+cd "/root/$student_id"
+git clone --branch E4 https://github.com/laolvfan/devops.git devops
+cd devops
+git checkout --detach 255f9d06da6d7ba05e4772aeabe6f5002b68c4fc
+git config --local user.name "$student_id"
+git config --local user.email "$student_id@localhost"
 git rev-parse HEAD
 git status --short
 make doctor
@@ -112,4 +142,4 @@ E4 smoke.json 的日志末尾与关键行不代替 E5 完整原始日志。E5 �
 - 《E4 可重复工程环境》课件：第 4、7—20、23 页。
 - 《E3 并行测试基线》课件：B 组 DRAFT 样本和 MDFixer 固定输入部分。
 
-源材料位于本机 `~/devops_resources/`。本文不复制教师凭据或同学名单，也不包含运行日期标注。
+源材料位于本机 `~/devops_resources/`。

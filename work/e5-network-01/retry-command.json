@@ -1,0 +1,9 @@
+[
+  "python3",
+  "scripts/lab_cloud.py",
+  "e5",
+  "--out",
+  "work/e5-02",
+  "--build-timeout",
+  "600"
+]
