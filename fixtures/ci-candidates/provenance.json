@@ -1,0 +1,11 @@
+{
+  "candidate_file": "DeepSeek-E5.Dockerfile",
+  "sha256": "e0f4635cceddf909b589f3662c42aa894d11cc41b5049a6ce2ba2b0b7993a978",
+  "provider": "DeepSeek",
+  "acquisition": "Manual transfer of the teaching E5 error-driven response; no API call",
+  "model_version": "Not recorded",
+  "selection": "Teaching replay normalized only to preserve the B11 E4 base image and pinned digest",
+  "original_teaching_sha256": "ede21b0fab394071641526e2fccefc41565efb00de6fb54d9d5b906aebeb535d",
+  "source_evidence": "Teacher-provided DevOps_1020_Student_Cloud.zip, labs/B-draft/fixtures/ci-candidates",
+  "scope": "Teaching replay, not a B11 E5 result"
+}
