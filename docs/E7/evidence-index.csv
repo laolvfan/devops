@@ -2,14 +2,14 @@ phase,case,status,expected,actual,source_commit,image_id,evidence_path_or_url,no
 local,independent-oracle,PASS,6 unit tests pass,6 passed,b9dc5ff1c5d233433ced0be257d50ef284795a18,,docs/E7/preparation-evidence/oracle-tests.log,Working tree adds E7 files; synthetic reports test the oracle only
 local,team-extension,PASS,Multistage candidate rejected before build,Passed against implementation received from main,6600fe78347af499417ab7eab69832c568135a88,,docs/E7/main-sync-evidence/service-and-oracle-tests.log,Main implementation plus E7 extension; Docker validation pending
 local,service-and-oracle-integration,PASS,All service and E7 oracle tests pass,32 passed,6600fe78347af499417ab7eab69832c568135a88,,docs/E7/main-sync-evidence/service-and-oracle-tests.log,26 service tests plus 6 gate-oracle tests; Windows unit tests
-gate,unit-tests,PENDING,All collected service tests pass,,,,,Record actual count
-gate,success,PENDING,SUCCEEDED/0 and matching output from the built image,,,,,
-gate,wrong-output,PENDING,FAILED/1 and output_matches=false,,,,,
-gate,invalid-candidate,PENDING,FAILED/1 before building with no attempts,,,,,
-gate,build-failed,PENDING,FAILED/1 after second build and no verification,,,,,
-gate,runtime-timeout,PENDING,TIMED_OUT/1 after successful build and runtime container removed,,,,,
-ci,normal,PENDING,Full quality gate passes and artifact saved,,,,,
-ci,branch-protection,PENDING,Required check plus strict and enforce_admins enabled,,,,,
-ci,rejection,PENDING,Latest PR check fails and normal merge is blocked,,,,,
-ci,recovery,PENDING,Same PR corrected and latest full check passes,,,,,
-ci,merged,PENDING,MERGED with mergeCommit and mergedAt saved,,,,,
+gate,unit-tests,PASS,All collected service tests pass,26 service tests passed,dbc1278d421a5d8b0441e800a8684a5a9d590eda,,/root/devops-e7.d149Jj/work/e7-gate-20261020-112209/gate/gate-result.json,Server result supplied by student; original artifacts archived from server
+gate,success,PASS,SUCCEEDED/0 and matching output from the built image,SUCCEEDED/0,dbc1278d421a5d8b0441e800a8684a5a9d590eda,,/root/devops-e7.d149Jj/work/e7-gate-20261020-112209/gate/gate-result.json,Server result supplied by student; original artifacts archived from server
+gate,wrong-output,PASS,FAILED/1 and output_matches=false,FAILED/1; output mismatch detected,dbc1278d421a5d8b0441e800a8684a5a9d590eda,,/root/devops-e7.d149Jj/work/e7-gate-20261020-112209/gate/gate-result.json,Server result supplied by student; original artifacts archived from server
+gate,invalid-candidate,PASS,FAILED/1 before building with no attempts,FAILED/1 before building,dbc1278d421a5d8b0441e800a8684a5a9d590eda,,/root/devops-e7.d149Jj/work/e7-gate-20261020-112209/gate/gate-result.json,Server result supplied by student; original artifacts archived from server
+gate,build-failed,PASS,FAILED/1 after second build and no verification,FAILED/1 with no verification,dbc1278d421a5d8b0441e800a8684a5a9d590eda,,/root/devops-e7.d149Jj/work/e7-gate-20261020-112209/gate/gate-result.json,Server result supplied by student; original artifacts archived from server
+gate,runtime-timeout,PASS,TIMED_OUT/1 after successful build and runtime container removed,TIMED_OUT/1 and runtime container removed,dbc1278d421a5d8b0441e800a8684a5a9d590eda,,/root/devops-e7.d149Jj/work/e7-gate-20261020-112209/gate/gate-result.json,Server result supplied by student; original artifacts archived from server
+ci,normal,PASS,Full quality gate passes and artifact saved,Full gate succeeded; ZIP downloaded and digest verified,dbc1278d421a5d8b0441e800a8684a5a9d590eda,,https://github.com/laolvfan/devops/actions/runs/39362321293,ci-evidence/normal/artifact.zip
+ci,branch-protection,PASS,Required check plus strict and enforce_admins enabled,protected=true; required check app15368; enforcement everyone,,,docs/E7/ci-evidence/protection-observed.json,Owner configured; complete administration export not visible to push-only identity
+ci,rejection,PASS,Latest PR check fails and normal merge is blocked,CI failed; OPEN/BLOCKED; merge HTTP405; process exit1,6944e887fd422ebf7d272cf399a5fa2e00316cb7,,docs/E7/ci-evidence/rejection/merge-attempt.json,Failed run 39396123591; 1 failed / 26 passed
+ci,recovery,PASS,Same PR corrected and latest full check passes,27 service tests and all six gate checks passed,cef2d97d91a380eb6fcfd15362f0301a5d1a2089,,https://github.com/laolvfan/devops/actions/runs/39396645261,ci-evidence/recovery/artifact.zip; final report-only runtime inputs remain identical
+ci,merged,PENDING,MERGED with mergeCommit and mergedAt saved,,,,https://github.com/laolvfan/devops/pull/3,Final merge record saved during server archiving

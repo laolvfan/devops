@@ -1,0 +1,18 @@
+{
+  "source": "https://api.github.com/repos/laolvfan/devops/branches/main",
+  "protected": true,
+  "required_status_checks": {
+    "enforcement_level": "everyone",
+    "contexts": [
+      "e7-b-quality-gate"
+    ],
+    "checks": [
+      {
+        "context": "e7-b-quality-gate",
+        "app_id": 15368
+      }
+    ]
+  },
+  "full_administration_settings_visibility": "Unavailable to current push-only identity",
+  "runtime_enforcement_evidence": "ci-evidence/rejection/merge-attempt.json"
+}

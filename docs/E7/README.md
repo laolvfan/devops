@@ -1,6 +1,6 @@
-# B11 E7：第一阶段准备与交接
+# B11 E7：测试、CI 门禁与提交证据
 
-本阶段完成测试设计、自主扩展测试、五场景 runner、CI 配置和证据模板。已接收 main 上完成的 E5（合并提交 `6600fe7`），同步其基础 `draft.auto-build` 实现及修正后的样例。默认候选改用 P1 实际验证的 `work/candidate/error-mirror/Dockerfile`。当前 workflow 仅支持手动触发；本地检查和真实 Docker/CI 结果分别记录。
+已完成服务器上的六项独立判定测试、26 项服务测试及五个真实场景门禁，正常 GitHub CI 全部通过。默认候选使用 P1 实际验证的 `work/candidate/error-mirror/Dockerfile`。workflow 已启用 PR、main 和手动触发；失败拦截与同一 PR 的修复恢复见 [实验报告](report.md)。
 
 最终提交产物统一放在服务器 `/root/submit`，E7 建议使用 `/root/submit/E7/`，整理方式见 [提交归档说明](submission.md)。
 
@@ -11,7 +11,7 @@
 |`services/draft/tests/test_team_extensions.py`|小组新增候选约束测试：拒绝新增最终阶段并直接 echo 的 Dockerfile|
 |`tests/e7/test_gate_expectations.py`|小组新增六项判定测试：成功、预期故障、镜像错配、基础设施失败、构建超时与运行超时区分、失败后停止验证|
 |`scripts/run_e7_b_gate.py`|从教师 B-draft 原样导入；运行服务测试和五个真实工作流场景|
-|`.github/workflows/e7-quality-gate.yml`|基于教师流程适配：手动触发、E6 前置检查、独立判定测试、扫描、构建、门禁和归档|
+|`.github/workflows/e7-quality-gate.yml`|PR/main/手动触发；交接检查、独立判定、扫描、构建、门禁和归档|
 |`fixtures/ci-candidates/`|教师保存的 DeepSeek 候选及来源记录；属于回放输入|
 |`work/candidate/error-mirror/Dockerfile`|P1 的错误驱动候选及记录过的换源调整；默认正式门禁输入，已由 main 跟踪|
 |`ci/B-main-protection.json`|教师分支保护配置，启用前核对 App ID|
@@ -19,6 +19,7 @@
 |`docs/E7/evidence-index.csv`|正式运行的证据索引，未执行条目标记 PENDING|
 |`docs/E7/handoff.json`|向 E5/E6 同学索取的输入和版本信息|
 |`docs/E7/validation.md`|第一阶段实际检查、来源、范围和后续事项|
+|`docs/E7/report.md`、`ci-evidence/`|正式实验报告、三阶段 CI 原始 artifact 与合并拒绝证据|
 
 原始课程包：`DevOps_1020_Student_Cloud/labs/B-draft/`，分支保护及演示测试来自包内 `ci/`。本分支已合入 main 的基础 `autobuild.py` 和 CLI；E6 同学的后续核心修改与自动实验结果继续按提交版本交接。
 
@@ -77,11 +78,11 @@ python3 scripts/run_e7_b_gate.py \
 
 构建服务使用 bridge 网络访问注册表，生成程序的验证容器使用 `--network none`。共享服务器上重型 gate 错峰执行。
 
-## CI 启用顺序
+## CI 与合并门禁流程
 
 1. 确认 main 已同步的基础模块和 E6 后续版本可用，检查 CLI、fixture/候选组合和镜像内测试。CI 前置检查会调用真实 `prepare_candidate`，提前报告交接不兼容。
 2. 将 workflow 的 `CANDIDATE_PATH` 与 `CANDIDATE_SOURCE` 设置为所选候选及其真实来源；继续使用回放时保留已有取值。
-3. 在 `on:` 下增加以下触发，保留 `workflow_dispatch:`：
+3. workflow 已使用以下自动触发，并保留 `workflow_dispatch:`：
 
 ```yaml
   pull_request:
@@ -97,4 +98,4 @@ python3 scripts/run_e7_b_gate.py \
 
 CI 以只读 contents 权限检出触发版本；第三方 action 固定到官方 v4 标签核对过的提交。无论成功或失败都归档 work/ci，保留 14 天。触发 SHA、PR head SHA、实际检出 SHA 分别记录，PR 的合并测试提交与分支 head 可不同。
 
-此阶段仅准备保护配置与演示用例，未修改 GitHub 权限、创建 PR 或执行合并。完整 E7 验收以 evidence-index.csv 中的真实日志、运行链接和结果为准。
+正常功能 PR #2 已合并；main 保护由所有者配置。PR #3 保存错误测试、真实拒绝与修复恢复流程。完整 E7 验收以 report.md、evidence-index.csv 和 ci-evidence 的实际记录为准；最终合并记录与服务器原始运行目录一并放入 `/root/submit/E7/`。
