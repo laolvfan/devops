@@ -1,5 +1,5 @@
 {
-  "status": "E5_RECEIVED_E6_BASELINE_AVAILABLE_REAL_GATE_PENDING",
+  "status": "E7_SERVER_AND_CI_RECOVERY_PASSED_FINAL_MERGE_AND_ARCHIVE_PENDING",
   "e5": {
     "status": "COMPLETED_ON_MAIN",
     "commit": "a28e3a0ffefdbf0900c606d01b97fc4c18803a90",
@@ -28,14 +28,31 @@
     "preparation_candidate_path": "work/candidate/error-mirror/Dockerfile",
     "preparation_candidate_source": "group-e5-error-driven-with-recorded-mirror-adjustment",
     "teacher_replay_candidate_path": "fixtures/ci-candidates/DeepSeek-E5.Dockerfile",
-    "automatic_ci_triggers_enabled": false,
-    "real_docker_gate_executed": false,
-    "branch_protection_applied": false
+    "automatic_ci_triggers_enabled": true,
+    "real_docker_gate_executed": true,
+    "server_tested_commit": "dbc1278d421a5d8b0441e800a8684a5a9d590eda",
+    "server_repository": "/root/devops-e7.d149Jj",
+    "server_gate_directory": "work/e7-gate-20261020-112209",
+    "server_gate_exit_code": 0,
+    "server_gate_all_passed": true,
+    "branch_protection_applied": true,
+    "required_check": "e7-b-quality-gate",
+    "required_check_app_id": 15368,
+    "normal_run_id": 39362321293,
+    "rejection_run_id": 39396123591,
+    "merge_rejection_http_status": 405,
+    "merge_attempt_exit_code": 1,
+    "recovery_run_id": 39396645261,
+    "recovery_run_conclusion": "success",
+    "recovery_head": "cef2d97d91a380eb6fcfd15362f0301a5d1a2089",
+    "functional_pr": "https://github.com/laolvfan/devops/pull/2",
+    "functional_merge_commit": "89c34c249562b19f321fa51696cb9f6c8d6f83cb",
+    "demonstration_pr": "https://github.com/laolvfan/devops/pull/3"
   },
   "submission": {
     "root": "/root/submit",
     "e7_directory": "/root/submit/E7",
-    "status": "PLANNED_NOT_UPLOADED",
+    "status": "AWAITING_USER_ARCHIVE_CONFIRMATION",
     "instructions_path": "docs/E7/submission.md"
   }
 }

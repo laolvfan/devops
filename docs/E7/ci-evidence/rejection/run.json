@@ -1,0 +1,8 @@
+{
+  "run_id": 39396123591,
+  "url": "https://github.com/laolvfan/devops/actions/runs/39396123591",
+  "conclusion": "failure",
+  "head_sha": "6944e887fd422ebf7d272cf399a5fa2e00316cb7",
+  "checked_out_commit": "b32d04d21d30d1a8e9bad8bf14401e1148169352",
+  "artifact_sha256": "c0f7f027539f8fc1246a847e49670013aa5e1261573f343a578c6afd269d0862"
+}

@@ -1,0 +1,20 @@
+{
+  "method": "PUT",
+  "endpoint": "/repos/laolvfan/devops/pulls/3/merge",
+  "head_sha": "6944e887fd422ebf7d272cf399a5fa2e00316cb7",
+  "request": {
+    "sha": "6944e887fd422ebf7d272cf399a5fa2e00316cb7",
+    "merge_method": "merge"
+  },
+  "http_status": 405,
+  "response": {
+    "message": "Required status check \"e7-b-quality-gate\" is failing.",
+    "documentation_url": "https://docs.github.com/articles/about-protected-branches",
+    "status": "405"
+  },
+  "preflight": {
+    "protected": true,
+    "required_check": "e7-b-quality-gate",
+    "check_conclusion": "failure"
+  }
+}

@@ -1,0 +1,3 @@
+PASS: valid actual CI bundles produce complete temporary reports and records
+PASS: failed recovery bundle is refused before completion is marked
+Synthetic filesystem checks only; /root/submit was not accessed

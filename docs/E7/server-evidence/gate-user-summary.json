@@ -1,0 +1,18 @@
+{
+  "source": "Terminal output supplied by student 241880326; original artifacts remain on the course server",
+  "repository": "/root/devops-e7.d149Jj",
+  "source_commit": "dbc1278d421a5d8b0441e800a8684a5a9d590eda",
+  "original_gate_json": "/root/devops-e7.d149Jj/work/e7-gate-20261020-112209/gate/gate-result.json",
+  "original_results_csv": "/root/devops-e7.d149Jj/work/e7-gate-20261020-112209/gate/results.csv",
+  "image": "e7-draft:241880326",
+  "gate_exit_code": 0,
+  "passed": true,
+  "cases": [
+    {"case": "unit-tests", "passed": true, "exit_code": 0},
+    {"case": "success", "passed": true, "exit_code": 0, "workflow_status": "SUCCEEDED", "trace_id": "e6-b-89beca3813d44b28971ffd745868245e"},
+    {"case": "wrong-output", "passed": true, "exit_code": 1, "workflow_status": "FAILED", "trace_id": "e6-b-7496e1915da544bfb61e7b5d25cfb502"},
+    {"case": "invalid-candidate", "passed": true, "exit_code": 1, "workflow_status": "FAILED", "trace_id": ""},
+    {"case": "build-failed", "passed": true, "exit_code": 1, "workflow_status": "FAILED", "trace_id": "e6-b-3f9cb5f0ef81478b8dd3b49eb3518ab7"},
+    {"case": "runtime-timeout", "passed": true, "exit_code": 1, "workflow_status": "TIMED_OUT", "trace_id": "e6-b-b050363a8df14a6b9f7a2585784ca31f"}
+  ]
+}

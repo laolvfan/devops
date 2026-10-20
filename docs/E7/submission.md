@@ -36,4 +36,6 @@
 
 只归档交付所需源码、报告与证据；本机虚拟环境、Git 登录配置和密钥文件不纳入提交。复制后核对文件清单，传输的候选或压缩包按需要核对一次完整性。
 
-目前已记录统一提交路径，尚未连接服务器或写入 `/root/submit`。第一阶段本地准备日志保存在仓库 `docs/E7/preparation-evidence/`，正式 E7 gate 和 CI 的后续结果单独归档。
+正式服务器 gate 已完成，三阶段 CI 的原始 ZIP 和元数据已保存在 `docs/E7/ci-evidence/`。PR #3 合并后，按 server-commands.md 取得准确版本并执行 `bash scripts/submit_e7.sh`，脚本会核对合并状态、服务器原始 gate、CI 结论与 ZIP 完整性后完成整理。
+
+恢复执行的 SHA 早于最后的报告提交。脚本校验它是最终 PR head 的祖先，并核对服务、fixture、候选、门禁、依赖与 CI workflow 的运行输入没有变化。提交目录中的 CSV、交接 JSON 和报告在核对实际合并结果后补齐最终状态。以 `ARCHIVE_COMPLETE=/root/submit/E7` 与进程退出码 0 确认归档完成。
