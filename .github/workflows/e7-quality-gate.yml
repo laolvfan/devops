@@ -74,7 +74,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          docker build --progress=plain -f services/draft/Dockerfile -t "$IMAGE" . 2>&1 | tee work/ci/build.log
+          docker build --progress=plain -f services/draft/Dockerfile \
+            --build-arg BASE_IMAGE=docker.io/library/python@sha256:f82c96458eedc847b233e582eb31336f4954b39cae020b6dcf5b3ed0e5cbcd74 \
+            --build-arg DOCKER_CLI_IMAGE=docker.io/library/docker@sha256:9190b0613792e658a7783cf14b2d5ace5941bb68ede7276922ea36ee457d76ad \
+            -t "$IMAGE" . 2>&1 | tee work/ci/build.log
           docker image inspect "$IMAGE" > work/ci/service-image-inspect.json
           python3 scripts/secret_scan.py . --image "$IMAGE" 2>&1 | tee work/ci/image-scan.log
 

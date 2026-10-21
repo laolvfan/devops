@@ -59,6 +59,8 @@ main 的分支查询返回 protected=true，必需检查 `e7-b-quality-gate` 绑
 
 main 的实际完整保护配置已补存到 `ci-evidence/protection-full.json`，核实 strict=true、enforce_admins=true，必需检查为 `e7-b-quality-gate`，审批人数为 0。最终整合 PR 仍遵守相同门禁。
 
+整合 PR 的首次 CI（运行 `39597617741`）因 runner 无法解析 DaoCloud 域名而在服务镜像元数据拉取处失败，没有执行目标场景。CI 改为通过构建参数从 Docker Hub 拉取相同摘要的 Python 和 Docker CLI 镜像；服务器 Dockerfile 默认值不变。该网络调整没有改变基础镜像摘要或服务实现，失败日志保存在 `ci-evidence/integration-infrastructure-failure.log`。
+
 两次集成独立审查覆盖 CI 权限、交接契约、shell 与判定；归档专项检查发现完成条件不足，已补充 CI 结论、恢复 gate 与运行输入等价验证。真实 CI 包的临时目录归档通过，失败恢复包会被拒绝；检查未访问真实 `/root/submit`。服务器的相同生产逻辑场景不重复运行，恢复由完整 CI 验证。
 
 候选及下载 artifact 的哈希用于输入来源和传输完整性；普通源码未另外计算哈希。历史根目录契约测试的路径问题与 E7 改动分开记录，未重复运行已有失败记录的无关测试。
