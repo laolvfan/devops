@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "trace_id": "e6-b-65d9f1ef46554336b97fc4935c7aac63",
+  "baseline_failure": "MISSING_MAKE",
+  "fixed_build_exit_code": 0,
+  "verify_exit_code": 0,
+  "verified_output": "hello E3",
+  "candidate_sha256": "5d4f3abf8f5aeb7907bb89baa9f94341af0ba4b3415cde3db21b07bab03c9f96",
+  "image_id": "sha256:9b461c218d5c440e769becaefbe0e181294b156f2d230caea0c6a52684dc2af0",
+  "candidate_source": "student-candidate",
+  "replay": false,
+  "scope": "Saved evidence consistency; does not independently rerun builds"
+}

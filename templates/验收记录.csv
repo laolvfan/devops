@@ -1,10 +1,10 @@
 编号,轨道,阶段,项目,状态,证据路径或URL,说明
-C01,共同,环境,云主机与Docker,PENDING,,
-C02,共同,E5,真实复现与差异,PENDING,,
-C03,共同,E6,输入哈希报告日志,PENDING,,
-C04,共同,E7,自主扩展测试,PENDING,,
-C05,共同,CI,正常失败恢复及artifact,PENDING,,
-C06,共同,CI,必需检查与实际拒绝合并,PENDING,,
-B01,B,E5,缺失make及候选来源,PENDING,,
-B02,B,E6,构建和同镜像运行验证,PENDING,,
-B03,B,E7,五场景与超时清理,PENDING,,
+C01,共同,环境,云主机与Docker,PASS,docs/E6/README.md;work/final-e67-build/,对应证据已核对；E7 历史失败恢复与最终集成运行分别保存
+C02,共同,E5,真实复现与差异,PASS,docs/E5/report.md;work/e5-02/,对应证据已核对；E7 历史失败恢复与最终集成运行分别保存
+C03,共同,E6,输入哈希报告日志,PASS,docs/E6/README.md;work/final-e6/,对应证据已核对；E7 历史失败恢复与最终集成运行分别保存
+C04,共同,E7,自主扩展测试,PASS,services/draft/tests/test_team_extensions.py;docs/E6/integration-check.json,对应证据已核对；E7 历史失败恢复与最终集成运行分别保存
+C05,共同,CI,正常失败恢复及artifact,PASS,docs/E7/ci-evidence/normal/;docs/E7/ci-evidence/rejection/;docs/E7/ci-evidence/recovery/,对应证据已核对；E7 历史失败恢复与最终集成运行分别保存
+C06,共同,CI,必需检查与实际拒绝合并,PASS,docs/E7/ci-evidence/protection-full.json;docs/E7/ci-evidence/rejection/merge-attempt.json;https://github.com/laolvfan/devops/pull/3,对应证据已核对；E7 历史失败恢复与最终集成运行分别保存
+B01,B,E5,缺失make及候选来源,PASS,work/e5-02/iter-01/;work/candidate/provenance.json,对应证据已核对；E7 历史失败恢复与最终集成运行分别保存
+B02,B,E6,构建和同镜像运行验证,PASS,work/final-e6/evidence/result.json;docs/E6/final-evidence-check.json,对应证据已核对；E7 历史失败恢复与最终集成运行分别保存
+B03,B,E7,五场景与超时清理,PASS,work/final-e7/gate/gate-result.json;work/final-e7/gate/results.csv,对应证据已核对；E7 历史失败恢复与最终集成运行分别保存

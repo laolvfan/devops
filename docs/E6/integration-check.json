@@ -1,0 +1,7 @@
+{
+  "command": "PYTHONPATH=services/draft:. /tmp/b11-final-py311/bin/python -m pytest -q services/draft/tests scripts/tests tests/e7",
+  "exit_code": 0,
+  "passed_tests": 40,
+  "scope": "Service tests, E6 evidence-verifier tests and E7 gate-oracle tests; executed locally after resolving merge conflicts",
+  "secret_scan_exit_code": 0
+}

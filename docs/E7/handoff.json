@@ -1,5 +1,5 @@
 {
-  "status": "E7_SERVER_AND_CI_RECOVERY_PASSED_FINAL_MERGE_AND_ARCHIVE_PENDING",
+  "status": "E6_E7_INTEGRATED_AND_SERVER_VERIFIED",
   "e5": {
     "status": "COMPLETED_ON_MAIN",
     "commit": "a28e3a0ffefdbf0900c606d01b97fc4c18803a90",
@@ -12,17 +12,18 @@
     "report_path": "docs/E5/report.md"
   },
   "e6": {
-    "status": "BASELINE_AVAILABLE_REAL_VALIDATION_PENDING",
-    "commit": "6600fe78347af499417ab7eab69832c568135a88",
-    "service_image_id": null,
-    "result_json_path": null,
-    "evidence_verifier_result": null,
+    "status": "INTEGRATED_AND_REAL_VALIDATION_PASSED",
+    "commit": "691826bf6dbb78b284e88c7df0ad4d6c5b6a04cf",
+    "service_image_id": "sha256:442d4feaae388e0681f8bec08d8c123808e709c9095cdea1e19bf344347a3477",
+    "result_json_path": "work/final-e6/evidence/result.json",
+    "evidence_verifier_result": "docs/E6/final-evidence-check.json",
     "required_module": "services/draft/draft/autobuild.py",
     "required_cli": "python3 -m draft auto-build",
     "candidate_validation_interface": "prepare_candidate(broken, candidate)",
     "fixture_compatibility_status": "MATCHED_MAIN_IMPLEMENTATION_AND_P1_CANDIDATE",
     "teaching_fixture_initial_from": "FROM python:3.13-slim",
-    "replay_candidate_from": "FROM python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f"
+    "replay_candidate_from": "FROM python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f",
+    "member_branch_commit": "1254f408761b0ee3a4ab4eef7b89b4c0f3956f7a"
   },
   "e7": {
     "preparation_candidate_path": "work/candidate/error-mirror/Dockerfile",
@@ -47,12 +48,19 @@
     "recovery_head": "cef2d97d91a380eb6fcfd15362f0301a5d1a2089",
     "functional_pr": "https://github.com/laolvfan/devops/pull/2",
     "functional_merge_commit": "89c34c249562b19f321fa51696cb9f6c8d6f83cb",
-    "demonstration_pr": "https://github.com/laolvfan/devops/pull/3"
+    "demonstration_pr": "https://github.com/laolvfan/devops/pull/3",
+    "final_integration": {
+      "runtime_commit": "691826bf6dbb78b284e88c7df0ad4d6c5b6a04cf",
+      "passed": true,
+      "evidence": "work/final-e7/gate/gate-result.json",
+      "service_tests": 32
+    }
   },
   "submission": {
     "root": "/root/submit",
     "e7_directory": "/root/submit/E7",
-    "status": "AWAITING_USER_ARCHIVE_CONFIRMATION",
-    "instructions_path": "docs/E7/submission.md"
+    "status": "HISTORICAL_E7_ARCHIVED_FINAL_INTEGRATION_VERIFIED",
+    "instructions_path": "docs/E7/submission.md",
+    "historical_merge_commit": "9308a17dce50d8443e60a33918bd43a21875b6e9"
   }
 }

@@ -1,0 +1,8 @@
+{
+  "track": "B",
+  "stage": "build",
+  "time_utc": "2026-10-21T12:05:24.994381+00:00",
+  "image": "b11-draft:final-e67",
+  "packaging_entrypoint": "cloud-v1",
+  "replay": false
+}

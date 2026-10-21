@@ -1,0 +1,12 @@
+[
+  "/usr/bin/python3",
+  "scripts/run_e7_b_gate.py",
+  "--image",
+  "b11-draft:final-e67",
+  "--out",
+  "/root/241880100/devops-final-e67/work/final-e7/gate",
+  "--candidate",
+  "/root/241880100/devops-final-e67/work/candidate/error-mirror/Dockerfile",
+  "--build-timeout",
+  "600"
+]

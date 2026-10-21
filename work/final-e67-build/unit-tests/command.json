@@ -1,0 +1,9 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--network",
+  "none",
+  "b11-draft:final-e67",
+  "pytest"
+]

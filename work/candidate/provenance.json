@@ -10,7 +10,8 @@
       "candidate_path": "work/candidate/error/Dockerfile",
       "candidate_sha256": "1ab9b77cd9aaf3036838adc54de6ea51849fc3584a92f2da6b5b6412c35b6afe",
       "manual_changes": [],
-      "is_recorded_replay": false
+      "is_recorded_replay": false,
+      "date": "10.20"
     },
     {
       "id": "context",
@@ -22,7 +23,8 @@
       "candidate_path": "work/candidate/context/Dockerfile",
       "candidate_sha256": "7792065d6d9233095c37b5ba60ef30a3b387e8a007723f02a06473648e03f592",
       "manual_changes": [],
-      "is_recorded_replay": false
+      "is_recorded_replay": false,
+      "date": "10.20"
     }
   ],
   "comparison": "两份回复安装相同的 gcc、make、libc6-dev，仅包名顺序不同。",

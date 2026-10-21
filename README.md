@@ -12,3 +12,5 @@ B11 负责 DRAFT（生成可构建环境）和 MDFixer（修复缺失依赖）�
 ## E5–E7 DRAFT 工程
 
 见 [B11 E5–E7 DRAFT 工程](docs/E5/README.md)。已整合候选构建验证、故障测试及 CI 配置；统一运行入口为 `python3 scripts/lab_cloud.py`。
+
+E6 的实现修改、最终自动构建和证据校验见 [E6 报告](docs/E6/README.md)；E7 的真实故障场景、CI 拒绝恢复及最终集成结果见 [E7 报告](docs/E7/report.md)。

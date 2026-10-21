@@ -1,12 +1,15 @@
 {
-  "provider": "填写或记录回放",
-  "model_version": "未知时填写未记录",
-  "date": "",
-  "prompt_path": "",
-  "raw_response_path": "",
-  "candidate_path": "",
-  "candidate_sha256": "",
-  "manual_changes": [],
-  "selection_reason": "",
-  "is_recorded_replay": false
+  "provider": "ChatGPT",
+  "model_version": "5.6",
+  "date": "10.20",
+  "prompt_path": "work/e5-02/iter-01/prompt-error-driven.txt",
+  "raw_response_path": "work/candidate/response-error.txt",
+  "candidate_path": "work/candidate/error-mirror/Dockerfile",
+  "candidate_sha256": "5d4f3abf8f5aeb7907bb89baa9f94341af0ba4b3415cde3db21b07bab03c9f96",
+  "manual_changes": [
+    "Debian 软件源切换到阿里云 HTTPS 镜像；索引更新增加 30 秒连接超时和一次重试。"
+  ],
+  "selection_reason": "两者修复依赖集合一致，选择错误驱动候选并处理软件源下载问题后验证。",
+  "is_recorded_replay": false,
+  "all_candidates_record": "work/candidate/provenance.json"
 }

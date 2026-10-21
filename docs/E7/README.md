@@ -21,7 +21,7 @@
 |`docs/E7/validation.md`|第一阶段实际检查、来源、范围和后续事项|
 |`docs/E7/report.md`、`ci-evidence/`|正式实验报告、三阶段 CI 原始 artifact 与合并拒绝证据|
 
-原始课程包：`DevOps_1020_Student_Cloud/labs/B-draft/`，分支保护及演示测试来自包内 `ci/`。本分支已合入 main 的基础 `autobuild.py` 和 CLI；E6 同学的后续核心修改与自动实验结果继续按提交版本交接。
+原始课程包：`DevOps_1020_Student_Cloud/labs/B-draft/`，分支保护及演示测试来自包内 `ci/`。已整合 E6 分支的核心修改与 CLI；最终两轮构建和五场景回归均通过，版本、镜像和证据见 [E6 报告](../E6/README.md)。
 
 ## 五场景预期表
 
