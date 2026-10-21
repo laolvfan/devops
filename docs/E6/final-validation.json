@@ -1,0 +1,94 @@
+{
+  "runtime_commit": "691826bf6dbb78b284e88c7df0ad4d6c5b6a04cf",
+  "server_directory": "/root/241880100/devops-final-e67",
+  "service_image_id": "sha256:442d4feaae388e0681f8bec08d8c123808e709c9095cdea1e19bf344347a3477",
+  "service_tests": 32,
+  "local_related_tests": 40,
+  "e6": {
+    "status": "SUCCEEDED",
+    "evidence": "work/final-e6/",
+    "candidate_sha256": "5d4f3abf8f5aeb7907bb89baa9f94341af0ba4b3415cde3db21b07bab03c9f96",
+    "image_id": "sha256:9b461c218d5c440e769becaefbe0e181294b156f2d230caea0c6a52684dc2af0",
+    "verification": {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--cpus",
+        "1",
+        "--memory",
+        "128m",
+        "--pids-limit",
+        "64",
+        "--cidfile",
+        "/evidence/verify-container-id.txt",
+        "sha256:9b461c218d5c440e769becaefbe0e181294b156f2d230caea0c6a52684dc2af0"
+      ],
+      "exit_code": 0,
+      "expected_output": "hello E3",
+      "actual_output": "hello E3\n",
+      "output_matches": true
+    },
+    "evidence_check": {
+      "passed": true,
+      "trace_id": "e6-b-65d9f1ef46554336b97fc4935c7aac63",
+      "baseline_failure": "MISSING_MAKE",
+      "fixed_build_exit_code": 0,
+      "verify_exit_code": 0,
+      "verified_output": "hello E3",
+      "candidate_sha256": "5d4f3abf8f5aeb7907bb89baa9f94341af0ba4b3415cde3db21b07bab03c9f96",
+      "image_id": "sha256:9b461c218d5c440e769becaefbe0e181294b156f2d230caea0c6a52684dc2af0",
+      "candidate_source": "student-candidate",
+      "replay": false,
+      "scope": "Saved evidence consistency; does not independently rerun builds"
+    }
+  },
+  "e7": {
+    "passed": true,
+    "evidence": "work/final-e7/",
+    "cases": [
+      {
+        "case": "unit-tests",
+        "passed": true,
+        "exit_code": 0
+      },
+      {
+        "case": "success",
+        "passed": true,
+        "exit_code": 0,
+        "workflow_status": "SUCCEEDED",
+        "trace_id": "e6-b-6e32548096f7455a89994e85f61d9fa0"
+      },
+      {
+        "case": "wrong-output",
+        "passed": true,
+        "exit_code": 1,
+        "workflow_status": "FAILED",
+        "trace_id": "e6-b-f74fc8892cb945b79fdeaa2297a5e701"
+      },
+      {
+        "case": "invalid-candidate",
+        "passed": true,
+        "exit_code": 1,
+        "workflow_status": "FAILED",
+        "trace_id": ""
+      },
+      {
+        "case": "build-failed",
+        "passed": true,
+        "exit_code": 1,
+        "workflow_status": "FAILED",
+        "trace_id": "e6-b-e4516de252b24d0c9282f944753d774c"
+      },
+      {
+        "case": "runtime-timeout",
+        "passed": true,
+        "exit_code": 1,
+        "workflow_status": "TIMED_OUT",
+        "trace_id": "e6-b-2621e3f7b506481d99793cf8d2877fa0"
+      }
+    ]
+  }
+}

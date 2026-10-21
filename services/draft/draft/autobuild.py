@@ -33,7 +33,9 @@ def prepare_candidate(broken, candidate):
         raise ValueError("Candidate must start with a digest-pinned FROM")
     if sum(line.upper().startswith("FROM ") for line in proposed) != 1:
         raise ValueError("Only single-stage candidates are supported")
-    if original[0] != proposed[0].split("@", 1)[0]:
+    original_base, _, original_digest = original[0].partition("@")
+    proposed_base, _, proposed_digest = proposed[0].partition("@")
+    if original_base != proposed_base or (original_digest and original_digest != proposed_digest):
         raise ValueError("Candidate changed the original base image tag")
     baseline = [proposed[0], *original[1:]]
     cursor, added = 0, []
@@ -65,12 +67,15 @@ def classify_failure(text):
         return "INFRASTRUCTURE"
     return "OTHER_BUILD_ERROR"
 
-def auto_build(fixture, candidate, output, expected_output, timeout=300, verify_timeout=30):
+def auto_build(fixture, candidate, output, expected_output, timeout=300, verify_timeout=30,
+               candidate_source="student-candidate"):
     if os.name != "posix":
         raise ValueError("Run inside the Linux service container")
     fixture, candidate, output = Path(fixture).resolve(), Path(candidate).resolve(), Path(output).resolve()
     if timeout <= 0 or verify_timeout <= 0:
         raise ValueError("Timeouts must be positive")
+    if candidate_source not in ("teaching-replay", "student-candidate"):
+        raise ValueError("Unsupported candidate source")
     if not fixture.is_dir() or not candidate.is_file():
         raise ValueError("Fixture or candidate does not exist")
     if output == fixture or fixture in output.parents:
@@ -79,13 +84,14 @@ def auto_build(fixture, candidate, output, expected_output, timeout=300, verify_
         raise ValueError("Use a fresh empty output directory")
     if any(p.is_symlink() for p in fixture.rglob("*")):
         raise ValueError("Symlink fixtures are unsupported")
-    text = candidate.read_text(encoding="utf-8")
+    candidate_bytes = candidate.read_bytes()
+    text = candidate_bytes.decode("utf-8")
     baseline = prepare_candidate((fixture / "Dockerfile.broken").read_text(encoding="utf-8"), text)
     output.mkdir(parents=True, exist_ok=True)
     run_id = uuid.uuid4().hex
     report = {"status": "RUNNING", "detector": "DRAFT_TEACHING_REPLAY", "trace_id": "e6-b-" + run_id,
-              "candidate_source": "Manual model response replay; no model/API call in this command",
-              "candidate_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "attempts": []}
+              "candidate_source": candidate_source,
+              "candidate_sha256": hashlib.sha256(candidate_bytes).hexdigest(), "attempts": []}
     started = time.monotonic()
     cid_path = output / "verify-container-id.txt"
     try:
@@ -97,7 +103,10 @@ def auto_build(fixture, candidate, output, expected_output, timeout=300, verify_
             iteration = output / f"iter-{number:02d}"
             iteration.mkdir()
             path = iteration / "Dockerfile"
-            path.write_text(dockerfile, encoding="utf-8")
+            if number == 2:
+                path.write_bytes(candidate_bytes)
+            else:
+                path.write_text(dockerfile, encoding="utf-8")
             tag = f"e6-draft-replay:{run_id}-{number}"
             command = ["docker", "build", "--progress=plain", "-f", str(path), "-t", tag, str(project)]
             attempt = {"iteration": number, "tag": tag, "command": command}

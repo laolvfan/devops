@@ -1,0 +1,10 @@
+[
+  "docker",
+  "build",
+  "--progress=plain",
+  "-f",
+  "services/draft/Dockerfile",
+  "-t",
+  "b11-draft:final-e67",
+  "."
+]

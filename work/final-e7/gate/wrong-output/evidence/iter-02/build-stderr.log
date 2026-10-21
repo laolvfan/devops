@@ -1,0 +1,43 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 606B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 57B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM docker.io/library/python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f
+#4 resolve docker.io/library/python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 54B done
+#5 DONE 0.0s
+
+#6 [2/5] RUN sed -i     -e s@http://deb.debian.org/debian-security@https://mirrors.aliyun.com/debian-security@g     -e s@http://deb.debian.org/debian@https://mirrors.aliyun.com/debian@g     /etc/apt/sources.list.d/debian.sources     && apt-get -o Acquire::Retries=1 -o Acquire::https::Timeout=30 update     && apt-get install -y --no-install-recommends gcc make libc6-dev     && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [3/5] WORKDIR /work
+#7 CACHED
+
+#8 [4/5] COPY main.c Makefile ./
+#8 CACHED
+
+#9 [5/5] RUN make
+#9 CACHED
+
+#10 exporting to image
+#10 exporting layers done
+#10 exporting manifest sha256:069cb94212ce16cb230260ba9fa89a34d666d71a62ca8a1451171c894061184a done
+#10 exporting config sha256:177f6d8fdd53b50bd77470a120fe58552550525a835e47fbe991a88a62cceeb5 done
+#10 exporting attestation manifest sha256:99d1628a28897b5646441d4b07576ae5c1ccacbb2a24da83fc1327b33e758176 0.0s done
+#10 exporting manifest list sha256:786c00e5760a7924c6662a6a03eaeb80e27b5c3fcca8ca272c219c4143a4a3b5
+#10 exporting manifest list sha256:786c00e5760a7924c6662a6a03eaeb80e27b5c3fcca8ca272c219c4143a4a3b5 done
+#10 naming to docker.io/library/e6-draft-replay:f74fc8892cb945b79fdeaa2297a5e701-2 done
+#10 unpacking to docker.io/library/e6-draft-replay:f74fc8892cb945b79fdeaa2297a5e701-2 done
+#10 DONE 0.1s

@@ -6,7 +6,7 @@
 
 使用 P1 已完成 E5 的 `work/candidate/error-mirror/Dockerfile`，候选 SHA256 为 `5d4f3abf8f5aeb7907bb89baa9f94341af0ba4b3415cde3db21b07bab03c9f96`。来源记录 `work/candidate/provenance.json` 保存 ChatGPT 错误驱动回复及人工换源调整。E7 读取保存的候选执行验证，模型回复生成与 E5 手工构建归属 P1。
 
-核心 auto-build 实现与原始五场景 runner 来自教师参考及小组 main。E7 新增：多阶段候选提前拒绝的自主测试、六项独立判定测试、CI 交接检查和原始证据归档；实际执行失败与恢复的版本退出码测试。Codex 协助代码、CI 和文档操作，课程服务器命令由本人执行。
+核心 auto-build 实现与原始五场景 runner 来自教师参考及小组 main。E7 新增：多阶段候选提前拒绝的自主测试、六项独立判定测试、CI 交接检查和原始证据归档；实际执行失败与恢复的版本退出码测试。
 
 ## 服务器验证
 
@@ -37,7 +37,7 @@
 
 正常 CI 为 [39362321293](https://github.com/laolvfan/devops/actions/runs/39362321293)。head 是 `dbc1278`，实际检出 PR 合并测试提交 `7cd47ad59e3a9b5dfa8909bbef56f5447aba1f59`；两者分别记录。独立判定、源码与镜像扫描、服务构建及完整六项 gate 均通过。原始 artifact、gate JSON、CSV 和运行元数据保存在 `ci-evidence/normal/`。
 
-main 的分支查询返回 protected=true，必需检查 `e7-b-quality-gate` 绑定 GitHub Actions App ID `15368`，状态检查对所有角色执行。可见字段见 `ci-evidence/protection-observed.json`。所有者通过界面配置保护；当前推送帐号无法导出完整管理配置，期望设置模板与观测结果分别保存。
+main 的分支查询返回 protected=true，必需检查 `e7-b-quality-gate` 绑定 GitHub Actions App ID `15368`，状态检查对所有角色执行。可见字段见 `ci-evidence/protection-observed.json`。所有者通过界面配置保护；现已补充实际完整保护配置 `ci-evidence/protection-full.json`，确认 strict=true、enforce_admins=true、审批人数为 0。
 
 ## 同一 PR 的失败与恢复
 
@@ -54,6 +54,12 @@ main 的分支查询返回 protected=true，必需检查 `e7-b-quality-gate` 绑
 最后的报告与归档脚本提交晚于上述恢复执行，运行输入保持一致；保护规则还会要求最新提交的 CI 通过后才能合并。最终合并状态以 PR #3 的实际记录及服务器提交目录中的 merge 记录为准。
 
 ## 验证范围与交付
+
+最终 E6/E7 整合运行版本为 `691826bf6dbb78b284e88c7df0ad4d6c5b6a04cf`，已纳入成员 E6 分支的来源标记、候选原始字节哈希和固定摘要修复。服务器在独立目录 `/root/241880100/devops-final-e67` 构建服务镜像，32 项服务测试通过；E6 两轮构建及证据校验通过，E7 服务测试与五个真实场景全部通过。新证据为 `work/final-e67-build/`、`work/final-e6/`、`work/final-e7/`，版本和镜像 ID 汇总见 `docs/E6/final-validation.json`。历史 CI、失败拒绝及 PR #3 合并记录继续保留，不替换为新版运行记录。
+
+main 的实际完整保护配置已补存到 `ci-evidence/protection-full.json`，核实 strict=true、enforce_admins=true，必需检查为 `e7-b-quality-gate`，审批人数为 0。最终整合 PR 仍遵守相同门禁。
+
+整合 PR 的首次 CI（运行 `39597617741`）因 runner 无法解析 DaoCloud 域名而在服务镜像元数据拉取处失败，没有执行目标场景。CI 改为通过构建参数从 Docker Hub 拉取相同摘要的 Python 和 Docker CLI 镜像；服务器 Dockerfile 默认值不变。该网络调整没有改变基础镜像摘要或服务实现，失败日志保存在 `ci-evidence/integration-infrastructure-failure.log`。
 
 两次集成独立审查覆盖 CI 权限、交接契约、shell 与判定；归档专项检查发现完成条件不足，已补充 CI 结论、恢复 gate 与运行输入等价验证。真实 CI 包的临时目录归档通过，失败恢复包会被拒绝；检查未访问真实 `/root/submit`。服务器的相同生产逻辑场景不重复运行，恢复由完整 CI 验证。
 

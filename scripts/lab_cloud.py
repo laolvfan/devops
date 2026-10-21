@@ -122,11 +122,12 @@ def main(argv=None):
     if not candidate.is_file():
         raise ValueError(f'Candidate missing: {candidate}')
     meta['candidate_sha256'] = hashlib.sha256(candidate.read_bytes()).hexdigest()
-    meta['candidate_source'] = 'supplied recorded response' if args.replay else 'student supplied; see student provenance record'
+    meta['candidate_source'] = 'teaching-replay' if args.replay else 'student-candidate'
     (output / 'invocation.json').write_text(json.dumps(meta, indent=2), encoding='utf-8')
     evidence = output / 'evidence'
     evidence.mkdir()
-    return execute(container(['--network', 'bridge', '--cidfile', str(output / 'service-container-id.txt'), '--group-add', str(Path('/var/run/docker.sock').stat().st_gid), '-v', '/var/run/docker.sock:/var/run/docker.sock', '--mount', f'type=bind,src={candidate},dst=/inputs/Dockerfile,readonly', '--mount', f'type=bind,src={evidence},dst=/evidence']) + [args.image, 'python3', '-m', 'draft', 'auto-build', '--fixture', '/app/fixtures/draft', '--candidate', '/inputs/Dockerfile', '--out', '/evidence', '--expected-output', 'hello E3', '--timeout', str(args.build_timeout)], output / 'runner', 2 * args.build_timeout + 180)
+    candidate_source = 'teaching-replay' if args.replay else 'student-candidate'
+    return execute(container(['--network', 'bridge', '--cidfile', str(output / 'service-container-id.txt'), '--group-add', str(Path('/var/run/docker.sock').stat().st_gid), '-v', '/var/run/docker.sock:/var/run/docker.sock', '--mount', f'type=bind,src={candidate},dst=/inputs/Dockerfile,readonly', '--mount', f'type=bind,src={evidence},dst=/evidence']) + [args.image, 'python3', '-m', 'draft', 'auto-build', '--fixture', '/app/fixtures/draft', '--candidate', '/inputs/Dockerfile', '--out', '/evidence', '--expected-output', 'hello E3', '--timeout', str(args.build_timeout), '--candidate-source', candidate_source], output / 'runner', 2 * args.build_timeout + 180)
 
 if __name__ == '__main__':
     try:

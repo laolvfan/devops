@@ -1,0 +1,43 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 633B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 57B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM docker.io/library/python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f
+#4 resolve docker.io/library/python:3.13-slim@sha256:70729b46c69b4f1e97c4822c1af3df53a1476cf5ddc6c087c0c10bc3a5678c2f 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 54B done
+#5 DONE 0.0s
+
+#6 [3/5] WORKDIR /work
+#6 CACHED
+
+#7 [2/5] RUN sed -i     -e s@http://deb.debian.org/debian-security@https://mirrors.aliyun.com/debian-security@g     -e s@http://deb.debian.org/debian@https://mirrors.aliyun.com/debian@g     /etc/apt/sources.list.d/debian.sources     && apt-get -o Acquire::Retries=1 -o Acquire::https::Timeout=30 update     && apt-get install -y --no-install-recommends gcc make libc6-dev     && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [4/5] COPY main.c Makefile ./
+#8 CACHED
+
+#9 [5/5] RUN make
+#9 CACHED
+
+#10 exporting to image
+#10 exporting layers done
+#10 exporting manifest sha256:ad8968f9673dc86491a820daddee8059ae0ccc840d2a36a968d56cb4b0b148bc done
+#10 exporting config sha256:368f30b2c1c9557ebf3406a5b65a109022a0f9a9fe320744b33528396bf0a10b done
+#10 exporting attestation manifest sha256:377e2fbd686163824de6b6b26041187e0bae15a09c646ce26bdbf57ce8ed77a9 0.0s done
+#10 exporting manifest list sha256:2054e34cce7783e670aae78ba79c1fa8001620df0e5051d0a815bcac57ff52bb
+#10 exporting manifest list sha256:2054e34cce7783e670aae78ba79c1fa8001620df0e5051d0a815bcac57ff52bb 0.0s done
+#10 naming to docker.io/library/e6-draft-replay:2621e3f7b506481d99793cf8d2877fa0-2 done
+#10 unpacking to docker.io/library/e6-draft-replay:2621e3f7b506481d99793cf8d2877fa0-2 done
+#10 DONE 0.1s
