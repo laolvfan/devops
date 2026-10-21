@@ -18,6 +18,7 @@ def build_parser():
     sp.add_argument("--expected-output", required=True)
     sp.add_argument("--timeout", type=int, default=300)
     sp.add_argument("--verify-timeout", type=int, default=30)
+    sp.add_argument("--candidate-source", choices=["teaching-replay", "student-candidate"], default="student-candidate")
     return ap
 
 def main(argv=None):
@@ -30,7 +31,8 @@ def main(argv=None):
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0 if result["passed"] else 1
     try:
-        result = auto_build(args.fixture, args.candidate, args.out, args.expected_output, args.timeout, args.verify_timeout)
+        result = auto_build(args.fixture, args.candidate, args.out, args.expected_output,
+                            args.timeout, args.verify_timeout, args.candidate_source)
     except (ValueError, OSError) as exc:
         result = {"status": "FAILED", "error": str(exc)}
     print(json.dumps(result, ensure_ascii=False, indent=2))

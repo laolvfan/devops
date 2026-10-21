@@ -36,3 +36,31 @@ def test_smoke_keeps_error_line_before_log_tail(monkeypatch):
     assert result["passed"] is True
     assert result["make_error_line"] == "/bin/sh: 1: make: not found"
     assert all("make: not found" not in line for line in result["log_tail"])
+
+
+def test_auto_build_requires_an_explicit_candidate():
+    import pytest
+
+    with pytest.raises(SystemExit):
+        build_parser().parse_args(["auto-build", "--out", "work/test", "--expected-output", "hello E3"])
+
+
+def test_auto_build_reports_success(monkeypatch, capsys):
+    import json
+    from draft import cli
+
+    calls = []
+
+    def fake_auto_build(*args):
+        calls.append(args)
+        return {"status": "SUCCEEDED", "candidate_source": args[-1]}
+
+    monkeypatch.setattr(cli, "auto_build", fake_auto_build)
+    code = main([
+        "auto-build", "--candidate", "fixtures/ci-candidates/DeepSeek-E5.Dockerfile",
+        "--out", "work/test", "--expected-output", "hello E3",
+        "--candidate-source", "teaching-replay",
+    ])
+    assert code == 0
+    assert json.loads(capsys.readouterr().out)["candidate_source"] == "teaching-replay"
+    assert calls[0][-1] == "teaching-replay"

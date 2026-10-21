@@ -9,6 +9,9 @@ import re
 def verify(directory):
     root = Path(directory).resolve()
     report = json.loads((root / "result.json").read_text(encoding="utf-8"))
+    invocation = json.loads((root.parent / "invocation.json").read_text(encoding="utf-8"))
+    if invocation.get("stage") != "e6" or not isinstance(invocation.get("replay"), bool):
+        raise ValueError("Missing or invalid E6 invocation metadata")
     if report["status"] != "SUCCEEDED":
         raise ValueError("Workflow was not successful")
     attempts = report["attempts"]
@@ -25,6 +28,11 @@ def verify(directory):
     candidate = (root / "iter-02/Dockerfile").read_bytes()
     if hashlib.sha256(candidate).hexdigest() != report["candidate_sha256"]:
         raise ValueError("Candidate hash mismatch")
+    candidate_source = "teaching-replay" if invocation["replay"] else "student-candidate"
+    if invocation.get("candidate_source") != candidate_source:
+        raise ValueError("Candidate source does not match invocation replay flag")
+    if invocation.get("candidate_sha256") != report["candidate_sha256"] or report.get("candidate_source") != candidate_source:
+        raise ValueError("Candidate provenance does not match workflow result")
     image = json.loads((root / "iter-02/image-inspect.json").read_text(encoding="utf-8"))[0]["Id"]
     verification = report["verification"]
     if image != attempts[1]["image_id"] or verification["command"][-1] != image:
@@ -46,6 +54,7 @@ def verify(directory):
     return {"passed": True, "trace_id": report["trace_id"], "baseline_failure": "MISSING_MAKE",
             "fixed_build_exit_code": 0, "verify_exit_code": 0, "verified_output": "hello E3",
             "candidate_sha256": report["candidate_sha256"], "image_id": image,
+            "candidate_source": candidate_source, "replay": invocation["replay"],
             "scope": "Saved evidence consistency; does not independently rerun builds"}
 
 

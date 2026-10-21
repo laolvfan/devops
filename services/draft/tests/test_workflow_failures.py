@@ -1,4 +1,5 @@
 """Deterministic Docker response stubs test orchestration, not real builds."""
+import hashlib
 import json
 from pathlib import Path
 import tempfile
@@ -23,7 +24,10 @@ class WorkflowFailureTests(unittest.TestCase):
             (fixture / "Dockerfile.reference").write_text("not a candidate")
             (fixture / "main.c").write_text("source")
             candidate = root / "candidate"
-            candidate.write_text(CANDIDATE)
+            if mode == "crlf-candidate":
+                candidate.write_bytes(CANDIDATE.replace("\n", "\r\n").encode("utf-8"))
+            else:
+                candidate.write_text(CANDIDATE)
 
             def fake_execute(argv, stdout, stderr, timeout):
                 self.calls.append(argv)
@@ -62,12 +66,19 @@ class WorkflowFailureTests(unittest.TestCase):
             self.assertEqual(saved, result)
             self.assertFalse((root / "output/project/Dockerfile.reference").exists())
             self.assertLessEqual(len(result["attempts"]), 2)
+            if mode == "crlf-candidate":
+                self.assertEqual(result["candidate_sha256"], hashlib.sha256(candidate.read_bytes()).hexdigest())
+                self.assertEqual(result["candidate_sha256"], hashlib.sha256((root / "output/iter-02/Dockerfile").read_bytes()).hexdigest())
             return result
 
     def test_success_uses_built_image(self):
         report = self.exercise("success")
         self.assertEqual(report["status"], "SUCCEEDED")
         self.assertEqual(report["verification"]["command"][-1], IMAGE)
+
+    def test_candidate_hash_matches_saved_bytes_with_windows_newlines(self):
+        report = self.exercise("crlf-candidate")
+        self.assertEqual(report["status"], "SUCCEEDED")
 
     def test_network_error_aborts_before_repair(self):
         report = self.exercise("infrastructure")

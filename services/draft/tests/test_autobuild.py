@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 from draft.autobuild import prepare_candidate, classify_failure, instructions
 
 BASE = 'FROM python:3.13-slim\nWORKDIR /work\nCOPY main.c Makefile ./\nRUN make\nCMD ["./hello"]\n'
@@ -8,6 +9,24 @@ CANDIDATE = BASE.replace("FROM python:3.13-slim", PIN).replace("RUN make", "RUN 
 class CandidateTests(unittest.TestCase):
     def test_preserves_baseline_and_pin(self):
         self.assertEqual(prepare_candidate(BASE, CANDIDATE), BASE.replace("FROM python:3.13-slim", PIN))
+
+    def test_preserves_digest_already_pinned_in_baseline(self):
+        baseline = BASE.replace("FROM python:3.13-slim", PIN)
+        candidate = baseline.replace("RUN make", "RUN apt-get install -y build-essential\nRUN make")
+        self.assertEqual(prepare_candidate(baseline, candidate), baseline)
+
+    def test_b11_replay_matches_existing_pinned_fixture(self):
+        fixture = Path("fixtures/draft")
+        candidate = Path("fixtures/ci-candidates/DeepSeek-E5.Dockerfile")
+        repaired = prepare_candidate(
+            (fixture / "Dockerfile.broken").read_text(encoding="utf-8"),
+            candidate.read_text(encoding="utf-8"),
+        )
+        self.assertEqual(repaired.splitlines()[0], candidate.read_text().splitlines()[0])
+        self.assertEqual(
+            repaired.splitlines()[0].split("@", 1)[0],
+            (fixture / "Dockerfile.broken").read_text().splitlines()[0].split("@", 1)[0],
+        )
 
     def test_multiline_install(self):
         candidate = CANDIDATE.replace(" && apt-get", " " + chr(92) + "\n    && apt-get")
