@@ -39,4 +39,27 @@ class ProfileTests(unittest.TestCase):
         (self.p/'Makefile').write_text((self.p/'Makefile').read_text().replace('-O0','-include unknown.h'))
         with self.assertRaisesRegex(ValueError,'UNSUPPORTED_FLAGS'):scan(self.p)
 
+
+class StudentE9B(unittest.TestCase):
+    def test_macro_style_patch_updates_definition(self):
+        import tempfile
+        from pathlib import Path
+        from lab import fixture, patch, scan, run
+
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory) / "sample"
+            fixture(project, "macro")
+            diff, plan = patch(project, scan(project))
+            candidate = Path(directory) / "candidate.patch"
+            candidate.write_text(diff)
+            run(["git", "apply", str(candidate.resolve())], project)
+
+            makefile = (project / "Makefile").read_text()
+            self.assertIn("DEPS = main.c unused.h config.h", makefile)
+            self.assertIn("main.o: $(DEPS)", makefile)
+            self.assertEqual(plan[0]["style"], "macro")
+            self.assertFalse(any(item["type"] == "MISSING"
+                                 for item in scan(project)["findings"]))
+
+
 if __name__=='__main__':unittest.main()
