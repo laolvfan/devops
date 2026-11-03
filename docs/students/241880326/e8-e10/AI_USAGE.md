@@ -5,7 +5,7 @@
 - 使用者：王炜，学号 241880326
 - 工具：Codex
 - 日期：2026-11-03
-- 实验：E8—E10，B 组 MDfixer；本记录覆盖已完成的 E8 部分。
+- 实验：E8—E10，B 组 MDfixer；本记录覆盖已完成的 E8 和 E9 部分。
 
 ## 输入上下文与问题
 
@@ -33,6 +33,14 @@ python3 -m unittest discover -s labs/e8e10 -p test_profile.py -v
 
 实际结果：原有 7 项及个人新增 1 项，共 8 项通过；`TEST_EXIT_CODE=0`。服务器日志为 `work/unit-tests-20261103-111321.log`，E8 证据目录为 `work/e8-B-manual.FGe5JE`。
 
+## E9 补充：共享变量分析
+
+Codex 协助说明三种声明风格、建议并提供共享变量分析脚本，并在课件副本上预先验证该分析逻辑。本人在服务器执行手册样例、将 macro 候选应用到独立副本，并运行该扩展分析。
+
+实际输出显示，修改共享的 `DEPS` 后，`main.o/config.h` 的 MISSING 消除，`helper.o/config.h` 被识别为 REDUNDANT；`SHARED_VARIABLE_ANALYSIS_PASS`、`STEP_EXIT_CODE=0`。证据目录为 `work/e9-B-manual.BH10Cm`，包含前后报告、候选补丁、计划和步骤日志。
+
+本次扩展为独立样例分析，没有修改参考修复算法，也没有额外添加仓库单元测试。
+
 ## 后续记录
 
-E9、E10 和论文扩展尚未完成，后续如继续使用 AI，应记录实际输入、建议、本人修改和验证结果。
+E10 和论文扩展尚未完成，后续如继续使用 AI，应记录实际输入、建议、本人修改和验证结果。
