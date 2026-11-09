@@ -39,4 +39,65 @@ class ProfileTests(unittest.TestCase):
         (self.p/'Makefile').write_text((self.p/'Makefile').read_text().replace('-O0','-include unknown.h'))
         with self.assertRaisesRegex(ValueError,'UNSUPPORTED_FLAGS'):scan(self.p)
 
+class Student241880100B(unittest.TestCase):
+    """Independent expected outcomes for report, style and acceptance boundaries."""
+
+    def test_e8_unknown_target_rejected_without_writing_source(self):
+        from lab import patch, scan
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory) / 'sample'
+            fixture(project)
+            before = (project / 'Makefile').read_bytes()
+            report = scan(project)
+            report['findings'] = [{'type': 'MISSING', 'target': 'ghost.o', 'dependency': 'config.h'}]
+            with self.assertRaisesRegex(ValueError, '^UNSUPPORTED_TARGET$'):
+                patch(project, report)
+            self.assertEqual((project / 'Makefile').read_bytes(), before)
+
+    def test_e9_renamed_macro_updates_definition_and_preserves_reference(self):
+        from lab import commit, patch, run, scan
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory) / 'sample'
+            fixture(project, 'macro')
+            makefile = project / 'Makefile'
+            makefile.write_text(makefile.read_text().replace('DEPS', 'SOURCES'))
+            commit(project, 'rename dependency variable')
+            before = makefile.read_bytes()
+            diff, plan = patch(project, scan(project))
+            self.assertIn('+SOURCES = main.c unused.h config.h', diff)
+            self.assertEqual(plan, [{'target': 'main.o', 'dependency': 'config.h', 'style': 'macro'}])
+            self.assertEqual(makefile.read_bytes(), before)
+            candidate = Path(directory) / 'candidate.patch'
+            candidate.write_text(diff)
+            run(['git', 'apply', '--check', str(candidate)], project)
+            run(['git', 'apply', str(candidate)], project)
+            self.assertIn('main.o: $(SOURCES)', makefile.read_text())
+            self.assertIn('unused.h', makefile.read_text())
+            self.assertFalse(any(f['type'] == 'MISSING' for f in scan(project)['findings']))
+
+    def test_e10_build_success_cannot_hide_remaining_missing_dependency(self):
+        import difflib
+        from lab import validate
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            project = root / 'sample'
+            fixture(project)
+            before = (project / 'Makefile').read_bytes()
+            original = before.decode()
+            changed = original.replace('CFLAGS = -O0', 'CFLAGS = -O1')
+            candidate = root / 'candidate.patch'
+            candidate.write_text(''.join(difflib.unified_diff(
+                original.splitlines(True), changed.splitlines(True),
+                fromfile='a/Makefile', tofile='b/Makefile')))
+            result = validate(project, candidate, root / 'validation')
+            self.assertTrue(result['checks']['patch_applies'])
+            self.assertTrue(result['checks']['build'])
+            self.assertTrue(result['checks']['test'])
+            self.assertFalse(result['checks']['header_change'])
+            self.assertFalse(result['checks']['no_missing'])
+            self.assertFalse(result['accepted'])
+            self.assertTrue(result['rollback'])
+            self.assertTrue(result['source_unchanged'])
+            self.assertEqual((project / 'Makefile').read_bytes(), before)
+
 if __name__=='__main__':unittest.main()
