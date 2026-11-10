@@ -100,4 +100,30 @@ class Student241880100B(unittest.TestCase):
             self.assertTrue(result['source_unchanged'])
             self.assertEqual((project / 'Makefile').read_bytes(), before)
 
+class Student241880326E8(unittest.TestCase):
+    def test_redundant_only_does_not_remove_dependency(self):
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory) / 'sample'
+            fixture(project)
+
+            before = (project / 'Makefile').read_bytes()
+            report = scan(project)
+
+            # 构造只包含冗余依赖的报告，作为本测试的输入。
+            report['findings'] = [
+                finding for finding in report['findings']
+                if finding['type'] == 'REDUNDANT'
+            ]
+
+            self.assertEqual(
+                [(f['target'], f['dependency']) for f in report['findings']],
+                [('main.o', 'unused.h')]
+            )
+
+            diff, plan = patch(project, report)
+
+            self.assertEqual(diff, '')
+            self.assertEqual(plan, [])
+            self.assertEqual((project / 'Makefile').read_bytes(), before)
+
 if __name__=='__main__':unittest.main()
