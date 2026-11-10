@@ -10,4 +10,5 @@ work/
 __pycache__/
 .pytest_cache/
 
+# Generated E11-E12 integration inputs
 /data/

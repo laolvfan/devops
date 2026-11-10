@@ -1,0 +1,76 @@
+{
+  "student_id": "241880100",
+  "track": "B",
+  "runtime_commit": "e002d507c09d78721486101e026934215b2f500c",
+  "branch": "student/241880100/e8-e10",
+  "environment_image_id": "sha256:713e282a1b5485bbde44e0cc3be15238b446079cea8b9c00037f18e0ef324364",
+  "tests": {
+    "total": 10,
+    "new": 3,
+    "log": "work/unit-tests-241880100-e8-e10.log"
+  },
+  "stages": {
+    "e8": {
+      "out": "work/e8-B-manual.HXXVja",
+      "step_logs": 7,
+      "step_exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "e9": {
+      "out": "work/e9-B-manual.zSBU5U",
+      "step_logs": 5,
+      "step_exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "e10": {
+      "out": "work/e10-B-manual.cfBxat",
+      "step_logs": 8,
+      "step_exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "e8_baseline": "29b5b5f8ee2def85c539f3c4dd695faf8d4012f1",
+  "e10_baseline": "8544f8fbcbe629899c3a5630ba3d084d1d6710b9",
+  "e10_gate": {
+    "track": "B",
+    "passed": true,
+    "rows": 3
+  },
+  "e10_extra": {
+    "passed": true,
+    "expected": "build and smoke success must not hide remaining MD",
+    "validation": {
+      "accepted": false,
+      "checks": {
+        "patch_applies": true,
+        "build": true,
+        "test": true,
+        "header_change": false,
+        "no_missing": false
+      },
+      "error": null,
+      "source_unchanged": true,
+      "rollback": true
+    }
+  }
+}
