@@ -21,8 +21,9 @@ devops/
 ├── README.md
 ├── Makefile、compose.yaml        # E4 可重复环境入口（make all = doctor+build+test+smoke+scan）
 ├── run_lab.py                    # E8–E10 统一入口（build / e8 / e9 / e10，--track A|B）
+├── run_e11e12.py                 # E11–E12 统一入口（build / test / prepare / run / serve）
 ├── requirements-dev.in/.lock     # 开发依赖及带哈希的锁文件
-├── .github/workflows/            # CI：e7-quality-gate.yml、e8e10.yml
+├── .github/workflows/            # CI：e7-quality-gate.yml、e8e10.yml、e11e12.yml
 │
 ├── contract/                     # A11/B11 共用接口契约
 │   ├── schemas/                  #   task / md-report / draft-iterations 的 JSON Schema
@@ -30,6 +31,7 @@ devops/
 │
 ├── services/draft/               # DRAFT 服务（教师 B-draft 模板及本组实现、测试）
 ├── labs/e8e10/                   # E8–E10 实验代码（lab.py）与运行环境
+├── labs/e11e12/                  # E11–E12 集成：pipeline.py 编排、server.py 任务 API、prepare.py 样例、vendor/draft 适配器
 ├── fixtures/                     # 测试输入：draft/ 失败与参考 Dockerfile，ci-candidates/ CI 候选
 ├── scripts/                      # 运行与检查脚本
 │   ├── lab_cloud.py              #   E5–E7 统一运行入口
@@ -73,4 +75,4 @@ devops/
 | E4 | 导入教师 B-draft 模板，三位成员完成构建、测试、冒烟和密钥检查，并做同 SHA 重跑对照 | [docs/E4](docs/E4/README.md) |
 | E5–E7 | 真实项目 DRAFT 工程、自动构建、故障场景与 CI 拒绝恢复 | [E5](docs/E5/README.md)、[E6](docs/E6/README.md)、[E7](docs/E7/report.md) |
 | E8–E10 | 个人实验与测试扩展，组内合并为统一版本 | [docs/students](docs/students/) |
-| E11–E12 | 轨道内集成与 A11/B11 接口联调 | 进行中，见 `e11-e12-integration` 分支 |
+| E11–E12 | 轨道内集成与 A11/B11 接口联调 | 进行中，入口 `python3 run_e11e12.py` |
