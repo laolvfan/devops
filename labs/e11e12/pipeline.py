@@ -49,25 +49,32 @@ def command(argv, cwd, log):
         raise Failure('COMMAND_FAILED', f'{argv[0]} failed; see {log.name}')
     return p.stdout.strip()
 
-def snapshot(repo, revision, dest, logs):
+def snapshot(repo, revision, dest, logs, profile='teaching'):
     sha = command(['git','rev-parse','--verify',revision+'^{commit}'], repo, logs/(dest.name+'-resolve.log'))
     command(['git','clone','--no-hardlinks','--no-checkout',str(repo),str(dest)], repo, logs/(dest.name+'-clone.log'))
     command(['git','checkout','--detach',sha], dest, logs/(dest.name+'-checkout.log'))
     # E8-E10 profile; fail early instead of silently ignoring other targets.
     names = {p.name for p in dest.glob('*.c')}
-    if names != {'main.c','helper.c'} or not (dest/'config.h').is_file():
-        raise Failure('UNSUPPORTED_PROJECT', 'Expected main.c/helper.c/config.h and explicit Make rules')
+    if profile == 'teaching':
+        if names != {'main.c','helper.c'} or not (dest/'config.h').is_file():
+            raise Failure('UNSUPPORTED_PROJECT', 'Expected main.c/helper.c/config.h and explicit Make rules')
+    elif profile == 'cjson':
+        required = ('cJSON.c', 'cJSON.h', 'cJSON_Utils.c', 'cJSON_Utils.h', 'Makefile')
+        if any(not (dest/name).is_file() for name in required):
+            raise Failure('UNSUPPORTED_PROJECT', 'Expected cJSON source files and Makefile')
+    else:
+        raise Failure('UNSUPPORTED_PROFILE', profile)
     return sha
 
-def full(project, folder):
+def full(project, folder, profile='teaching'):
     from buildchecker.fullcheck import full_check
-    report = full_check(project, folder)
+    report = full_check(project, folder, build_command='make cJSON_Utils.o' if profile == 'cjson' else 'make app')
     if report.get('status') != 'SUCCEEDED':
         raise Failure('FULL_CHECK_FAILED', str(report.get('error', report.get('error_code'))))
     return report
 
-def normalized(findings):
-    return sorted((f['type'],f['target'],f['dependency']) for f in findings if f['target'] in ('main.o','helper.o'))
+def normalized(findings, targets=('main.o','helper.o')):
+    return sorted((f['type'],f['target'],f['dependency']) for f in findings if f['target'] in targets)
 
 def execute(request, out, job_id=None):
     job_id = job_id or 'job-'+uuid.uuid4().hex
@@ -88,35 +95,54 @@ def execute(request, out, job_id=None):
         mode=request['mode']
         if mode not in ('e11-a','e11-b','e12'):
             raise Failure('INVALID_REQUEST','Unknown mode')
+        profile=request.get('project_profile', 'teaching')
+        if profile not in ('teaching', 'cjson'):
+            raise Failure('UNSUPPORTED_PROFILE', str(profile))
+        if profile == 'cjson' and mode != 'e12':
+            raise Failure('UNSUPPORTED_PROFILE', 'cjson supports e12 only')
+        if profile == 'cjson':
+            import cjson_profile
+            profile_scan, profile_patch, profile_validate = cjson_profile.scan, cjson_profile.patch, cjson_profile.validate
+            targets = ('cJSON_Utils.o',)
+        else:
+            profile_scan, profile_patch, profile_validate = scan, patch, validate
+            targets = ('main.o', 'helper.o')
         repo=Path(request['repo']).resolve()
         if not repo.is_dir():
             raise Failure('INVALID_REQUEST','Repository missing')
         base=out/'base-project'; target=out/'target-project'
-        base_sha=snapshot(repo,request['base'],base,out/'logs')
-        target_sha=snapshot(repo,request['target'],target,out/'logs')
+        base_sha=snapshot(repo,request['base'],base,out/'logs',profile)
+        target_sha=snapshot(repo,request['target'],target,out/'logs',profile)
         result.update(base_commit=base_sha,target_commit=target_sha)
         if mode in ('e11-b','e12'):
             from draft.autobuild import auto_build
             candidate=Path(request['candidate']).resolve()
+            if profile == 'cjson':
+                broken=Path(request['broken_dockerfile']).resolve()
+                if not broken.is_relative_to((ROOT/'data').resolve()) or not broken.is_file():
+                    raise Failure('INVALID_REQUEST','broken_dockerfile must be a file under data/')
+                if (target/'Dockerfile.broken').exists():
+                    raise Failure('INVALID_REQUEST','upstream Dockerfile.broken already exists')
+                (target/'Dockerfile.broken').write_bytes(broken.read_bytes())
             draft=auto_build(target,candidate,out/'draft-build',request.get('expected_output','1'),timeout=request.get('build_timeout',600))
             if draft['status']!='SUCCEEDED':
                 raise Failure('DRAFT_FAILED',draft.get('error','Inspect draft-build logs'))
             stage('draft',target_sha,draft,[out/'draft-build/result.json'])
         if mode in ('e11-a','e12'):
-            base_full=full(base,out/'baseline-full')
-            old=scan(base)
+            base_full=full(base,out/'baseline-full',profile)
+            old=profile_scan(base)
             edges=json.loads((out/'baseline-full/actual-graph.json').read_text())
-            projected={t:sorted({e['dependency'] for e in edges if e['target']==t}) for t in ('main.o','helper.o')}
+            projected={t:sorted({e['dependency'] for e in edges if e['target']==t}) for t in targets}
             if projected != old['actual']:
                 raise Failure('GRAPH_MISMATCH','BuildChecker baseline differs from GCC observations')
             old['actual']=projected
             save(out/'baseline-cache.json',old)
             baseline=stage('full-check',base_sha,base_full,[out/'baseline-full/actual-graph.json',out/'baseline-full/findings.json',out/'baseline-cache.json'])
             check_envelope(baseline,base_sha,'full-check')
-            current=scan(target,old)
+            current=profile_scan(target,old)
             save(out/'incremental-report.json',current)
-            reference=full(target,out/'target-full')
-            if normalized(reference['findings']) != normalized(current['findings']):
+            reference=full(target,out/'target-full',profile)
+            if normalized(reference['findings'],targets) != normalized(current['findings'],targets):
                 raise Failure('FINDINGS_MISMATCH','Incremental/full object-target findings differ')
             md_envelope=stage('incremental-check',target_sha,current,[out/'incremental-report.json',out/'target-full/findings.json'])
         else:
@@ -135,16 +161,16 @@ def execute(request, out, job_id=None):
             check_envelope(md_envelope,target_sha)
             current=md_envelope['data']
             before=(target/'Makefile').read_bytes()
-            diff,edits=patch(target,current)
+            diff,edits=profile_patch(target,current)
             if not diff:
                 raise Failure('NO_MISSING_DEPENDENCY','No MD to repair')
             patchfile=out/'candidate.patch';patchfile.write_text(diff,encoding='utf-8')
             save(out/'repair-plan.json',edits)
             stage('repair',target_sha,{'edits':edits,'input_report':artifact(out/(md_envelope['kind']+'.json'),out,job_id)},[patchfile,out/'repair-plan.json'])
-            verdict=validate(target,patchfile,out/'validation')
+            verdict=profile_validate(target,patchfile,out/'validation')
             if not verdict['accepted']:
                 raise Failure('REPAIR_REJECTED',str(verdict))
-            final=full(target,out/'final-full')
+            final=full(target,out/'final-full',profile)
             if any(f['type']=='MISSING' for f in final['findings']):
                 (target/'Makefile').write_bytes(before)
                 raise Failure('RECHECK_FAILED','MD remains; working-copy declaration restored')
