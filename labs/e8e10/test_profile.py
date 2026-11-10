@@ -100,4 +100,51 @@ class Student241880100B(unittest.TestCase):
             self.assertTrue(result['source_unchanged'])
             self.assertEqual((project / 'Makefile').read_bytes(), before)
 
+class Student241880326E8(unittest.TestCase):
+    def test_redundant_only_does_not_remove_dependency(self):
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory) / 'sample'
+            fixture(project)
+
+            before = (project / 'Makefile').read_bytes()
+            report = scan(project)
+
+            # 构造只包含冗余依赖的报告，作为本测试的输入。
+            report['findings'] = [
+                finding for finding in report['findings']
+                if finding['type'] == 'REDUNDANT'
+            ]
+
+            self.assertEqual(
+                [(f['target'], f['dependency']) for f in report['findings']],
+                [('main.o', 'unused.h')]
+            )
+
+            diff, plan = patch(project, report)
+
+            self.assertEqual(diff, '')
+            self.assertEqual(plan, [])
+            self.assertEqual((project / 'Makefile').read_bytes(), before)
+
+class StudentE9B(unittest.TestCase):
+    def test_macro_style_patch_updates_definition(self):
+        import tempfile
+        from pathlib import Path
+        from lab import fixture, patch, scan, run
+
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory) / "sample"
+            fixture(project, "macro")
+            diff, plan = patch(project, scan(project))
+            candidate = Path(directory) / "candidate.patch"
+            candidate.write_text(diff)
+            run(["git", "apply", str(candidate.resolve())], project)
+
+            makefile = (project / "Makefile").read_text()
+            self.assertIn("DEPS = main.c unused.h config.h", makefile)
+            self.assertIn("main.o: $(DEPS)", makefile)
+            self.assertEqual(plan[0]["style"], "macro")
+            self.assertFalse(any(item["type"] == "MISSING"
+                                 for item in scan(project)["findings"]))
+
 if __name__=='__main__':unittest.main()
