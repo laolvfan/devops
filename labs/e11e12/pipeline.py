@@ -148,7 +148,9 @@ def execute(request, out, job_id=None):
         else:
             # E11-B still consumes a fixed MD input, separately from A's live output.
             fixed=Path(request['fixed_report'])
-            envelope=json.loads(fixed.read_text(encoding='utf-8'))
+            expected_hash=request.get('fixed_report_sha256')
+            envelope=(load_artifact(fixed, expected_hash) if expected_hash is not None
+                      else json.loads(fixed.read_text(encoding='utf-8')))
             check_envelope(envelope,target_sha,'fixed-md')
             current=envelope['data']
             if current.get('commit') != target_sha:
