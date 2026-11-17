@@ -32,6 +32,55 @@ class Contracts(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/'r.json';p.write_text('{}')
             with self.assertRaises(pipeline.Failure):pipeline.load_artifact(p,'0'*64)
+    def test_b_pipeline_checks_fixed_report_hash(self):
+        import hashlib
+        import json
+        import draft.autobuild
+
+        sha = 'a' * 40
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            repo = root / 'repo'
+            repo.mkdir()
+            report = root / 'fixed.json'
+            report.write_text(json.dumps({
+                'schema_version': 'e11e12-1',
+                'kind': 'fixed-md',
+                'commit': sha,
+                'status': 'SUCCEEDED',
+                'data': {'commit': sha}
+            }))
+            digest = hashlib.sha256(report.read_bytes()).hexdigest()
+
+            def fake_snapshot(repo, commit, dest, logs, profile):
+                dest.mkdir(parents=True)
+                (dest / 'Makefile').write_text('all:\\n')
+                return sha
+
+            def fake_build(target, candidate, out, expected, timeout):
+                out.mkdir(parents=True)
+                (out / 'result.json').write_text('{}')
+                return {'status': 'SUCCEEDED'}
+
+            request = {
+                'mode': 'e11-b',
+                'repo': str(repo),
+                'base': sha,
+                'target': sha,
+                'candidate': str(root / 'Dockerfile'),
+                'fixed_report': str(report),
+                'fixed_report_sha256': digest
+            }
+            with patch.object(pipeline, 'snapshot', side_effect=fake_snapshot), \
+                 patch.object(draft.autobuild, 'auto_build', side_effect=fake_build), \
+                 patch.object(pipeline, 'patch', return_value=('', [])):
+                good = pipeline.execute(request, root / 'good')
+                self.assertIn('fixed-md', [s['name'] for s in good['stages']])
+
+                report.write_text(report.read_text() + ' ')
+                bad = pipeline.execute(request, root / 'bad')
+                self.assertEqual(bad['error']['code'], 'ARTIFACT_HASH_MISMATCH')
+
     def test_same_key_same_request_same_job(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);store=server.Store(root/'jobs')
