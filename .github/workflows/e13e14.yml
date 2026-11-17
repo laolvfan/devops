@@ -64,6 +64,9 @@ jobs:
         uses: actions/upload-artifact@v7.0.2
         with:
           name: e13e14-evidence-${{ github.run_id }}-${{ github.run_attempt }}
-          path: work/
+          path: |
+            work/
+            !work/**/.git/**
+          include-hidden-files: true
           if-no-files-found: warn
           retention-days: 14
