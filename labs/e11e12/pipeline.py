@@ -35,6 +35,13 @@ def check_envelope(report, commit, kind=None):
     if kind and report.get('kind') != kind:
         raise Failure('ARTIFACT_TYPE_MISMATCH', kind)
 
+def check_fixed_report_hash(path, expected_sha256):
+    if expected_sha256 is None:
+        return
+    actual = hashlib.sha256(path.read_bytes()).hexdigest()
+    if actual != expected_sha256:
+        raise Failure('ARTIFACT_HASH_MISMATCH', 'Fixed report content changed during transfer')
+
 def load_artifact(path, expected_sha256):
     data=path.read_bytes()
     if hashlib.sha256(data).hexdigest()!=expected_sha256:
@@ -98,8 +105,8 @@ def execute(request, out, job_id=None):
         profile=request.get('project_profile', 'teaching')
         if profile not in ('teaching', 'cjson'):
             raise Failure('UNSUPPORTED_PROFILE', str(profile))
-        if profile == 'cjson' and mode != 'e12':
-            raise Failure('UNSUPPORTED_PROFILE', 'cjson supports e12 only')
+        if profile == 'cjson' and mode not in ('e11-b', 'e12'):
+            raise Failure('UNSUPPORTED_PROFILE', 'cjson supports e11-b and e12 only')
         if profile == 'cjson':
             import cjson_profile
             profile_scan, profile_patch, profile_validate = cjson_profile.scan, cjson_profile.patch, cjson_profile.validate
@@ -148,6 +155,7 @@ def execute(request, out, job_id=None):
         else:
             # E11-B still consumes a fixed MD input, separately from A's live output.
             fixed=Path(request['fixed_report'])
+            check_fixed_report_hash(fixed, request.get('fixed_report_sha256'))
             envelope=json.loads(fixed.read_text(encoding='utf-8'))
             check_envelope(envelope,target_sha,'fixed-md')
             current=envelope['data']
