@@ -65,6 +65,15 @@ class CjsonProfileTests(unittest.TestCase):
         sha = pipeline.snapshot(self.root, "HEAD", destination, logs, profile="cjson")
         self.assertEqual(sha, subprocess.check_output(["git", "-C", str(self.root), "rev-parse", "HEAD"], text=True).strip())
 
+    def test_e11_b_accepts_cjson_profile(self):
+        import pipeline
+        result = pipeline.execute(
+            {"mode": "e11-b", "project_profile": "cjson",
+             "repo": str(self.root / "missing")},
+            self.root / "pipeline-output"
+        )
+        self.assertEqual(result["error"]["code"], "INVALID_REQUEST")
+
     def test_api_rejects_broken_dockerfile_outside_data(self):
         import pipeline
         import server

@@ -98,8 +98,8 @@ def execute(request, out, job_id=None):
         profile=request.get('project_profile', 'teaching')
         if profile not in ('teaching', 'cjson'):
             raise Failure('UNSUPPORTED_PROFILE', str(profile))
-        if profile == 'cjson' and mode != 'e12':
-            raise Failure('UNSUPPORTED_PROFILE', 'cjson supports e12 only')
+        if profile == 'cjson' and mode not in ('e11-b', 'e12'):
+            raise Failure('UNSUPPORTED_PROFILE', 'cjson supports e11-b and e12 only')
         if profile == 'cjson':
             import cjson_profile
             profile_scan, profile_patch, profile_validate = cjson_profile.scan, cjson_profile.patch, cjson_profile.validate
