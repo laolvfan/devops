@@ -70,4 +70,24 @@ class Contracts(unittest.TestCase):
                 else:
                     self.assertIn('main.o: main.c $(HEADERS) config.h extra.h', diff)
 
+
+    def test_fixed_report_hash_matches_bytes(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / 'report.json'
+            p.write_bytes(b'{"status":"SUCCEEDED"}\\n')
+            digest = hashlib.sha256(p.read_bytes()).hexdigest()
+            pipeline.check_fixed_report_hash(p, digest)
+
+    def test_fixed_report_hash_rejects_changed_bytes(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / 'report.json'
+            p.write_bytes(b'original')
+            digest = hashlib.sha256(p.read_bytes()).hexdigest()
+            p.write_bytes(b'changed')
+            with self.assertRaises(pipeline.Failure) as caught:
+                pipeline.check_fixed_report_hash(p, digest)
+            self.assertEqual(caught.exception.code, 'ARTIFACT_HASH_MISMATCH')
+
 if __name__=='__main__':unittest.main()
