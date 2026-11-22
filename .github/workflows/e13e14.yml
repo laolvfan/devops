@@ -51,6 +51,7 @@ jobs:
         run: |
           set -euo pipefail
           export E14_ROOT="$PWD" E14_IMAGE=course-e11e12:999999999
+          export E14_UID="$(id -u)" E14_GID="$(id -g)"
           docker compose -f labs/e13e14/compose.yaml -p e14-ci up -d --wait
           python3 labs/e13e14/orchestrate.py --request data/integration-sample/e12.json --out work/ci-e14
           python3 labs/e13e14/scan_runtime_logs.py work/ci-e14
@@ -65,6 +66,9 @@ jobs:
         uses: actions/upload-artifact@v7.0.2
         with:
           name: e13e14-evidence-${{ github.run_id }}-${{ github.run_attempt }}
-          path: work/
+          path: |
+            work/
+            !work/**/.git/**
+          include-hidden-files: true
           if-no-files-found: warn
           retention-days: 14

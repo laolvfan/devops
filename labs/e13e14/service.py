@@ -2,7 +2,6 @@
 import hashlib
 import json
 import os
-import subprocess
 import sys
 import time
 import traceback
@@ -26,11 +25,6 @@ def local(value, area='work'):
     return path
 
 
-def allow_git_repo(path):
-    subprocess.run(['git', 'config', '--global', '--add', 'safe.directory', str(path)],
-                   check=True, stdout=subprocess.DEVNULL)
-
-
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -43,7 +37,6 @@ def save(path, data):
 def run(data):
     project = local(data['project'])
     out = local(data['out'])
-    allow_git_repo(project)
     if out.exists():
         raise ValueError('Output already exists')
     if ROLE == 'draft':
@@ -60,7 +53,6 @@ def run(data):
         return {'status': 'SUCCEEDED', 'result': result, 'artifact': str(out / 'findings.json')}
     if ROLE == 'echecker':
         base = local(data['base'])
-        allow_git_repo(base)
         baseline_graph = local(data['baseline_graph'])
         target_findings = local(data['target_findings'])
         old = scan(base)

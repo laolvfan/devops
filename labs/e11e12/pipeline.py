@@ -36,11 +36,10 @@ def check_envelope(report, commit, kind=None):
         raise Failure('ARTIFACT_TYPE_MISMATCH', kind)
 
 def check_fixed_report_hash(path, expected_sha256):
-    if expected_sha256 is None:
-        return
-    actual = hashlib.sha256(path.read_bytes()).hexdigest()
-    if actual != expected_sha256:
+    data = path.read_bytes()
+    if expected_sha256 is not None and hashlib.sha256(data).hexdigest() != expected_sha256:
         raise Failure('ARTIFACT_HASH_MISMATCH', 'Fixed report content changed during transfer')
+    return data
 
 def load_artifact(path, expected_sha256):
     data=path.read_bytes()
@@ -155,8 +154,8 @@ def execute(request, out, job_id=None):
         else:
             # E11-B still consumes a fixed MD input, separately from A's live output.
             fixed=Path(request['fixed_report'])
-            check_fixed_report_hash(fixed, request.get('fixed_report_sha256'))
-            envelope=json.loads(fixed.read_text(encoding='utf-8'))
+            report_bytes=check_fixed_report_hash(fixed, request.get('fixed_report_sha256'))
+            envelope=json.loads(report_bytes.decode('utf-8'))
             check_envelope(envelope,target_sha,'fixed-md')
             current=envelope['data']
             if current.get('commit') != target_sha:
