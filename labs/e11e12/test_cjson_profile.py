@@ -89,5 +89,21 @@ class CjsonProfileTests(unittest.TestCase):
         self.assertIn("RUN make test", baseline)
         self.assertIn("build-essential", candidate)
 
+
+    def test_e11_b_accepts_cjson_profile_route(self):
+        import pipeline
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            request = {
+                "mode": "e11-b",
+                "project_profile": "cjson",
+                "repo": str(root / "missing-repo"),
+                "base": "0" * 40,
+                "target": "1" * 40,
+            }
+            result = pipeline.execute(request, root / "result")
+            self.assertEqual(result["error"]["code"], "INVALID_REQUEST")
+            self.assertEqual(result["error"]["message"], "Repository missing")
+
 if __name__ == "__main__":
     unittest.main()
