@@ -1,4 +1,4 @@
-"""Run E14's four Compose services on one pinned teaching project."""
+"""Run E14's four Compose services on a pinned teaching or cJSON project."""
 import argparse
 import hashlib
 import json
@@ -45,7 +45,7 @@ def command(argv, cwd, log):
     return p.stdout.strip()
 
 
-def snapshot(repo, revision, target, logs):
+def snapshot(repo, revision, target, logs, profile):
     if not re.fullmatch(r'[0-9a-f]{40}', revision):
         raise ValueError('Use a full Git commit SHA')
     head = command(['git', 'rev-parse', '--verify', revision + '^{commit}'], repo,
@@ -53,7 +53,11 @@ def snapshot(repo, revision, target, logs):
     command(['git', 'clone', '--no-hardlinks', '--no-checkout', str(repo), str(target)], repo,
             logs / (target.name + '-clone.log'))
     command(['git', 'checkout', '--detach', head], target, logs / (target.name + '-checkout.log'))
-    if {p.name for p in target.glob('*.c')} != {'main.c', 'helper.c'} or not (target / 'config.h').is_file():
+    if profile == 'cjson':
+        required = ('cJSON.c', 'cJSON.h', 'cJSON_Utils.c', 'cJSON_Utils.h', 'Makefile')
+        if not all((target / name).is_file() for name in required):
+            raise ValueError('Unsupported cJSON project layout')
+    elif {p.name for p in target.glob('*.c')} != {'main.c', 'helper.c'} or not (target / 'config.h').is_file():
         raise ValueError('Unsupported teaching project profile')
     return head
 
@@ -92,7 +96,7 @@ def execute(request, out):
     save(out / 'request.json', request)
 
     def payload(project, folder, **extra):
-        return {'project': container_path(project), 'out': container_path(folder),
+        return {'project': container_path(project), 'out': container_path(folder), 'project_profile': profile,
                 'job_id': job, 'trace_id': trace, **extra}
 
     def stage(name, commit, data):
@@ -102,12 +106,22 @@ def execute(request, out):
         result['stages'].append({'name': name, 'artifact': {'uri': path.name, 'sha256': digest(path)}})
 
     try:
+        profile = request.get('project_profile', 'teaching')
+        if profile not in ('teaching', 'cjson'):
+            raise ValueError(f'Unsupported project profile: {profile}')
+        result['project_profile'] = profile
         base = out / 'base-project'
         target = out / 'target-project'
         logs = out / 'logs'
-        base_sha = snapshot(repo, request['base'], base, logs)
-        target_sha = snapshot(repo, request['target'], target, logs)
+        base_sha = snapshot(repo, request['base'], base, logs, profile)
+        target_sha = snapshot(repo, request['target'], target, logs, profile)
         result.update(base_commit=base_sha, target_commit=target_sha)
+        if profile == 'cjson':
+            broken = host_path(request['broken_dockerfile'])
+            if not broken.is_relative_to((ROOT / 'data').resolve()) or not broken.is_file():
+                raise ValueError('broken_dockerfile must be a file under data/')
+            with (target / 'Dockerfile.broken').open('xb') as f:
+                f.write(broken.read_bytes())
 
         drafted = call('draft', payload(target, out / 'draft-build',
                                         candidate=container_path(candidate),

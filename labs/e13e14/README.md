@@ -13,3 +13,5 @@ E12 已完成 A/B 技术路线集成。E13–E14 复用 E11–E12 的 `run_e11e1
 导入学生仓库时，将本目录的 Python 文件、`compose.yaml` 和 `tests/` 复制到仓库根目录的 `labs/e13e14/`；将 `.github/workflows/e13e14.yml` 复制到仓库根目录同名路径。工作流包含契约检查、Compose 配置、源码扫描、固定样例四容器构建与运行、日志扫描。它是待接入真实远端的 CI 模板；只有 Git 平台在目标提交上实际运行成功，才能填写 CI 通过。
 
 本包还提供测试矩阵、命令路径和记录模板。扫描器的 C6 假 Key 命中、清理后复扫已在隔离云机测试副本通过；E13 的 A→B 当次报告交接、C4 超时与 C7 失败隔离也已在教师样例上通过。C5 沿用 E10 B 组错误补丁回滚样例作为前期回归。E14 的四容器教师样例五阶段已通过，完整结果见验证记录。跨组实际项目的 C1–C8 完整矩阵和 GitHub 门禁仍待学生执行；教师隐藏测试仍需在学生提交上进行。本包不把教学样例结果写成实际组项目通过。
+
+四服务入口支持 `project_profile: "cjson"`。请求需提供 cJSON 仓库、完整 base/target、候选 Dockerfile、`broken_dockerfile` 和预期输出。输入文件均位于 `data/`。BuildChecker 构建 `cJSON_Utils.o`，EChecker 和 MDFixer 复用 E11–E12 的 cJSON 适配，检测范围为该目标。MDFixer 消费同一轮 EChecker 生成的报告。未填写项目类型时沿用原双 C 源文件流程。
